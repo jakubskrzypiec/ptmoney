@@ -33,8 +33,19 @@ Przewijanie nie przesuwa treści — napędza animację:
 2. znak rośnie; jest wycięty w czarnej zasłonie, więc świeci przez niego marka,
 3. zasłona jedzie w górę jak kurtyna i odsłania hero.
 
-Sterowanie: `#introSpacer` (220 vh) daje dystans przewijania, `renderIntro()` w `main.js`
+4. na tej samej osi hero **składa się z kawałków**: wiersze nagłówka wjeżdżają zza masek
+   jeden po drugim, portret odsłania się od góry, na końcu wchodzą przyciski i pasek raty.
+
+Przez cały czas treść stoi nieruchomo — przewijanie przewija animację, nie stronę.
+
+Sterowanie: `#introSpacer` (300 vh) daje dystans przewijania, `renderIntro()` w `main.js`
 przelicza go na postęp `p` od 0 do 1. Progi faz są w tej funkcji — to jedyne miejsce do strojenia.
+Kolejność elementów hero bierze się z `data-delay` w `index.html` (0–1 na osi wejścia),
+a `renderHero()` przelicza to na przezroczystość, przesunięcie i maski.
+
+Gdy intro jest pominięte, hero i tak wchodzi — te same ruchy odgrywa raz klasa `.is-in`
+na przejściach CSS, bez udziału przewijania. Po zakończeniu wejścia portret dostaje
+delikatną parallaksę: dryfuje wolniej niż reszta strony.
 
 Intro **nie uruchamia się**, gdy: system prosi o ograniczenie animacji
 (`prefers-reduced-motion`), użytkownik widział je już w tej sesji, adres ma kotwicę

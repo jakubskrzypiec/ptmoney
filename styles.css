@@ -178,7 +178,7 @@ em { font-style: normal; color: var(--blue); }
   transform-origin: 50% 46%;
   will-change: opacity, transform;
 }
-.js-intro .intro-spacer { display: block; height: 220vh; }
+.js-intro .intro-spacer { display: block; height: 300vh; }
 
 /* Płyta pod maską — to ona nadaje logo kolor marki w pierwszej fazie. */
 .intro-plate { position: absolute; inset: 0; background: var(--blue); }
@@ -307,15 +307,24 @@ em { font-style: normal; color: var(--blue); }
    Hero
    ========================================================================== */
 
-.hero { padding-block: clamp(56px, 8vw, 104px) clamp(56px, 7vw, 96px); }
+.hero { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 88px); overflow: clip; }
 
-.hero-grid { display: grid; gap: clamp(48px, 6vw, 72px); align-items: center; }
+/* Lewa kolumna trzyma siatkę kontenera, portret dobiega do prawej krawędzi okna. */
+.hero-main {
+  display: grid;
+  gap: clamp(36px, 5vw, 64px);
+  padding-left: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
+  padding-right: var(--gutter);
+}
 
 .hero-copy h1 { margin-bottom: 30px; }
-.hero-lead { max-width: 50ch; font-size: clamp(1.02rem, 1.4vw, 1.16rem); color: var(--muted); }
+.hero-lead { max-width: 46ch; font-size: clamp(1.02rem, 1.4vw, 1.16rem); color: var(--muted); }
+
+/* Każdy wiersz nagłówka wjeżdża zza własnej maski. */
+.hero-line { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
+.hero-line > span { display: block; }
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
-
 .hero-note { display: flex; align-items: center; gap: 9px; margin-top: 22px; font-size: .85rem; font-weight: 500; color: var(--muted); }
 .hero-note svg { width: 17px; height: 17px; flex: none; fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -338,37 +347,120 @@ em { font-style: normal; color: var(--blue); }
 }
 .portrait-fallback img { width: 54px; opacity: .3; }
 
-.hero-visual { position: relative; }
-.hero-visual::before {
-  content: ""; position: absolute; z-index: 0;
-  left: 20px; right: -20px; top: -20px;
-  aspect-ratio: 4 / 5;
-  border: 1px solid var(--blue);
-  border-radius: var(--radius-lg);
-}
-@media (max-width: 899px) { .hero-visual::before { display: none; } }
-.portrait--hero { z-index: 1; }
+.portrait--hero { aspect-ratio: 3 / 4; }
 
-.rate-strip {
-  position: relative; z-index: 2;
-  margin-top: -76px; margin-left: clamp(0px, 3vw, 26px);
-  margin-right: clamp(0px, 6vw, 56px);
-  background: var(--ink);
-  color: var(--white);
+@media (min-width: 900px) {
+  .hero-main {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 41%);
+    align-items: center;
+    padding-right: 0;
+  }
+  .portrait--hero {
+    aspect-ratio: auto;
+    height: min(74vh, 660px);
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  }
+}
+
+/* Pasek raty — jednocześnie podgląd i wejście do formularza. */
+.rate-bar {
+  margin-top: clamp(40px, 5vw, 64px);
+  display: grid; gap: 22px;
+  padding: 24px;
+  background: var(--ink); color: var(--white);
   border-radius: var(--radius-lg);
-  padding: 22px 24px 20px;
 }
-.rate-strip-kicker {
+.rate-bar-kicker {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
   font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
-  color: rgba(255,255,255,.45); margin-bottom: 18px;
+  color: rgba(255,255,255,.42);
 }
-.rate-strip-out {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
-  margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.12);
+.rate-bar-kicker span { color: var(--white); }
+.rate-bar-controls { display: grid; gap: 20px; }
+.rate-bar-out { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.rate-bar-out > span { font-size: .78rem; color: rgba(255,255,255,.55); }
+.rate-bar-out strong { font-family: var(--font-display); font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 600; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
+.rate-bar-out small { font-size: .7rem; font-weight: 500; color: rgba(255,255,255,.5); letter-spacing: 0; }
+.rate-bar-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 48px; padding: 13px 22px;
+  background: var(--blue); color: var(--white);
+  border-radius: var(--radius);
+  font-size: .9rem; font-weight: 600; text-decoration: none;
+  transition: background-color .2s var(--ease);
 }
-.rate-strip-out span { font-size: .8rem; color: rgba(255,255,255,.6); }
-.rate-strip-out strong { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; letter-spacing: -0.03em; }
-.rate-strip-out small { font-size: .72rem; font-weight: 500; color: rgba(255,255,255,.55); letter-spacing: 0; }
+.rate-bar-cta:hover { background: var(--blue-dark); }
+.rate-bar-cta svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (min-width: 760px) {
+  .rate-bar {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    align-items: center; gap: 34px;
+    padding: 22px 26px;
+  }
+  .rate-bar-kicker { display: block; max-width: 14ch; letter-spacing: .12em; }
+  .rate-bar-kicker span { display: block; margin-top: 5px; letter-spacing: .1em; }
+  .rate-bar-controls { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .rate-bar-out { flex-direction: column; align-items: flex-end; gap: 2px; }
+}
+
+/* Pasek zaufania */
+.trust-bar {
+  list-style: none; margin: clamp(44px, 5vw, 68px) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--line);
+}
+.trust-bar li { padding: 24px 0 4px; border-bottom: 1px solid var(--line-soft); }
+.trust-bar li:nth-child(odd) { padding-right: 20px; }
+.trust-bar strong {
+  display: block;
+  font-family: var(--font-display); font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  font-weight: 600; letter-spacing: -0.035em; color: var(--ink);
+}
+.trust-bar span { display: block; margin-top: 4px; font-size: .82rem; color: var(--muted); }
+
+@media (min-width: 900px) {
+  .trust-bar { grid-template-columns: repeat(4, 1fr); }
+  .trust-bar li { padding: 28px 24px 22px 0; border-bottom: 0; }
+  .trust-bar li + li { border-left: 1px solid var(--line-soft); padding-left: 28px; }
+}
+
+/* --------------------------------------------------------------------------
+   Wejście hero
+   Scrub: main.js wpisuje wartości inline (oś przewijania intro).
+   Bez intro: klasa .is-in odpala te same ruchy jednorazowo, na przejściach CSS.
+   -------------------------------------------------------------------------- */
+
+.hero-armed .hero [data-hero-in] { opacity: 0; transform: translateY(26px); }
+.hero-armed .hero [data-hero-line] > span { transform: translateY(105%); }
+.hero-armed .hero [data-hero-wipe] { clip-path: inset(0 0 100% 0); }
+.hero-armed .hero [data-hero-wipe] img[data-portrait] { transform: scale(1.14); }
+
+.hero.is-in [data-hero-in] {
+  opacity: 1; transform: none;
+  transition: opacity .85s var(--ease) var(--d, 0s), transform .85s var(--ease) var(--d, 0s);
+}
+.hero.is-in [data-hero-line] > span {
+  transform: none;
+  transition: transform .95s var(--ease) var(--d, 0s);
+}
+.hero.is-in [data-hero-wipe] {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.05s var(--ease) var(--d, 0s);
+}
+.hero.is-in [data-hero-wipe] img[data-portrait] {
+  transform: none;
+  transition: transform 1.4s var(--ease) var(--d, 0s);
+}
+/* Po wejściu transform przejmuje parallaksa — bez przejścia, inaczej wlokłaby się za scrollem. */
+.hero.is-settled [data-hero-wipe] img[data-portrait] { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-armed .hero [data-hero-in] { opacity: 1; transform: none; }
+  .hero-armed .hero [data-hero-line] > span { transform: none; }
+  .hero-armed .hero [data-hero-wipe] { clip-path: none; }
+  .hero-armed .hero [data-hero-wipe] img[data-portrait] { transform: none; }
+}
 
 /* Suwaki */
 .range-field + .range-field { margin-top: 18px; }
@@ -412,30 +504,6 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .range-field--dark input[type="range"]::-webkit-slider-thumb { border-color: var(--white); background: var(--ink); }
 .range-field--dark input[type="range"]::-moz-range-thumb { border-color: var(--white); background: var(--ink); }
 
-/* Pasek zaufania */
-.trust-bar {
-  list-style: none; margin: clamp(56px, 7vw, 88px) 0 0; padding: 0;
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  border-top: 1px solid var(--line);
-}
-.trust-bar li {
-  padding: 24px 0 4px;
-  border-bottom: 1px solid var(--line-soft);
-}
-.trust-bar li:nth-child(odd) { padding-right: 20px; }
-.trust-bar strong {
-  display: block;
-  font-family: var(--font-display); font-size: clamp(1.6rem, 3.2vw, 2.3rem);
-  font-weight: 600; letter-spacing: -0.035em; color: var(--ink);
-}
-.trust-bar span { display: block; margin-top: 4px; font-size: .82rem; color: var(--muted); }
-
-@media (min-width: 900px) {
-  .hero-grid { grid-template-columns: 1.08fr .92fr; }
-  .trust-bar { grid-template-columns: repeat(4, 1fr); }
-  .trust-bar li { padding: 28px 24px 22px 0; border-bottom: 0; }
-  .trust-bar li + li { border-left: 1px solid var(--line-soft); padding-left: 28px; }
-}
 
 /* ==========================================================================
    Produkty

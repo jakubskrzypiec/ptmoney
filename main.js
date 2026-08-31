@@ -31,6 +31,62 @@
   const introFallback = $('#introMarkFallback');
   const pageWrap = $('#pageWrap');
 
+  const hero = $('#hero');
+  const heroIn = $$('[data-hero-in]', hero || document);
+  const heroLines = $$('[data-hero-line]', hero || document);
+  const heroWipes = $$('[data-hero-wipe]', hero || document);
+  const heroParallax = $$('[data-hero-parallax]', hero || document);
+  const heroAll = [...heroIn, ...heroLines, ...heroWipes];
+
+  // Opóźnienia z HTML-a obsługują obie ścieżki: scrub i jednorazowe wejście na przejściach CSS.
+  heroAll.forEach(el => el.style.setProperty('--d', `${(Number(el.dataset.delay) || 0) * 900}ms`));
+  // Stan wyjściowy włączamy dopiero stąd — gdy main.js nie wstanie, hero zostaje widoczne.
+  if (heroAll.length) html.classList.add('hero-armed');
+
+  const HERO_SPAN = 0.42;              // ile osi zajmuje jeden element hero
+
+  /* Ustawia hero na zadanym postępie q (0 = ukryte, 1 = na miejscu). */
+  function renderHero(q) {
+    heroIn.forEach(el => {
+      const e = phase(q, Number(el.dataset.delay) || 0, (Number(el.dataset.delay) || 0) + HERO_SPAN);
+      el.style.opacity = String(e);
+      el.style.transform = `translate3d(0, ${26 * (1 - e)}px, 0)`;
+    });
+    heroLines.forEach(el => {
+      const e = phase(q, Number(el.dataset.delay) || 0, (Number(el.dataset.delay) || 0) + HERO_SPAN);
+      el.firstElementChild.style.transform = `translate3d(0, ${105 * (1 - e)}%, 0)`;
+    });
+    heroWipes.forEach(el => {
+      const e = phase(q, Number(el.dataset.delay) || 0, (Number(el.dataset.delay) || 0) + HERO_SPAN * 1.4);
+      el.style.clipPath = `inset(0 0 ${100 * (1 - e)}% 0)`;
+      const img = $('img[data-portrait]', el);
+      if (img) img.style.transform = `scale(${1 + 0.14 * (1 - e)})`;
+    });
+  }
+
+  /* Oddaje sterowanie CSS-owi: kasuje wartości inline i włącza klasę .is-in. */
+  function releaseHero({ animate }) {
+    heroAll.forEach(el => {
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.clipPath = '';
+      const img = $('img[data-portrait]', el);
+      if (img) img.style.transform = '';
+      if (!animate) el.style.setProperty('--d', '0ms');
+    });
+    if (!hero) return;
+    if (!animate) {
+      hero.classList.add('is-in', 'is-settled');
+      return;
+    }
+    // Dwie klatki, żeby przeglądarka zdążyła namalować stan wyjściowy — inaczej
+    // dołożenie klasy w tej samej klatce zjada przejście.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      hero.classList.add('is-in');
+      window.setTimeout(() => hero.classList.add('is-settled'), 2200);
+    }));
+  }
+
   const MARK_START = 148;              // px — startowa szerokość znaku
   const MARK_GROWTH = 1.5;             // krotność największego boku okna na końcu wzrostu
   let introActive = false;
@@ -40,7 +96,7 @@
     typeof CSS !== 'undefined' && typeof CSS.supports === 'function' &&
     (CSS.supports('mask-composite', 'exclude') || CSS.supports('-webkit-mask-composite', 'xor'));
 
-  function hideIntro({ remember = false, keepViewport = false } = {}) {
+  function hideIntro({ remember = false, keepViewport = false, heroDone = false } = {}) {
     if (!intro) return;
     const zone = introSpacer?.offsetHeight || 0;
     const y = window.scrollY;
@@ -57,6 +113,8 @@
       catch (e) { window.scrollTo(0, top); }
     }
     if (remember) { try { sessionStorage.setItem('ptm-intro-seen', '1'); } catch (e) {} }
+    // Po scrubie hero jest już na miejscu — nie odgrywamy wejścia drugi raz.
+    releaseHero({ animate: !heroDone });
   }
 
   function renderIntro() {
@@ -82,7 +140,7 @@
     }
 
     // 2. Znak rośnie i staje się oknem na stronę.
-    const grow = phase(p, 0.10, 0.74);
+    const grow = phase(p, 0.08, 0.60);
     const maxSide = Math.max(window.innerWidth, window.innerHeight);
     const size = MARK_START + (maxSide * MARK_GROWTH - MARK_START) * Math.pow(grow, 1.6);
 
@@ -93,14 +151,18 @@
       introFallback.style.transform = `translate(-50%, -50%) scale(${size / MARK_START})`;
     }
 
-    // 3. Kurtyna jedzie w górę i odsłania stronę — bez mglistego zanikania.
-    const exit = phase(p, 0.74, 1);
-    intro.style.clipPath = `inset(0 0 ${100 * exit}% 0)`;
-    intro.style.transform = `translate3d(0, ${-6 * exit}vh, 0)`;
-    intro.style.opacity = String(1 - phase(p, 0.96, 1));
-    html.classList.toggle('intro-open', p > 0.70);
+    // 3. Kurtyna schodzi w dół i odsłania stronę od góry — tym samym kierunkiem,
+    //    w którym zaraz układają się wiersze nagłówka.
+    const exit = phase(p, 0.58, 0.80);
+    intro.style.clipPath = `inset(${100 * exit}% 0 0 0)`;
+    intro.style.transform = `translate3d(0, ${5 * exit}vh, 0)`;
+    intro.style.opacity = String(1 - phase(p, 0.78, 0.82));
+    html.classList.toggle('intro-open', p > 0.60);
 
-    if (p >= 1) hideIntro({ remember: true, keepViewport: true });
+    // 4. Hero składa się jeszcze na tej samej osi — strona wciąż stoi w miejscu.
+    renderHero(phase(p, 0.60, 1));
+
+    if (p >= 1) hideIntro({ remember: true, keepViewport: true, heroDone: true });
   }
 
   function requestIntroFrame() {
@@ -124,6 +186,26 @@
     window.addEventListener('resize', requestIntroFrame, { passive: true });
     // Bezpiecznik: gdyby coś zablokowało przewijanie, intro nie zostaje na zawsze.
     window.setTimeout(() => { if (introActive && window.scrollY === 0) introHint?.classList.add('is-nudged'); }, 6000);
+  }
+
+  /* Portret dryfuje wolniej niż strona, gdy hero odjeżdża w górę. */
+  if (hero && heroParallax.length && !reduceMotion) {
+    let parallaxTicking = false;
+    const renderParallax = () => {
+      parallaxTicking = false;
+      if (!hero.classList.contains('is-settled')) return;
+      const rect = hero.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      const out = clamp01(-rect.top / Math.max(1, rect.height));
+      heroParallax.forEach(img => { img.style.transform = `translate3d(0, ${-46 * out}px, 0)`; });
+    };
+    const requestParallax = () => {
+      if (parallaxTicking) return;
+      parallaxTicking = true;
+      requestAnimationFrame(renderParallax);
+    };
+    window.addEventListener('scroll', requestParallax, { passive: true });
+    window.addEventListener('resize', requestParallax, { passive: true });
   }
 
   /* ==========================================================================

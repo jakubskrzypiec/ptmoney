@@ -105,29 +105,39 @@ document.documentElement.classList.add('js');
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="container hero-grid">
+  <!-- Wejście hero jest zsynchronizowane z osią przewijania intro (patrz renderIntro w main.js).
+       data-hero-in + data-delay ustalają kolejność; bez intro odpala się raz, po załadowaniu. -->
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="hero-main">
       <div class="hero-copy">
-        <p class="eyebrow reveal">Pośrednictwo finansowe · Cała Polska</p>
-        <h1 id="hero-title" class="reveal">Kredyt, leasing czy&nbsp;faktoring? <em>Sprawdzamy banki</em>, żebyś Ty nie&nbsp;musiał.</h1>
-        <p class="hero-lead reveal">Porównujemy oferty ponad 30 banków i instytucji finansowych, negocjujemy warunki i pilnujemy formalności. Ty zostawiasz dane raz — resztą zajmuje się nasz zespół.</p>
-        <div class="hero-actions reveal">
-          <a class="btn btn--primary btn--lg" href="#kontakt">Zostaw kontakt<span class="btn-sub">— oddzwonimy w 24 h</span></a>
+        <p class="eyebrow" data-hero-in data-delay="0">Pośrednictwo finansowe · Cała Polska</p>
+        <h1 id="hero-title">
+          <span class="hero-line" data-hero-line data-delay="0.06"><span>Kredyt, leasing</span></span>
+          <span class="hero-line" data-hero-line data-delay="0.13"><span>czy faktoring?</span></span>
+          <span class="hero-line" data-hero-line data-delay="0.20"><span><em>Sprawdzamy banki</em>,</span></span>
+          <span class="hero-line" data-hero-line data-delay="0.27"><span>żebyś Ty nie musiał.</span></span>
+        </h1>
+        <p class="hero-lead" data-hero-in data-delay="0.34">Porównujemy oferty ponad 30 banków i instytucji finansowych, negocjujemy warunki i pilnujemy formalności. Ty zostawiasz dane raz — resztą zajmuje się nasz zespół.</p>
+        <div class="hero-actions" data-hero-in data-delay="0.40">
+          <a class="btn btn--primary btn--lg" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
           <a class="btn btn--ghost btn--lg contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
-        <p class="hero-note reveal">
+        <p class="hero-note" data-hero-in data-delay="0.46">
           <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.25 2.25L15.5 9.5"/></svg>
           Konsultacja zawsze bezpłatna
         </p>
       </div>
 
-      <div class="hero-visual reveal">
-        <figure class="portrait portrait--hero">
-          <img src="./img/doradca.jpg" alt="Doradca P&amp;T Money" width="1104" height="1462" loading="eager" decoding="async" data-portrait>
-          <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradcy</span></figcaption>
-        </figure>
-        <aside class="rate-strip" aria-label="Szybki podgląd raty">
-          <p class="rate-strip-kicker">Szybki podgląd raty · kredyt gotówkowy</p>
+      <figure class="portrait portrait--hero" data-hero-wipe data-delay="0.16">
+        <img src="./img/doradca.jpg" alt="Doradca P&amp;T Money" width="1104" height="1462" loading="eager" decoding="async" data-portrait data-hero-parallax>
+        <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradcy</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="container">
+      <aside class="rate-bar" aria-label="Szybki podgląd raty" data-hero-in data-delay="0.52">
+        <p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
+        <div class="rate-bar-controls">
           <div class="range-field range-field--dark">
             <div class="range-label"><label for="heroAmount">Kwota</label><output for="heroAmount" id="heroAmountVal">30 000 zł</output></div>
             <input id="heroAmount" type="range" min="2000" max="150000" step="1000" value="30000" aria-label="Kwota kredytu">
@@ -136,16 +146,15 @@ document.documentElement.classList.add('js');
             <div class="range-label"><label for="heroPeriod">Okres</label><output for="heroPeriod" id="heroPeriodVal">48 mies.</output></div>
             <input id="heroPeriod" type="range" min="6" max="120" step="6" value="48" aria-label="Okres spłaty">
           </div>
-          <div class="rate-strip-out" aria-live="polite">
-            <span>Orientacyjna rata</span>
-            <strong id="heroResult">712 <small>zł / mies.</small></strong>
-          </div>
-        </aside>
-      </div>
-    </div>
+        </div>
+        <div class="rate-bar-out" aria-live="polite">
+          <span>Orientacyjna rata</span>
+          <strong id="heroResult">712 <small>zł / mies.</small></strong>
+        </div>
+        <a class="rate-bar-cta" href="#kontakt">Sprawdź swoją ofertę <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+      </aside>
 
-    <div class="container">
-      <ul class="trust-bar reveal">
+      <ul class="trust-bar" data-hero-in data-delay="0.58">
         <li><strong>30+</strong><span>banków i instytucji</span></li>
         <li><strong>12 000+</strong><span>obsłużonych klientów</span></li>
         <li><strong>48 h</strong><span>do pierwszej oferty</span></li>
