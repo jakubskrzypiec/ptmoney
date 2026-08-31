@@ -634,3 +634,13 @@ p { max-width: 68ch; }
   .intro-scroll::after { animation:none; }
 }
 .form-card .form-grid { display:block; }
+
+/* ===== Fix pack: mortgage heading overflow + tidy ===== */
+/* .section-heading is a 2-col grid globally; inside .mortgage-grid it is already
+   in a narrow column, which squeezed the h2 to one word per line. */
+.mortgage .section-heading { display: block; max-width: 100%; }
+.mortgage .section-heading h2 { max-width: 15ch; margin-bottom: 16px; }
+.mortgage .section-heading > p:last-of-type { max-width: 46ch; margin-bottom: 22px; color: var(--text-muted); }
+@media (min-width: 900px) {
+  .mortgage .section-heading h2 { max-width: 18ch; }
+}
