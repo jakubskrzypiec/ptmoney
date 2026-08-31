@@ -1,25 +1,25 @@
 :root {
   --white: #FFFFFF;
   --off-white: #F6F7F9;
-  --ink: #0A0A0B;
+  --ink: #08090B;
   --ink-soft: #1A1C20;
   --text: #16181D;
   --text-muted: #5B6472;
   --line: #E4E7EC;
   --line-strong: #C9CED7;
-  --blue: #1A44FF;
-  --blue-dark: #0F2FD4;
-  --blue-tint: #EEF1FF;
+  --blue: #1330F0;
+  --blue-dark: #0C22B8;
+  --blue-tint: #EDF0FF;
   --surface: #FFFFFF;
   --surface-2: #F6F7F9;
   --ink-2: #343A43;
   --ink-3: #7A8493;
   --a: #0A0A0B;
-  --b: #1A44FF;
+  --b: #1330F0;
   --shadow: 0 1px 2px rgba(10,10,11,.06), 0 8px 24px rgba(10,10,11,.06);
   --shadow-hover: 0 2px 4px rgba(10,10,11,.06), 0 16px 34px rgba(10,10,11,.09);
-  --radius: 14px;
-  --radius-lg: 16px;
+  --radius: 8px;
+  --radius-lg: 10px;
   --ease: cubic-bezier(.22,.7,.2,1);
   --header-h: 72px;
 }
@@ -303,7 +303,7 @@ tbody tr:hover td { background: color-mix(in srgb, var(--blue-tint) 45%, transpa
 @page { size: A4; margin: 12mm; }
 @media print {
   :root, [data-theme="dark"] {
-    --white: #fff; --off-white: #fff; --ink: #000; --ink-soft: #111; --text: #111; --text-muted: #555; --line: #D7D7D7; --line-strong: #BFBFBF; --blue: #1A44FF; --blue-dark: #0F2FD4; --blue-tint: #F2F4FF; --surface: #fff; --surface-2: #F7F7F7; --ink-2: #333; --ink-3: #666; --a: #111; --b: #1A44FF;
+    --white: #fff; --off-white: #fff; --ink: #000; --ink-soft: #111; --text: #111; --text-muted: #555; --line: #D7D7D7; --line-strong: #BFBFBF; --blue: #1330F0; --blue-dark: #0C22B8; --blue-tint: #F2F4FF; --surface: #fff; --surface-2: #F7F7F7; --ink-2: #333; --ink-3: #666; --a: #111; --b: #1330F0;
   }
   body { background: #fff; font-size: 10px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .site-header, .calc-toolbar, .calc-cta, .site-footer, .mobile-bottom-bar, .more { display: none !important; }
