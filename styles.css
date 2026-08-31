@@ -181,12 +181,14 @@ em { font-style: normal; color: var(--blue); }
 .js-intro .intro-spacer { display: block; height: 300vh; }
 
 /* Płyta pod maską — to ona nadaje logo kolor marki w pierwszej fazie. */
+/* Płyta pod zasłoną daje kolor znaku widocznego przez wycięcie w masce. */
 .intro-plate { position: absolute; inset: 0; background: var(--blue); }
 
-/* Czarna zasłona z wyciętym kształtem logo. */
+/* Biała zasłona z wyciętym kształtem logo — znak czyta się jako granatowy
+   symbol na białym ekranie, a nie jako plansza ładowania na kolorze. */
 .intro-veil {
   position: absolute; inset: 0;
-  background: var(--ink);
+  background: var(--white);
   -webkit-mask-image: url("./logo-mark.png"), linear-gradient(#000, #000);
   mask-image: url("./logo-mark.png"), linear-gradient(#000, #000);
   -webkit-mask-repeat: no-repeat, no-repeat;
@@ -201,7 +203,7 @@ em { font-style: normal; color: var(--blue); }
 
 /* Zapasowy wariant dla przeglądarek bez mask-composite: zwykłe logo na czerni. */
 .intro-mark-fallback { display: none; }
-.intro.no-mask .intro-plate { background: var(--ink); }
+.intro.no-mask .intro-plate { background: var(--white); }
 .intro.no-mask .intro-veil { display: none; }
 .intro.no-mask .intro-mark-fallback {
   display: block;
@@ -216,24 +218,25 @@ em { font-style: normal; color: var(--blue); }
 }
 .intro-name {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 4.4vw, 2.5rem);
-  font-weight: 600; letter-spacing: -0.03em; color: var(--white);
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 600; letter-spacing: -0.035em; color: var(--ink);
+  max-width: 24ch; margin-inline: auto; text-wrap: balance; line-height: 1.12;
 }
-.intro-name span { font-weight: 400; opacity: .72; }
+.intro-name span { display: block; margin-top: .16em; font-size: .82em; font-weight: 500; color: var(--muted); opacity: 1; }
 .intro-sub {
   margin-top: 10px;
   font-size: .72rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255,255,255,.5);
+  color: var(--muted);
 }
 
 .intro-hint {
   position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 12px;
   font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(255,255,255,.55);
+  color: var(--muted);
 }
-.intro-hint-rail { display: block; width: 1px; height: 46px; background: rgba(255,255,255,.22); overflow: hidden; }
-.intro-hint-rail i { display: block; width: 1px; height: 16px; background: var(--white); animation: railDrop 1.9s var(--ease) infinite; }
+.intro-hint-rail { display: block; width: 1px; height: 46px; background: rgba(10,10,11,.12); overflow: hidden; }
+.intro-hint-rail i { display: block; width: 1px; height: 16px; background: var(--ink); animation: railDrop 1.9s var(--ease) infinite; }
 @keyframes railDrop { 0% { transform: translateY(-18px); } 60%, 100% { transform: translateY(48px); } }
 
 /* Podczas intro treść stoi w miejscu — przewijanie napędza wyłącznie animację. */
@@ -634,11 +637,11 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .process-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
 .process-step { padding: 32px 0; border-bottom: 1px solid var(--line-soft); }
 .step-number {
-  display: block; margin-bottom: 18px;
-  font-family: var(--font-display); font-size: 2.4rem; font-weight: 600;
-  letter-spacing: -0.05em; color: var(--blue-tint);
-  -webkit-text-stroke: 1px var(--blue); color: transparent;
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .14em;
+  font-variant-numeric: tabular-nums; color: var(--muted);
 }
+.step-number::after { content: ""; flex: 1; height: 1px; background: var(--line-soft, rgba(10,10,11,.12)); }
 .process-step h3 { margin-bottom: 10px; }
 .process-step p { color: var(--muted); font-size: .95rem; max-width: 40ch; }
 

@@ -174,6 +174,14 @@
   let introSeen = false;
   try { introSeen = sessionStorage.getItem('ptm-intro-seen') === '1'; } catch (e) {}
   const forceIntro = new URLSearchParams(window.location.search).get('intro') === '1';
+  // Po odświeżeniu przeglądarka sama przywraca pozycję przewijania, więc
+  // `window.scrollY > 0` uznawało F5 za wejście w środek strony i chowało
+  // intro — działało raz, potem wyglądało na zepsute.
+  if ('scrollRestoration' in history) {
+    try { history.scrollRestoration = 'manual'; } catch (e) {}
+  }
+  if (!location.hash && window.scrollY > 0) window.scrollTo(0, 0);
+
   const skipIntro = reduceMotion || (!forceIntro && (introSeen || Boolean(location.hash) || window.scrollY > 0));
 
   if (!intro || !introSpacer || skipIntro || !html.classList.contains('js-intro')) {
