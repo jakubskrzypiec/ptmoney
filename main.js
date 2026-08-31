@@ -1,182 +1,140 @@
+/* =============================================================================
+   P&T Money — skrypt strony głównej
+   ============================================================================= */
 (() => {
   'use strict';
 
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+
+  const html = document.documentElement;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const formatInt = new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 0 });
 
-  /* ---------- Scroll-scrub intro ---------- */
-  const html = document.documentElement;
+  const clamp01 = value => Math.min(1, Math.max(0, value));
+  /* Postęp fazy: 0 przed „from”, 1 po „to”, wygładzony pomiędzy. */
+  const phase = (p, from, to) => {
+    const t = clamp01((p - from) / Math.max(1e-6, to - from));
+    return t * t * (3 - 2 * t);
+  };
+
+  /* ==========================================================================
+     Intro — logo otwiera stronę wraz z przewijaniem
+     ========================================================================== */
+
   const intro = $('#siteIntro');
   const introSpacer = $('#introSpacer');
-  const introMonogram = $('#introMonogram');
+  const introVeil = $('#introVeil');
+  const introPlate = $('#introPlate');
   const introCopy = $('#introCopy');
-  const introScrollHint = $('#introScrollHint');
-  const headerLogo = $('#headerLogo');
-  const heroGrid = $('.hero-grid');
-  const header = $('.site-header');
-  const forceIntro = new URLSearchParams(window.location.search).get('intro') === '1';
-  const focusRoots = [$('.skip-link'), header, $('#main'), $('.site-footer'), $('.mobile-bottom-bar')].filter(Boolean);
+  const introHint = $('#introHint');
+  const introFallback = $('#introMarkFallback');
+  const pageWrap = $('#pageWrap');
+
+  const MARK_START = 148;              // px — startowa szerokość znaku
+  const MARK_GROWTH = 1.5;             // krotność największego boku okna na końcu wzrostu
   let introActive = false;
-  let ticking = false;
-  let dock = { x: 0, y: 0, scale: 1 };
+  let introTicking = false;
 
-  const clamp01 = value => Math.max(0, Math.min(1, value));
-  const phase = (p, from, to) => clamp01((p - from) / (to - from));
-  // Exact cubic-bezier(.22,.7,.2,1) evaluator for scrubbed phase progress.
-  function ease(t) {
-    const x1 = .22, y1 = .7, x2 = .2, y2 = 1;
-    const sample = (u, a1, a2) => 3 * (1 - u) * (1 - u) * u * a1 + 3 * (1 - u) * u * u * a2 + u * u * u;
-    const derivative = (u, a1, a2) => 3 * (1 - u) * (1 - u) * a1 + 6 * (1 - u) * u * (a2 - a1) + 3 * u * u * (1 - a2);
-    let u = clamp01(t);
-    for (let i = 0; i < 5; i += 1) {
-      const dx = sample(u, x1, x2) - t;
-      const d = derivative(u, x1, x2);
-      if (Math.abs(d) < 1e-6) break;
-      u = clamp01(u - dx / d);
-    }
-    return sample(u, y1, y2);
-  }
+  const supportsMaskComposite =
+    typeof CSS !== 'undefined' && typeof CSS.supports === 'function' &&
+    (CSS.supports('mask-composite', 'exclude') || CSS.supports('-webkit-mask-composite', 'xor'));
 
-  function setPageInert(inert) {
-    focusRoots.forEach(root => {
-      if ('inert' in root) root.inert = inert;
-      else if (inert) root.setAttribute('aria-hidden', 'true');
-      else root.removeAttribute('aria-hidden');
-    });
-  }
-
-  function measureDock() {
-    if (!introMonogram || !headerLogo || !introSpacer) return;
-
-    // Read the REAL header logo rect. The spacer sits before the header in flow,
-    // so subtract only the still-visible part of the spacer to get the logo's
-    // true dock position after the intro zone has been consumed.
-    const target = headerLogo.getBoundingClientRect();
-    const spacerRect = introSpacer.getBoundingClientRect();
-    const remainingSpacer = Math.max(0, spacerRect.bottom - Math.max(0, spacerRect.top));
-
-    const previousTransform = introMonogram.style.transform;
-    introMonogram.style.transform = 'none';
-    const source = introMonogram.getBoundingClientRect();
-    introMonogram.style.transform = previousTransform;
-
-    const sourceCx = source.left + source.width / 2;
-    const sourceCy = source.top + source.height / 2;
-    const targetCx = target.left + target.width / 2;
-    const targetCy = target.top + target.height / 2 - remainingSpacer;
-
-    dock.x = targetCx - sourceCx;
-    dock.y = targetCy - sourceCy;
-    dock.scale = Math.max(.1, target.height / Math.max(1, source.height));
-  }
-
-  function hideIntro({ remember = false, preserveViewport = false } = {}) {
+  function hideIntro({ remember = false, keepViewport = false } = {}) {
+    if (!intro) return;
     const zone = introSpacer?.offsetHeight || 0;
-    const before = window.scrollY;
+    const y = window.scrollY;
     introActive = false;
-    setPageInert(false);
-    html.classList.remove('js-intro', 'intro-docked');
-    if (intro) {
-      intro.style.pointerEvents = 'none';
-      intro.style.display = 'none';
+    html.classList.remove('js-intro');
+    html.classList.add('intro-open');
+    intro.style.display = 'none';
+    if (introSpacer) introSpacer.style.display = 'none';
+    if (pageWrap) pageWrap.style.transform = '';
+    if (keepViewport && zone) {
+      // Skok musi być natychmiastowy — globalne scroll-behavior: smooth animowałoby powrót.
+      const top = Math.max(0, y - zone);
+      try { window.scrollTo({ top, left: 0, behavior: 'instant' }); }
+      catch (e) { window.scrollTo(0, top); }
     }
-    if (heroGrid) {
-      heroGrid.style.opacity = '1';
-      heroGrid.style.transform = 'none';
-    }
-    // Collapsing the spacer at p=1 would otherwise move the document up by 100vh/60vh.
-    // Counter-scroll by exactly that measured height, so the visible content does not jump.
-    if (preserveViewport && zone > 0) {
-      window.scrollTo(0, Math.max(0, before - zone));
-    }
-    if (remember) {
-      try { sessionStorage.setItem('ptm-intro-seen', '1'); } catch (e) {}
-    }
+    if (remember) { try { sessionStorage.setItem('ptm-intro-seen', '1'); } catch (e) {} }
   }
 
   function renderIntro() {
-    ticking = false;
-    if (!introActive || !intro || !introSpacer || !introMonogram) return;
+    introTicking = false;
+    if (!introActive || !intro || !introSpacer) return;
 
-    const zone = Math.max(1, introSpacer.offsetHeight);
-    const p = clamp01(window.scrollY / zone);
-    const textP = ease(phase(p, 0, .30));
-    const moveP = ease(phase(p, .25, .85));
-    const growP = ease(phase(p, .25, .75));
-    const settleP = ease(phase(p, .75, .85));
-    const coverP = ease(phase(p, .55, 1));
-    const heroP = ease(phase(p, .55, 1));
-    const maxScale = window.innerWidth < 900 ? 1.2 : 1.35;
-    const grownScale = 1 + (maxScale - 1) * growP;
-    const scale = grownScale + (dock.scale - grownScale) * settleP;
+    const zone = introSpacer.offsetHeight;
+    const travel = Math.max(1, zone - window.innerHeight);
+    const p = clamp01(window.scrollY / travel);
 
+    // Treść strony stoi nieruchomo pod warstwą intro — przewijamy wyłącznie animację.
+    if (pageWrap) pageWrap.style.transform = `translate3d(0, ${window.scrollY - zone}px, 0)`;
+
+    // 1. Napisy i podpowiedź znikają jako pierwsze.
+    const textOut = phase(p, 0.04, 0.28);
     if (introCopy) {
-      introCopy.style.opacity = String(1 - textP);
-      introCopy.style.transform = `translate3d(0, ${24 * textP}px, 0)`;
-      introCopy.style.filter = `blur(${4 * textP}px)`;
+      introCopy.style.opacity = String(1 - textOut);
+      introCopy.style.transform = `translate(-50%, ${18 * textOut}px)`;
     }
-    if (introScrollHint) {
-      introScrollHint.style.opacity = String(1 - textP);
-      introScrollHint.style.transform = `translate3d(-50%, ${24 * textP}px, 0)`;
-      introScrollHint.style.filter = `blur(${4 * textP}px)`;
+    if (introHint) {
+      introHint.style.opacity = String(1 - phase(p, 0.02, 0.18));
+      introHint.style.transform = `translateX(-50%) translateY(${16 * textOut}px)`;
     }
 
-    introMonogram.style.transform = `translate3d(${dock.x * moveP}px, ${dock.y * moveP}px, 0) scale(${scale})`;
-    intro.style.opacity = String(1 - coverP);
-    intro.style.clipPath = `inset(0 0 ${100 * coverP}% 0)`;
+    // 2. Znak rośnie i staje się oknem na stronę.
+    const grow = phase(p, 0.10, 0.74);
+    const maxSide = Math.max(window.innerWidth, window.innerHeight);
+    const size = MARK_START + (maxSide * MARK_GROWTH - MARK_START) * Math.pow(grow, 1.6);
 
-    if (heroGrid) {
-      heroGrid.style.opacity = String(heroP);
-      heroGrid.style.transform = `translate3d(0, ${28 * (1 - heroP)}px, 0) scale(${1 + .02 * (1 - heroP)})`;
+    if (supportsMaskComposite && introVeil) {
+      introVeil.style.webkitMaskSize = `${size}px auto, cover`;
+      introVeil.style.maskSize = `${size}px auto, cover`;
+    } else if (introFallback) {
+      introFallback.style.transform = `translate(-50%, -50%) scale(${size / MARK_START})`;
     }
 
-    const docked = p >= .85;
-    intro.style.pointerEvents = docked ? 'none' : 'auto';
-    setPageInert(!docked);
-    html.classList.toggle('intro-docked', docked);
+    // 3. Kurtyna jedzie w górę i odsłania stronę — bez mglistego zanikania.
+    const exit = phase(p, 0.74, 1);
+    intro.style.clipPath = `inset(0 0 ${100 * exit}% 0)`;
+    intro.style.transform = `translate3d(0, ${-6 * exit}vh, 0)`;
+    intro.style.opacity = String(1 - phase(p, 0.96, 1));
+    html.classList.toggle('intro-open', p > 0.70);
 
-    if (p >= 1) hideIntro({ remember: true, preserveViewport: true });
+    if (p >= 1) hideIntro({ remember: true, keepViewport: true });
   }
 
   function requestIntroFrame() {
-    if (!introActive || ticking) return;
-    ticking = true;
+    if (!introActive || introTicking) return;
+    introTicking = true;
     requestAnimationFrame(renderIntro);
   }
 
-  let seenIntro = false;
-  try { seenIntro = sessionStorage.getItem('ptm-intro-seen') === '1'; } catch (e) {}
-  const shouldSkipIntro = reduceMotion || (!forceIntro && (seenIntro || Boolean(location.hash) || window.scrollY > 0));
+  let introSeen = false;
+  try { introSeen = sessionStorage.getItem('ptm-intro-seen') === '1'; } catch (e) {}
+  const forceIntro = new URLSearchParams(window.location.search).get('intro') === '1';
+  const skipIntro = reduceMotion || (!forceIntro && (introSeen || Boolean(location.hash) || window.scrollY > 0));
 
-  if (shouldSkipIntro || !html.classList.contains('js-intro')) {
+  if (!intro || !introSpacer || skipIntro || !html.classList.contains('js-intro')) {
     hideIntro({ remember: false });
-  } else if (intro && introSpacer && introMonogram && headerLogo) {
-    introActive = true;
-    setPageInert(true);
-    requestAnimationFrame(() => {
-      measureDock();
-      renderIntro();
-    });
-    window.addEventListener('scroll', requestIntroFrame, { passive: true });
-    window.addEventListener('resize', () => {
-      if (!introActive) return;
-      requestAnimationFrame(() => {
-        measureDock();
-        renderIntro();
-      });
-    }, { passive: true });
   } else {
-    hideIntro({ remember: false });
+    if (!supportsMaskComposite) intro.classList.add('no-mask');
+    introActive = true;
+    renderIntro();
+    window.addEventListener('scroll', requestIntroFrame, { passive: true });
+    window.addEventListener('resize', requestIntroFrame, { passive: true });
+    // Bezpiecznik: gdyby coś zablokowało przewijanie, intro nie zostaje na zawsze.
+    window.setTimeout(() => { if (introActive && window.scrollY === 0) introHint?.classList.add('is-nudged'); }, 6000);
   }
 
-  /* ---------- Compact sticky header ---------- */
+  /* ==========================================================================
+     Nagłówek
+     ========================================================================== */
+
+  const header = $('.site-header');
   const updateHeader = () => header?.classList.toggle('is-compact', window.scrollY > 40);
   window.addEventListener('scroll', updateHeader, { passive: true });
   updateHeader();
 
-  /* ---------- Mobile nav ---------- */
   const menuToggle = $('#menuToggle');
   const mobileNav = $('#mobileNav');
 
@@ -196,15 +154,48 @@
       mobileNav.hidden = open;
       document.body.classList.toggle('menu-open', !open);
     });
-
     $$('a', mobileNav).forEach(link => link.addEventListener('click', closeMenu));
     window.addEventListener('resize', () => { if (window.innerWidth >= 900) closeMenu(); }, { passive: true });
   }
 
-  /* ---------- Reveal + stagger ---------- */
+  /* ==========================================================================
+     Pływające CTA (desktop) — pojawia się po opuszczeniu hero,
+     znika, gdy formularz jest już na ekranie.
+     ========================================================================== */
+
+  const ctaDock = $('#ctaDock');
+  const contactSection = $('#kontakt');
+
+  if (ctaDock && contactSection) {
+    ctaDock.hidden = false;
+    const updateDock = () => {
+      const pastHero = window.scrollY > window.innerHeight * 0.9;
+      const rect = contactSection.getBoundingClientRect();
+      const formVisible = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+      ctaDock.classList.toggle('is-shown', pastHero && !formVisible);
+    };
+    window.addEventListener('scroll', updateDock, { passive: true });
+    window.addEventListener('resize', updateDock, { passive: true });
+    updateDock();
+  }
+
+  /* ==========================================================================
+     Zdjęcia — łagodny zapas, gdy pliku jeszcze nie ma w repozytorium
+     ========================================================================== */
+
+  $$('img[data-portrait]').forEach(img => {
+    const markMissing = () => img.closest('.portrait')?.classList.add('is-missing');
+    if (img.complete && img.naturalWidth === 0) markMissing();
+    img.addEventListener('error', markMissing);
+  });
+
+  /* ==========================================================================
+     Reveal
+     ========================================================================== */
+
   $$('.reveal-grid').forEach(grid => {
     $$('.reveal', grid).forEach((el, index) => {
-      el.style.transitionDelay = `${Math.min(index, 6) * 60}ms`;
+      el.style.transitionDelay = `${Math.min(index, 6) * 55}ms`;
     });
   });
 
@@ -218,15 +209,11 @@
         entry.target.classList.add('is-visible');
         revealObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.13, rootMargin: '0px 0px -4% 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
     revealEls.forEach(el => revealObserver.observe(el));
-    // Ukrywamy elementy dopiero po poprawnym uruchomieniu obserwatora.
-    // Gdy JS nie załaduje się lub wcześniej zgłosi błąd, treść pozostaje widoczna.
+    // Elementy chowamy dopiero po uruchomieniu obserwatora — bez JS treść zostaje widoczna.
     html.classList.add('reveal-ready');
 
-    // Bezpieczny fallback dla agresywnego przewijania / nietypowych WebView:
-    // IntersectionObserver pozostaje mechanizmem głównym, a scroll tylko dopina elementy,
-    // które znalazły się już w oknie, ale obserwator nie zdążył ich zgłosić.
     const revealInViewport = () => {
       revealEls.forEach(el => {
         if (el.classList.contains('is-visible')) return;
@@ -242,10 +229,12 @@
     requestAnimationFrame(revealInViewport);
   }
 
-  /* ---------- Helpers ---------- */
+  /* ==========================================================================
+     Liczby i kalkulatory
+     ========================================================================== */
+
   const fmtPLN = n => `${formatInt.format(Math.round(Number(n) || 0))} zł`;
   const fmtNumber = n => formatInt.format(Math.round(Number(n) || 0));
-
 
   const numberTweens = new WeakMap();
   function animateNumber(el, target, render, duration = 250) {
@@ -293,7 +282,7 @@
     input.addEventListener('input', () => setRangeProgress(input));
   });
 
-  /* ---------- Hero quick calculator ---------- */
+  /* Szybki podgląd raty w hero */
   const heroAmount = $('#heroAmount');
   const heroPeriod = $('#heroPeriod');
   const heroAmountVal = $('#heroAmountVal');
@@ -314,7 +303,7 @@
   [heroAmount, heroPeriod].forEach(el => el && el.addEventListener('input', updateHeroCalculator));
   updateHeroCalculator();
 
-  /* ---------- Full loan calculator ---------- */
+  /* Pełny kalkulator */
   const calcAmount = $('#calcAmount');
   const calcPeriod = $('#calcPeriod');
   const calcRate = $('#calcRate');
@@ -345,8 +334,10 @@
   [calcAmount, calcPeriod, calcRate].forEach(el => el && el.addEventListener('input', updateMainCalculator));
   updateMainCalculator();
 
-  /* ---------- Product -> form ---------- */
-  const contactSection = $('#kontakt');
+  /* ==========================================================================
+     Ścieżka: produkt → formularz
+     ========================================================================== */
+
   const productSelect = $('#fProduct');
   const amountField = $('#fAmount');
   const nameField = $('#fName');
@@ -367,8 +358,7 @@
     if (option) productSelect.value = option.value;
   }
 
-  const requestedProduct = new URLSearchParams(window.location.search).get('produkt');
-  selectProduct(requestedProduct);
+  selectProduct(new URLSearchParams(window.location.search).get('produkt'));
 
   $$('.product-select').forEach(link => {
     link.addEventListener('click', event => {
@@ -391,7 +381,10 @@
     });
   }
 
-  /* ---------- Count-up ---------- */
+  /* ==========================================================================
+     Liczniki
+     ========================================================================== */
+
   const statsGrid = $('#statsGrid');
   let statsAnimated = false;
 
@@ -408,14 +401,12 @@
     const duration = 900;
     const start = performance.now();
     const els = $$('[data-count]', statsGrid);
-
     const frame = now => {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 3);
       els.forEach(el => {
         const target = Number(el.dataset.count) || 0;
-        const value = Math.round(target * eased);
-        el.textContent = `${formatInt.format(value)}${el.dataset.suffix || ''}`;
+        el.textContent = `${formatInt.format(Math.round(target * eased))}${el.dataset.suffix || ''}`;
       });
       if (t < 1) requestAnimationFrame(frame);
     };
@@ -427,26 +418,23 @@
       showFinalStats();
     } else {
       const statsObserver = new IntersectionObserver(entries => {
-        if (entries.some(entry => entry.isIntersecting)) {
-          animateStats();
-          statsObserver.disconnect();
-        }
+        if (entries.some(entry => entry.isIntersecting)) { animateStats(); statsObserver.disconnect(); }
       }, { threshold: 0.35 });
       statsObserver.observe(statsGrid);
       const statsFallback = () => {
         if (statsAnimated) return;
         const rect = statsGrid.getBoundingClientRect();
-        if (rect.top < window.innerHeight * .9 && rect.bottom > 0) {
-          animateStats();
-          statsObserver.disconnect();
-        }
+        if (rect.top < window.innerHeight * .9 && rect.bottom > 0) { animateStats(); statsObserver.disconnect(); }
       };
       window.addEventListener('scroll', statsFallback, { passive: true });
       requestAnimationFrame(statsFallback);
     }
   }
 
-  /* ---------- FAQ accordion ---------- */
+  /* ==========================================================================
+     FAQ
+     ========================================================================== */
+
   $$('.faq-button').forEach(button => {
     button.addEventListener('click', () => {
       const panel = document.getElementById(button.getAttribute('aria-controls'));
@@ -464,7 +452,10 @@
     });
   });
 
-  /* ---------- Form ---------- */
+  /* ==========================================================================
+     Formularz
+     ========================================================================== */
+
   const form = $('#leadForm');
   const success = $('#formSuccess');
   const successText = $('#formSuccessText');
@@ -490,8 +481,7 @@
 
   function setFieldValidity(input, valid) {
     if (!input) return valid;
-    const field = input.closest('.field');
-    field?.classList.toggle('is-invalid', !valid);
+    input.closest('.field')?.classList.toggle('is-invalid', !valid);
     input.setAttribute('aria-invalid', String(!valid));
     return valid;
   }
@@ -530,8 +520,7 @@
     form.addEventListener('submit', async event => {
       event.preventDefault();
       if (!validateForm()) {
-        const invalid = $('[aria-invalid="true"]', form);
-        invalid?.focus();
+        $('[aria-invalid="true"]', form)?.focus();
         return;
       }
 
