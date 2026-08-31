@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator refinansowania kredytu hipotecznego — P&amp;T Money</title>
+  <meta name="description" content="Porównaj obecny kredyt hipoteczny z nową ofertą i zobacz, ile oszczędzasz na odsetkach, kosztach oraz kiedy refinansowanie zaczyna się zwracać.">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:title" content="Kalkulator refinansowania kredytu hipotecznego — P&amp;T Money">
+  <meta property="og:description" content="Porównaj obecny kredyt hipoteczny z nową ofertą i policz realną oszczędność po kosztach przeniesienia.">
+  <meta property="og:image" content="logo-horizontal.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="kalkulator.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "P&T Money",
+    "url": "https://ptmoney.pl/",
+    "email": "kontakt@ptmoney.pl",
+    "telephone": "+48 000 000 000",
+    "areaServed": {"@type": "Country", "name": "Polska"}
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculatorMain">Przejdź do kalkulatora</a>
+
+  <header class="site-header" id="top">
+    <div class="site-container header-inner">
+      <a class="site-brand" href="index.html" aria-label="P&amp;T Money — strona główna"><img src="logo-horizontal.png" alt="P&amp;T Money" width="174" height="36"></a>
+      <nav class="desktop-nav" aria-label="Główna nawigacja">
+        <a href="index.html#produkty">Produkty</a>
+        <a href="kalkulator.html" aria-current="page">Kalkulator</a>
+        <a href="index.html#jak-to-dziala">Jak to działa</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <a class="header-phone" href="tel:+48000000000" aria-label="Zadzwoń: +48 000 000 000">+48 000 000 000</a>
+        <a class="site-btn site-btn--primary site-btn--header" href="index.html#kontakt">Zostaw kontakt</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Nawigacja mobilna" hidden>
+      <div class="site-container mobile-nav-inner">
+        <a href="index.html#produkty">Produkty</a><a href="kalkulator.html">Kalkulator</a><a href="index.html#jak-to-dziala">Jak to działa</a><a href="index.html#faq">FAQ</a><a href="index.html#kontakt">Kontakt</a><a href="tel:+48000000000">Zadzwoń</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="calc-toolbar" aria-label="Narzędzia kalkulatora">
+    <div class="wrap topbar__inner">
+      <div class="brand">
+        <div class="brand__mark" aria-hidden="true"><img src="logo-mark.png" alt=""></div>
+        <div><div class="brand__name">Refinansowanie hipoteki</div><div class="brand__sub">Kalkulator oszczędności na odsetkach</div></div>
+      </div>
+      <div class="topbar__actions">
+        <button class="btn btn--ghost" id="themeBtn" type="button" title="Zmień motyw" aria-label="Zmień motyw"><span class="ico" id="themeIco" aria-hidden="true"></span><span class="btn__txt">Motyw</span></button>
+        <button class="btn btn--ghost" id="resetBtn" type="button">Wyczyść</button>
+        <button class="btn btn--primary" id="printBtn" type="button">Pobierz PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap" id="calculatorMain">
+    <section class="hero">
+      <span class="pill">Analiza porównawcza</span>
+      <h1>Sprawdź, ile Twój klient <em>naprawdę</em> oszczędza</h1>
+      <p>Po lewej wpisz warunki obecnego kredytu, po prawej swoją ofertę. Wynik liczy się na bieżąco — razem z kosztami przeniesienia kredytu i momentem, w którym zmiana zaczyna się zwracać.</p>
+    </section>
+
+    <section class="grid-2" aria-label="Dane wejściowe">
+      <article class="card card--current">
+        <div class="card__head"><span class="dot dot--current"></span><h2>Obecny kredyt klienta</h2></div>
+        <label class="field"><span class="field__lab">Bank / opis</span><input type="text" id="cName" placeholder="np. Obecny bank" autocomplete="off"></label>
+        <label class="field"><span class="field__lab">Pozostały kapitał do spłaty</span><div class="input-unit"><input type="number" id="cAmount" value="420000" min="0" step="1000" inputmode="numeric"><span class="unit">zł</span></div></label>
+        <div class="field"><span class="field__lab">Oprocentowanie <b class="val" id="cRateVal">7,45%</b></span><div class="input-unit"><input type="number" id="cRate" value="7.45" min="0" max="25" step="0.01" inputmode="decimal"><span class="unit">%</span></div><input type="range" class="slider" id="cRateS" value="7.45" min="0" max="15" step="0.05" aria-label="Oprocentowanie obecne"></div>
+        <div class="field"><span class="field__lab">Pozostały okres <b class="val" id="cTermVal">25 lat</b></span><div class="row-2"><div class="input-unit"><input type="number" id="cYears" value="25" min="0" max="40" step="1" inputmode="numeric"><span class="unit">lat</span></div><div class="input-unit"><input type="number" id="cMonths" value="0" min="0" max="11" step="1" inputmode="numeric"><span class="unit">mies.</span></div></div><input type="range" class="slider" id="cYearsS" value="25" min="1" max="35" step="1" aria-label="Okres obecny"></div>
+        <div class="field"><span class="field__lab">Rodzaj rat</span><div class="seg" id="cType" role="group" aria-label="Rodzaj rat obecnego kredytu"><button type="button" class="seg__btn is-on" data-v="annuity">Równe</button><button type="button" class="seg__btn" data-v="decreasing">Malejące</button></div></div>
+        <div class="mini"><span>Obecna rata</span><b id="cPayment">—</b></div>
+      </article>
+
+      <article class="card card--new">
+        <div class="card__head"><span class="dot dot--new"></span><h2>Twoja oferta</h2></div>
+        <label class="field"><span class="field__lab">Bank / opis</span><input type="text" id="nName" placeholder="np. Nowy bank" autocomplete="off"></label>
+        <div class="field"><span class="field__lab">Oprocentowanie <b class="val" id="nRateVal">5,89%</b></span><div class="input-unit"><input type="number" id="nRate" value="5.89" min="0" max="25" step="0.01" inputmode="decimal"><span class="unit">%</span></div><input type="range" class="slider" id="nRateS" value="5.89" min="0" max="15" step="0.05" aria-label="Oprocentowanie nowe"></div>
+        <div class="field"><span class="field__lab">Okres kredytowania <b class="val" id="nTermVal">25 lat</b></span><div class="row-2"><div class="input-unit"><input type="number" id="nYears" value="25" min="0" max="40" step="1" inputmode="numeric"><span class="unit">lat</span></div><div class="input-unit"><input type="number" id="nMonths" value="0" min="0" max="11" step="1" inputmode="numeric"><span class="unit">mies.</span></div></div><input type="range" class="slider" id="nYearsS" value="25" min="1" max="35" step="1" aria-label="Okres nowy"></div>
+        <div class="field"><span class="field__lab">Rodzaj rat</span><div class="seg" id="nType" role="group" aria-label="Rodzaj rat nowego kredytu"><button type="button" class="seg__btn is-on" data-v="annuity">Równe</button><button type="button" class="seg__btn" data-v="decreasing">Malejące</button></div></div>
+        <div class="costs"><div class="costs__head">Koszty przeniesienia kredytu</div><div class="row-2"><label class="field field--tight"><span class="field__lab">Prowizja nowego banku</span><div class="input-unit"><input type="number" id="nFeePct" value="0" min="0" max="10" step="0.1" inputmode="decimal"><span class="unit">%</span></div></label><label class="field field--tight"><span class="field__lab">Opłata za wcześniejszą spłatę</span><div class="input-unit"><input type="number" id="cEarlyPct" value="0" min="0" max="10" step="0.1" inputmode="decimal"><span class="unit">%</span></div></label></div><label class="field field--tight"><span class="field__lab">Pozostałe koszty (wycena, sąd, notariusz, PCC)</span><div class="input-unit"><input type="number" id="nOther" value="1200" min="0" step="100" inputmode="numeric"><span class="unit">zł</span></div></label><label class="check"><input type="checkbox" id="nCredited"><span>Dolicz prowizję do kwoty nowego kredytu</span></label></div>
+        <div class="mini mini--new"><span>Nowa rata</span><b id="nPayment">—</b></div>
+      </article>
+    </section>
+
+    <section class="results" aria-label="Wyniki">
+      <div class="headline" id="headline"><div class="headline__lab">Oszczędność na odsetkach</div><div class="headline__big" id="hSavings">—</div><div class="headline__sub" id="hSub">Uzupełnij dane, aby zobaczyć wynik</div><div class="headline__bars"><div class="hbar"><div class="hbar__lab"><span>Odsetki dziś</span><b id="hIntA">—</b></div><div class="hbar__track"><i class="hbar__fill hbar__fill--a" id="hFillA"></i></div></div><div class="hbar"><div class="hbar__lab"><span>Odsetki po zmianie</span><b id="hIntB">—</b></div><div class="hbar__track"><i class="hbar__fill hbar__fill--b" id="hFillB"></i></div></div></div></div>
+      <div class="kpis"><div class="kpi"><div class="kpi__lab">Rata miesięczna</div><div class="kpi__val" id="kPay">—</div><div class="kpi__note" id="kPayNote">—</div></div><div class="kpi"><div class="kpi__lab">Oszczędność netto <span class="hint" title="Oszczędność na odsetkach pomniejszona o koszty przeniesienia kredytu">?</span></div><div class="kpi__val" id="kNet">—</div><div class="kpi__note" id="kNetNote">—</div></div><div class="kpi"><div class="kpi__lab">Koszty przeniesienia</div><div class="kpi__val" id="kCost">—</div><div class="kpi__note" id="kCostNote">—</div></div><div class="kpi"><div class="kpi__lab">Zwrot kosztów po</div><div class="kpi__val" id="kBE">—</div><div class="kpi__note" id="kBENote">—</div></div></div>
+    </section>
+
+    <section class="card card--wide"><div class="card__head card__head--row"><h2>Przebieg spłaty</h2><div class="seg seg--sm" id="chartMode" role="group" aria-label="Tryb wykresu"><button type="button" class="seg__btn is-on" data-v="balance">Saldo zadłużenia</button><button type="button" class="seg__btn" data-v="interest">Odsetki narastająco</button></div></div><div class="legend"><span><i class="lg lg--a"></i><span id="legA">Obecny kredyt</span></span><span><i class="lg lg--b"></i><span id="legB">Twoja oferta</span></span></div><div class="chart-box"><svg id="chart" viewBox="0 0 900 340" preserveAspectRatio="none" role="img" aria-label="Wykres porównawczy"></svg><div class="tip" id="tip" hidden></div></div></section>
+
+    <section class="card card--wide bonus" id="bonus" hidden><div class="bonus__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"></path></svg></div><div class="bonus__body"><h3>Wariant dla ambitnych: zostaw ratę na obecnym poziomie</h3><p id="bonusTxt">—</p></div></section>
+
+    <section class="card card--wide"><div class="card__head"><h2>Zestawienie szczegółowe</h2></div><div class="table-scroll"><table class="cmp"><thead><tr><th>Parametr</th><th id="thA">Obecny kredyt</th><th id="thB">Twoja oferta</th><th>Różnica</th></tr></thead><tbody id="cmpBody"></tbody></table></div></section>
+
+    <section class="card card--wide"><div class="card__head card__head--row"><h2>Harmonogram spłaty</h2><div class="seg seg--sm" id="schedMode" role="group" aria-label="Harmonogram kredytu"><button type="button" class="seg__btn is-on" data-v="B">Twoja oferta</button><button type="button" class="seg__btn" data-v="A">Obecny kredyt</button></div></div><div class="table-scroll table-scroll--tall"><table class="sched"><thead><tr><th>Rata</th><th>Kwota raty</th><th>Kapitał</th><th>Odsetki</th><th>Saldo po spłacie</th></tr></thead><tbody id="schedBody"></tbody></table></div><div class="more"><button type="button" class="btn btn--ghost" id="moreBtn">Pokaż kolejne 60 rat</button><span class="more__info" id="moreInfo"></span></div></section>
+
+    <footer class="foot calc-print-foot"><div class="foot__adv"><label class="field field--tight"><span class="field__lab">Doradca</span><input type="text" id="advName" placeholder="Imię i nazwisko" autocomplete="off"></label><label class="field field--tight"><span class="field__lab">Kontakt</span><input type="text" id="advContact" placeholder="telefon / e-mail" autocomplete="off"></label></div><p class="disclaimer">Kalkulacja ma charakter poglądowy i nie stanowi oferty w rozumieniu art. 66 §1 Kodeksu cywilnego. Wyliczenia zakładają stałą stopę procentową przez cały okres kredytowania oraz spłatę rat w terminie; rzeczywiste koszty mogą się różnić i zależą od decyzji banku, ubezpieczeń i marż. Kredyt oparty o zmienną stopę procentową wiąże się z ryzykiem wzrostu raty.</p></footer>
+  </main>
+
+  <section class="calc-cta" aria-labelledby="calcCtaTitle"><div class="site-container calc-cta-inner"><div><p class="site-eyebrow">P&amp;T Money</p><h2 id="calcCtaTitle">Chcesz sprawdzić, czy to się opłaca w Twoim przypadku?</h2></div><a class="site-btn site-btn--primary" href="index.html#kontakt">Zostaw kontakt</a></div></section>
+
+  <footer class="site-footer">
+    <div class="site-container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a class="footer-logo" href="index.html" aria-label="P&amp;T Money — strona główna"><img src="logo-mark.png" alt="" width="46" height="42"><span>P&amp;T <strong>money</strong></span></a><p>Niezależne pośrednictwo finansowe. Porównujemy oferty banków, firm leasingowych i faktoringowych oraz towarzystw ubezpieczeniowych, żebyś nie musiał robić tego sam.</p></div>
+        <div class="footer-col"><h2>Produkty</h2><a href="index.html#produkty">Kredyt gotówkowy</a><a href="index.html#produkty">Kredyt hipoteczny</a><a href="index.html#produkty">Kredyt firmowy</a><a href="index.html#produkty">Leasing i faktoring</a></div>
+        <div class="footer-col"><h2>Firma</h2><a href="index.html#jak-to-dziala">Jak działamy</a><a href="index.html#faq">FAQ</a><a href="index.html#kontakt">Kontakt</a></div>
+        <div class="footer-col"><h2>Kontakt</h2><a href="tel:+48000000000">+48 000 000 000</a><a href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a><a href="https://ptmoney.pl/">ptmoney.pl</a></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 P&amp;T Money. Wszelkie prawa zastrzeżone.</p><p><a href="polityka-prywatnosci.html">Polityka prywatności</a> · <a href="regulamin.html">Regulamin</a></p></div>
+      <p class="footer-disclaimer">P&amp;T Money jest pośrednikiem finansowym i nie jest bankiem ani instytucją pożyczkową. Prezentowane kalkulacje mają charakter wyłącznie poglądowy i edukacyjny, nie stanowią oferty w rozumieniu art. 66 Kodeksu cywilnego ani rekomendacji inwestycyjnej. Ostateczne warunki finansowania, w tym RRSO, zależą od indywidualnej oceny zdolności kredytowej dokonanej przez wybraną instytucję finansową.</p>
+    </div>
+  </footer>
+
+  <div class="mobile-bottom-bar"><a class="site-btn site-btn--ghost" href="tel:+48000000000">Zadzwoń</a><a class="site-btn site-btn--primary" href="index.html#kontakt">Zostaw kontakt</a></div>
+
+  <script>
+    (() => {
+      const btn = document.getElementById('menuToggle');
+      const nav = document.getElementById('mobileNav');
+      if (!btn || !nav) return;
+      const close = () => { btn.setAttribute('aria-expanded','false'); btn.setAttribute('aria-label','Otwórz menu'); nav.hidden = true; document.body.classList.remove('menu-open'); };
+      btn.addEventListener('click', () => { const open = btn.getAttribute('aria-expanded') === 'true'; btn.setAttribute('aria-expanded', String(!open)); btn.setAttribute('aria-label', open ? 'Otwórz menu' : 'Zamknij menu'); nav.hidden = open; document.body.classList.toggle('menu-open', !open); });
+      nav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+      window.addEventListener('resize', () => { if (innerWidth >= 900) close(); }, { passive:true });
+    })();
+  </script>
+  <script src="kalkulator.js"></script>
+</body>
+</html>

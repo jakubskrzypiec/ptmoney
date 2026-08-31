@@ -1,0 +1,27 @@
+Po wrzuceniu nowego kompletu usuń z repo stare/robocze wersje, jeśli nadal tam są:
+- PTMONEY-UPDATE.patch
+- index (1).html
+- styles (2).css
+- app.js
+- script.js
+- ptmoney-meeting.css
+- ptmoney-meeting.js
+- ptmoney-v8.css / ptmoney-v8.js
+- ptmoney-v9.css / ptmoney-v9.js
+- ptmoney-v10.css / ptmoney-v10.js
+- ptmoney-v11.css / ptmoney-v11.js
+- ptmoney-v12.css / ptmoney-v12.js
+- ptmoney-v14.css / ptmoney-v14.js
+- ptmoney-v15.css / ptmoney-v15.js
+- ptmoney-v16.css / ptmoney-v16.js
+- ptmoney-v17.css / ptmoney-v17.js
+- ptmoney-v18.css / ptmoney-v18.js
+- refinansowanie.css / refinansowanie.html / refinansowanie.js (jeżeli produkcyjną podstroną jest kalkulator.html)
+- advisor.jpg i office-laptop.jpg, jeśli nie są używane
+
+Zostaw produkcyjnie:
+index.html, styles.css, main.js,
+kalkulator.html, kalkulator.css, kalkulator.js,
+polityka-prywatnosci.html, regulamin.html,
+logo-horizontal.png, logo-mark.png (plus warianty logo tylko jeśli faktycznie potrzebne),
+robots.txt, sitemap.xml.
