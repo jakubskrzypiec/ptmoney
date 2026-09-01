@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-6">
+<link rel="stylesheet" href="./styles.css?v=20260902-7">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -47,8 +47,8 @@ document.documentElement.classList.add('js');
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260902-6"></script>
-<script defer src="./main.js?v=20260902-6"></script>
+<script defer src="./dane.js?v=20260902-7"></script>
+<script defer src="./main.js?v=20260902-7"></script>
 </head>
 <body>
 
@@ -126,16 +126,17 @@ document.documentElement.classList.add('js');
       <div class="hero-copy">
         <!-- Czwarty człon zjada na telefonie drugą linijkę — chowamy go poniżej 560 px. -->
         <p class="eyebrow" data-hero-in data-delay="0">Kredyty · leasing · faktoring<span class="hide-sm"> · ubezpieczenia</span></p>
+        <!-- Dwa wersy zamiast trzech: blok jest niższy i siada w rogu,
+             a nagłówek rozkłada się szerzej. -->
         <h1 id="hero-title">
-          <span class="hero-line" data-hero-line data-delay="0.05"><span>Finansowanie</span></span>
-          <span class="hero-line" data-hero-line data-delay="0.11"><span>dopasowane</span></span>
-          <span class="hero-line" data-hero-line data-delay="0.17"><span><em>do Twojej sytuacji.</em></span></span>
+          <span class="hero-line" data-hero-line data-delay="0.05"><span>Finansowanie dopasowane</span></span>
+          <span class="hero-line" data-hero-line data-delay="0.13"><span><em>do Twojej sytuacji.</em></span></span>
         </h1>
-        <p class="hero-lead" data-hero-in data-delay="0.23">Porównujemy oferty ponad trzydziestu instytucji i prowadzimy cały proces — od pierwszej rozmowy po podpisanie umowy.</p>
+        <p class="hero-lead" data-hero-in data-delay="0.21">Porównujemy oferty ponad trzydziestu instytucji i prowadzimy cały proces — od pierwszej rozmowy po podpisanie umowy.</p>
 
-        <div class="hero-actions" data-hero-in data-delay="0.29">
-          <a class="btn btn--primary btn--lg" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
-          <a class="btn btn--ghost btn--lg contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
+        <div class="hero-actions" data-hero-in data-delay="0.27">
+          <a class="btn btn--primary" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
+          <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
         <!-- Lista trzech konkretów („konsultacja bez opłat” itd.) wyleciała stąd:
              powtarzała pasek zaufania jedną sekcję niżej, a rozpychała panel
@@ -475,6 +476,11 @@ document.documentElement.classList.add('js');
       </div>
     </div>
   </section>
+
+  <!-- ============ FORMULARZ ============ -->
+  <section class="section contact-section" id="kontakt" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div class="contact-copy reveal">
         <p class="eyebrow">Zostaw kontakt</p>
         <h2 id="contact-title">Podaj dane raz.<br><em>Resztę załatwiamy my.</em></h2>
         <p class="contact-lead">Oddzwaniamy zwykle w ciągu jednego dnia roboczego. Konsultacja i przygotowanie oferty są zawsze bezpłatne.</p>

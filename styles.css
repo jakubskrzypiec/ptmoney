@@ -436,24 +436,28 @@ em { font-style: normal; color: var(--blue); }
    elipsa w .hero-shade. Blok jest dosunięty do samego narożnika: margines
    dolny i boczny są mniejsze niż standardowy rytm strony, bo tu chodzi
    o zakotwiczenie w rogu, a nie o wyrównanie do siatki sekcji. */
-.hero-main { padding-inline: 0; }
+/* Hero wychodzi poza siatkę sekcji: max-width kontenera zostawiałby napisy
+   250 px od krawędzi na szerokim ekranie, a mają siedzieć w samym rogu. */
+.hero-main { padding-inline: 0; max-width: none; }
 .hero-copy {
   width: 100%;
-  max-width: 720px;
-  padding: 0 var(--gutter) clamp(36px, 4.5vh, 56px) clamp(24px, 3.6vw, 52px);
+  max-width: min(94vw, 980px);
+  padding: 0 var(--gutter) clamp(32px, 4vh, 52px) clamp(24px, 3.6vw, 52px);
 }
 .hero .eyebrow { color: #A7C0D4; margin-bottom: 26px; }
-/* Rozmiar jest związany z max-width kolumny: „Finansowanie” to najdłuższe słowo
-   w nagłówku i to ono wyznacza górną granicę — powyżej niej .hero-line
-   (overflow: hidden) zaczyna je przycinać. */
+/* Nagłówek jest dwuwersowy, więc miarą nie jest już najdłuższe słowo, tylko
+   najdłuższy WERS: „Finansowanie dopasowane”. Zajmuje ok. 11,2 × font-size,
+   a .hero-line (overflow: hidden) nie zawija, tylko tnie — dlatego górna
+   granica rozmiaru musi zostawiać zapas względem szerokości kolumny.
+   Po zmianie treści nagłówka sprawdź to ponownie przy 1440 i przy 1920. */
 .hero-copy h1 {
   color: var(--white);
-  margin-bottom: 26px;
-  font-size: clamp(2.8rem, 5.4vw, 5.4rem);
+  margin-bottom: 24px;
+  font-size: clamp(2rem, 4vw, 4.05rem);
   font-weight: 500;
-  line-height: .96;
+  line-height: 1;
   letter-spacing: -.045em;
-  max-width: 13ch;
+  max-width: none;
   text-wrap: initial;
   text-shadow: 0 2px 26px rgba(6,12,18,.5);
 }
@@ -585,7 +589,9 @@ em { font-style: normal; color: var(--blue); }
 .rate-bar-kicker span { color: var(--ink); letter-spacing: .09em; font-size: .92rem; }
 .rate-bar-controls { display: grid; gap: 24px; }
 .rate-bar-out { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.rate-bar-out > span { font-size: .92rem; color: var(--muted); }
+.rate-bar-out > span { font-size: .92rem; color: var(--muted); white-space: nowrap; }
+/* Liczby nie mogą zawijać ani przesuwać sąsiadów przy zmianie długości. */
+.rate-bar-out strong, .rate-bar .range-label output { white-space: nowrap; }
 
 /* Suwaki w tym pasku są grubsze niż w kalkulatorze — to główne narzędzie
    na stronie i ma się dać złapać bez celowania. */
@@ -611,7 +617,10 @@ em { font-style: normal; color: var(--blue); }
 
 @media (min-width: 560px) {
   .rate-bar { padding: 38px 42px; gap: 32px; }
-  .rate-bar-controls { grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  /* minmax(0, 1fr), nie 1fr: samo „1fr” ma minimum auto, więc dłuższa wartość
+     („150 000 zł”) rozpychała swoją komórkę i suwaki zmieniały szerokość
+     w trakcie przeciągania. */
+  .rate-bar-controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
   /* Reguła .range-field + .range-field { margin-top } jest pomyślana dla układu
      pionowego (kalkulator). Tutaj suwaki stoją obok siebie, więc ten margines
      spychał drugi o 18 px w dół i oba rzędy się rozjeżdżały. */
@@ -620,10 +629,15 @@ em { font-style: normal; color: var(--blue); }
 /* Powyżej 1040 px całość układa się w jeden rząd: opis | suwaki | wynik | wyjście.
    Wtedy kreski poziome znikają, bo rozdzielenie robią już kolumny. */
 @media (min-width: 1040px) {
+  /* Kolumny są SZTYWNE, nie auto. Przy „auto” każda zmiana liczby (759 -> 2126,
+     30 000 zł -> 84 000 zł) zmieniała szerokość kolumny, a przez to szerokość
+     suwaków — układ drgał przy każdym ruchu uchwytu. To był ten „lag”. */
   .rate-bar {
-    grid-template-columns: minmax(220px, auto) minmax(0, 1fr) auto auto;
-    align-items: center; gap: 56px; padding: 44px 52px;
+    grid-template-columns: 220px minmax(0, 1fr) 230px auto;
+    align-items: center; gap: 40px; padding: 44px 52px;
   }
+  /* Kolumna wyjścia jest „auto”, ale jej treść się nie zmienia, więc nie drga. */
+  .rate-bar-cta { white-space: nowrap; }
   .rate-bar-head { padding-bottom: 0; border-bottom: 0; }
   .rate-bar-out {
     flex-direction: column; align-items: flex-end; gap: 4px;
@@ -631,7 +645,7 @@ em { font-style: normal; color: var(--blue); }
     border-top: 0; border-left: 1px solid var(--line-soft);
     align-self: stretch; justify-content: center;
   }
-  .rate-bar-cta { min-height: 66px; padding: 18px 34px; font-size: 1.05rem; }
+  .rate-bar-cta { min-height: 66px; padding: 18px 30px; font-size: 1.02rem; }
 }
 
 
