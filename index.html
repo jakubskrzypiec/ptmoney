@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-1">
+<link rel="stylesheet" href="./styles.css?v=20260902-2">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -42,13 +42,13 @@ document.documentElement.classList.add('js');
   "address": {"@type": "PostalAddress", "streetAddress": "[Adres]", "addressCountry": "PL"}
 }
 </script>
-<!-- Hero ładuje się od razu — bez preloadu wchodzi dopiero po CSS i widać ciemną planszę. -->
+<!-- Hero ładuje się od razu — bez preloadu wchodzi dopiero po CSS i widać pustą planszę. -->
 <link rel="preload" as="image" href="./img/hero.jpg" fetchpriority="high">
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260902-1"></script>
-<script defer src="./main.js?v=20260902-1"></script>
+<script defer src="./dane.js?v=20260902-2"></script>
+<script defer src="./main.js?v=20260902-2"></script>
 </head>
 <body>
 
@@ -74,9 +74,7 @@ document.documentElement.classList.add('js');
 <header class="site-header site-header--overlay" id="top">
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="P&amp;T Money — strona główna">
-      <!-- Dwa warianty znaku: jasny leży na hero, ciemny na zestalonym nagłówku. -->
-      <img class="brand-logo brand-logo--light" src="./logo-horizontal-light.png" alt="P&amp;T Money" width="174" height="36">
-      <img class="brand-logo brand-logo--dark" id="headerLogo" src="./logo-horizontal.png" alt="" aria-hidden="true" width="174" height="36">
+      <img id="headerLogo" src="./logo-horizontal.png" alt="P&amp;T Money" width="174" height="36">
     </a>
     <nav class="desktop-nav" aria-label="Główna nawigacja">
       <a href="#produkty">Produkty</a>
@@ -111,12 +109,14 @@ document.documentElement.classList.add('js');
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <!-- Pełny ekran. Zdjęcie jest tłem całej sekcji, tekst siedzi w lewej kolumnie,
-       nagłówek strony leży na nim przezroczysty i zestala się przy przewijaniu.
+  <!-- Pełny ekran, zdjęcie jako tło całej sekcji. Kadr jest JASNY, więc typografia
+       jest ciemna, a nagłówek strony leży na nim w wersji ciemnej — odwrotnie niż
+       przy poprzednim, ciemnym zdjęciu. Tekst siedzi w lewym dolnym rogu: lewa
+       połowa kadru to pusta ściana, dół to blat — obie strefy są spokojne.
        data-hero-in + data-delay ustalają kolejność wejścia po kurtynie marki. -->
   <section class="hero" id="hero" aria-labelledby="hero-title">
     <div class="hero-media" data-hero-wipe data-delay="0.08" aria-hidden="true">
-      <img src="./img/hero.jpg" alt="" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" data-hero-parallax>
+      <img src="./img/hero.jpg" alt="" width="2560" height="1440" loading="eager" fetchpriority="high" decoding="async" data-hero-parallax>
     </div>
     <div class="hero-shade" aria-hidden="true"></div>
 
@@ -144,10 +144,6 @@ document.documentElement.classList.add('js');
       </div>
     </div>
 
-    <a class="hero-scroll" href="#start" data-hero-in data-delay="0.44">
-      <span>Zobacz, jak to działa</span>
-      <span class="hero-scroll-line" aria-hidden="true"><i></i></span>
-    </a>
   </section>
 
   <!-- ============ PODGLĄD RATY ============ -->

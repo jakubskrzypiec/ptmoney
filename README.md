@@ -22,8 +22,7 @@ otwierasz `index.html` albo wrzucasz cały katalog na hosting.
 
 | Plik | Kiedy |
 |---|---|
-| `logo-horizontal.png` | nagłówek po przewinięciu (ciemny tekst), Open Graph |
-| `logo-horizontal-light.png` | nagłówek na hero (biały tekst, jaśniejszy błękit znaku) |
+| `logo-horizontal.png` | nagłówek, Open Graph |
 | `logo-mark.png` | favicon, sam znak na jasnym tle, maska w intro |
 | `logo-mark-light.png` | znak na ciemnym tle (stopka) — niebieskie „P”, białe „T” |
 | `logo-mark-blue.png`, `logo-mark-black.png` | rozdzielone warstwy znaku (materiał źródłowy) |
@@ -31,26 +30,39 @@ otwierasz `index.html` albo wrzucasz cały katalog na hosting.
 ## Hero
 
 Hero zajmuje **cały ekran** (`min-height: 100svh`). Zdjęcie `img/hero.jpg` jest tłem
-całej sekcji, tekst siedzi w lewej kolumnie — tam, gdzie kadr jest najciemniejszy
-i najmniej się dzieje. Gradient `.hero-shade` dokłada przyciemnienie od lewej,
-żeby biała typografia trzymała kontrast niezależnie od zdjęcia.
+całej sekcji, a napisy siedzą w **lewym dolnym rogu** (`align-items: flex-end`) — tam,
+gdzie kadr jest pusty: po lewej ściana, na dole blat.
+
+Kadr jest **jasny**, więc cała typografia hero jest **ciemna**, a `.hero-shade` dokłada
+mleczną warstwę od lewej i od dołu, żeby tekst trzymał kontrast niezależnie od tego,
+jak zdjęcie przytnie się na danym ekranie. Gdyby wróciło ciemne zdjęcie, trzeba odwrócić
+komplet: `.hero-shade`, kolory w `.hero-copy`, `.hero-proof` i nagłówek.
 
 Nagłówek strony **leży na hero przezroczysty** (`.site-header--overlay`) i zestala się
-w biały pasek dopiero po przewinięciu o 40 px — wtedy `main.js` dokłada `.is-compact`.
-Ten sam przełącznik zamienia jasny znak na ciemny i pokazuje pasek postępu czytania.
-Wariant przezroczysty dotyczy **tylko strony głównej**; podstrony mają zwykły biały nagłówek.
+w biały pasek dopiero po przewinięciu o 40 px — wtedy `main.js` dokłada `.is-compact`
+i pokazuje pasek postępu czytania. Na jasnym zdjęciu treść nagłówka jest ciemna
+w obu stanach, więc zmienia się tylko tło. Wariant przezroczysty dotyczy **tylko strony
+głównej**; podstrony mają zwykły biały nagłówek.
 
-Rozmiar `h1` jest związany z `max-width` kolumny: „Finansowanie” to najdłuższe słowo
-nagłówka i to ono wyznacza górną granicę — powyżej niej `.hero-line` (`overflow: hidden`,
-potrzebne do animacji wjazdu wierszy) zaczyna je przycinać.
+### Dlaczego `h1` ma taki, a nie inny rozmiar
+
+Wiersze nagłówka wjeżdżają zza masek, więc `.hero-line` ma `overflow: hidden` — **nie
+zawija, tylko tnie**. „Finansowanie” to najdłuższe słowo i zajmuje ok. **5,9 × font-size**.
+Rozmiar musi więc zejść razem z szerokością okna, a `max-width` na wąskich ekranach jest
+wyłączony (`none`), żeby granicą był kontener, a nie liczba znaków. Przy `max-width: 9ch`
+zapas wynosił 7 px przy 320 px szerokości — zjadłby go pierwszy font zastępczy, gdyby
+Google Fonts nie doszło.
+
+Po zmianie treści nagłówka **sprawdź najdłuższe słowo przy 320 px szerokości okna.**
 
 ### Podmiana zdjęcia hero
 
-Kadr musi mieć **ciemną, spokojną lewą połowę** — tam ląduje cała typografia.
-Zapisuj w JPEG (nie PNG: to samo zdjęcie w PNG waży ponad dziesięć razy więcej,
-a hero ładuje się od razu), minimum 1600 px szerokości, i popraw `width`/`height`
-przy `<img>` w `index.html`. Ścieżka jest w dwóch miejscach: `<link rel="preload">`
-w `<head>` i sam `<img>`.
+Kadr musi mieć **jasną, spokojną lewą połowę i jasny dół** — tam ląduje cała typografia.
+Zapisuj w JPEG (nie PNG: 4K PNG waży ponad 4 MB, ten sam kadr w JPEG 2560 px — 230 kB,
+a hero ładuje się od razu), 2560 px szerokości w zupełności wystarczy.
+
+Po podmianie popraw `width` i `height` przy `<img>` w `index.html` **oraz** ścieżkę
+w `<link rel="preload">` w `<head>` — to dwa osobne miejsca.
 
 ## Intro marki
 

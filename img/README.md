@@ -2,7 +2,7 @@
 
 | Plik | Gdzie | Kadr |
 |---|---|---|
-| `hero.jpg` | tło hero (cały ekran) | poziomy, 16:9, ciemna lewa połowa |
+| `hero.jpg` | tło hero (cały ekran) | poziomy, 16:9, jasna lewa połowa i jasny dół |
 | `doradca.jpg` | materiał zapasowy | pełna sylwetka, 3:4 |
 | `doradca-2.jpg` | sekcja „Doradca” | popiersie, 4:5 |
 
@@ -11,14 +11,18 @@ Oba portrety pochodzą z jednego zdjęcia — sekcja „Doradca” ma ciaśniejs
 
 ## `hero.jpg` — wymagania kadru
 
-Cała typografia hero leży w **lewej połowie**, więc kadr musi być tam ciemny
-i spokojny: ściana, cień, blat. Motyw (biurko, laptop, dokumenty) trzymaj po prawej.
-Minimum 1600 px szerokości, JPEG jakość 84, tryb progresywny.
+Cała typografia hero leży w **lewym dolnym rogu**, więc kadr musi być tam jasny
+i spokojny: ściana, blat. Motyw (biurko, laptop, dokumenty) trzymaj po prawej
+i wyżej. 2560 px szerokości wystarczy, JPEG jakość 84.
 
 Po podmianie popraw `width` i `height` przy `<img>` w `index.html` **oraz** ścieżkę
 w `<link rel="preload">` w `<head>` — to dwa osobne miejsca.
-Jeśli nowe zdjęcie jest jaśniejsze, wzmocnij gradient `.hero-shade` w `styles.css`;
-biały tekst musi trzymać kontrast bez patrzenia w miernik.
+
+**Zdjęcie ciemniejsze wymaga przerobienia hero, nie tylko podmiany pliku.** Cała
+typografia jest dziś ciemna, a `.hero-shade` rozjaśnia tło od lewej i od dołu —
+na ciemnym kadrze trzeba odwrócić komplet kolorów w `styles.css` (`.hero-copy`,
+`.hero-proof`, `.hero-shade`, nagłówek `.site-header--overlay`) i dorobić jasny
+wariant znaku do nagłówka.
 
 ## Przy podmianie portretów
 
