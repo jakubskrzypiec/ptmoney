@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-8">
+<link rel="stylesheet" href="./styles.css?v=20260902-9">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -133,7 +133,7 @@ document.documentElement.classList.add('js');
              wydrukowane na folderze widocznym na zdjęciu, po prawej stronie kadru.
              Te same trzy słowa dwa razy na jednym ekranie wyglądały na pomyłkę.
              Drugi człon chowamy poniżej 560 px, bo zawija się na drugą linijkę. -->
-        <p class="eyebrow" data-hero-in data-delay="0">Niezależny pośrednik finansowy<span class="hide-sm"> · cała Polska</span></p>
+        <p class="eyebrow hero-eyebrow" data-hero-in data-delay="0"><span class="hero-status" aria-hidden="true"></span>Niezależny pośrednik finansowy<span class="hide-sm"> · cała Polska</span></p>
         <!-- Dwa wersy zamiast trzech: blok jest niższy i siada w rogu,
              a nagłówek rozkłada się szerzej. -->
         <h1 id="hero-title">
@@ -146,6 +146,11 @@ document.documentElement.classList.add('js');
           <a class="btn btn--primary" href="#produkty"><span>Sprawdź możliwości<span class="btn-sub"> — wybierz, czego potrzebujesz</span></span></a>
           <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
+        <ul class="hero-assurances" data-hero-in data-delay="0.33" aria-label="Najważniejsze korzyści">
+          <li><strong>Jedna rozmowa</strong><span>zamiast wielu wniosków</span></li>
+          <li><strong>Wiele ofert</strong><span>porównanych w jednym miejscu</span></li>
+          <li><strong>Jeden opiekun</strong><span>od kontaktu do umowy</span></li>
+        </ul>
       </div>
     </div>
 
@@ -171,10 +176,17 @@ document.documentElement.classList.add('js');
   <!-- ============ PRODUKTY ============ -->
   <section class="section section--line" id="produkty" aria-labelledby="produkty-title">
     <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Czym się zajmujemy</p>
-        <h2 id="produkty-title">Jeden doradca,<br>siedem rozwiązań finansowych.</h2>
-        <p class="section-lead">Wybierz, czego dziś potrzebujesz — resztę wyjaśnimy podczas rozmowy i dobierzemy oferty dopasowane do Twojej sytuacji.</p>
+      <div class="section-head section-head--products reveal">
+        <div>
+          <p class="eyebrow">Czym się zajmujemy</p>
+          <h2 id="produkty-title">Jeden doradca,<br>siedem rozwiązań finansowych.</h2>
+          <p class="section-lead">Wybierz, czego dziś potrzebujesz — resztę wyjaśnimy podczas rozmowy i dobierzemy oferty dopasowane do Twojej sytuacji.</p>
+        </div>
+        <ul class="audience-pills" aria-label="Obszary wsparcia">
+          <li>Dla Ciebie</li>
+          <li>Dla firmy</li>
+          <li>Ochrona</li>
+        </ul>
       </div>
 
       <ul class="product-list reveal-grid">
@@ -263,8 +275,9 @@ document.documentElement.classList.add('js');
         <figure class="portrait portrait--advisor">
           <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1374" loading="lazy" decoding="async" data-portrait>
           <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt="" width="785" height="707"><span>Zdjęcie doradczyni</span></figcaption>
+          <div class="advisor-badge" aria-label="Osobista obsługa jeden na jeden"><strong>1:1</strong><span>Osobista opieka<br>nad Twoją sprawą</span></div>
         </figure>
-        <p class="advisor-meta"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
+        <p class="advisor-meta"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span><span class="advisor-availability"><i aria-hidden="true"></i>Kontakt w ciągu jednego dnia roboczego</span></p>
         <div class="advisor-actions">
           <a class="btn btn--primary" href="#kontakt">Porozmawiaj bezpłatnie</a>
           <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
@@ -350,6 +363,7 @@ document.documentElement.classList.add('js');
           </dl>
         </div>
         <a class="btn btn--light" href="#kontakt" id="calcCta">Porozmawiaj o wyniku</a>
+        <p class="calc-privacy"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Wyliczenie zostaje w Twojej przeglądarce.</p>
       </div>
 
       <div class="calc-panel reveal">
@@ -514,7 +528,7 @@ document.documentElement.classList.add('js');
             </label>
             <p class="field-error" id="fConsentError">Zaznacz zgodę, aby wysłać formularz.</p>
           </div>
-          <button class="btn btn--primary btn--submit" type="submit">Poproś o kontakt</button>
+          <button class="btn btn--primary btn--submit" type="submit"><span>Poproś o kontakt</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></button>
           <p class="form-note">Po wysłaniu formularza skontaktuje się doradca P&amp;T Money. Dane wykorzystamy wyłącznie do obsługi tego zgłoszenia.</p>
           <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>
             <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.25 2.25L15.5 9.5"/></svg>
@@ -628,7 +642,7 @@ document.documentElement.classList.add('js');
 
 <div class="mobile-bottom-bar" aria-label="Szybki kontakt">
   <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="phone" href="tel:+48000000000">Zadzwoń</a>
-  <a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a>
+  <a class="btn btn--primary" href="#kontakt">Sprawdź możliwości</a>
 </div>
 
 </body>
