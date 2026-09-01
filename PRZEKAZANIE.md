@@ -30,15 +30,27 @@ tekst w nawiasach kwadratowych.
 
 ## 2. Zdjęcia — są na miejscu
 
-`img/doradca.jpg` (hero, pełna sylwetka) i `img/doradca-2.jpg` (sekcja
-„Doradca", popiersie) — oba wykadrowane z jednego zdjęcia, żeby ta sama
-grafika nie pojawiała się dwa razy w identycznym ujęciu.
+`img/hero.jpg` (tło hero na cały ekran) oraz `img/doradca-2.jpg` (sekcja
+„Doradca", popiersie).
 
-Przy podmianie na inną osobę: **zapisuj w JPEG, nie w PNG** i popraw `width`
-oraz `height` przy `<img>` w `index.html`. Szczegóły w `img/README.md`.
+Zdjęcie hero ma **ciemną lewą połowę** — tam leży cały tekst. Przy podmianie
+trzymaj ten sam układ, inaczej biała typografia przestanie się czytać.
+Przy każdej podmianie: **zapisuj w JPEG, nie w PNG** i popraw `width` oraz
+`height` przy `<img>` w `index.html`. Szczegóły w `img/README.md`.
 
 Podpis pod cytatem bierze się z pól `doradca` i `doradcaRola` w `dane.js` —
 rolę dopasuj do osoby na zdjęciu.
+
+---
+
+## 2a. Opinie klientów — treść zastępcza
+
+Sekcja „Opinie" (`#opinie` w `index.html`) zawiera **trzy przykładowe wypowiedzi**
+z wymyślonymi imionami. To materiał poglądowy, nie prawdziwe referencje.
+
+Przed publikacją albo wstaw prawdziwe opinie (za pisemną zgodą klientów,
+z imieniem i pierwszą literą nazwiska), albo usuń całą sekcję.
+**Nie publikuj tych przykładowych — to wprowadzanie w błąd.**
 
 ## 3. Podłącz formularz
 
@@ -105,6 +117,7 @@ na kiedy są aktualne.
 
 - [ ] `dane.js` wypełniony, na stronie nie ma tekstu w `[nawiasach]`
 - [ ] numer `+48 000 000 000` nigdzie się nie pokazuje
+- [ ] sekcja „Opinie" ma prawdziwe wypowiedzi albo została usunięta (punkt 2a)
 - [ ] zdjęcia sprawdzone na komórce i na desktopie, podpis pod cytatem zgodny z osobą
 - [ ] formularz wysłany testowo i zgłoszenie doszło
 - [ ] adresy w `sitemap.xml` i `robots.txt` zgodne z docelową domeną

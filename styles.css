@@ -238,13 +238,15 @@ em { font-style: normal; color: var(--blue); }
    Nagłówek
    ========================================================================== */
 
+/* Domyślny nagłówek — biały, przyklejony. Tak wygląda na podstronach
+   (polityka, regulamin, kalkulator), gdzie nad treścią nie ma ciemnego hero. */
 .site-header {
   position: sticky; top: 0; z-index: 90;
   background: rgba(255,255,255,.94);
   backdrop-filter: saturate(135%) blur(16px);
   -webkit-backdrop-filter: saturate(135%) blur(16px);
   border-bottom: 1px solid transparent;
-  transition: border-color .25s var(--ease), background-color .25s var(--ease);
+  transition: border-color .3s var(--ease), background-color .3s var(--ease);
 }
 .site-header.is-compact { border-bottom-color: var(--line); }
 
@@ -256,17 +258,66 @@ em { font-style: normal; color: var(--blue); }
   position: relative;
   font-size: .88rem; font-weight: 500; color: var(--text); text-decoration: none;
   padding-block: 6px;
+  transition: color .3s var(--ease);
 }
 .desktop-nav a::after {
   content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px;
-  background: var(--ink); transition: right .3s var(--ease);
+  background: currentColor; transition: right .3s var(--ease);
 }
+.desktop-nav a:hover { color: var(--ink); }
 .desktop-nav a:hover::after { right: 0; }
 
 .header-actions { display: flex; align-items: center; gap: 14px; }
-.header-phone { display: none; font-size: .85rem; font-weight: 600; text-decoration: none; letter-spacing: -0.01em; }
+.header-phone {
+  display: none; font-size: .85rem; font-weight: 600; text-decoration: none;
+  letter-spacing: -0.01em; color: var(--text); transition: color .3s var(--ease);
+}
 .header-phone:hover { color: var(--blue); }
 .btn--header { display: none; min-height: 42px; padding: 11px 18px; font-size: .85rem; }
+
+/* --------------------------------------------------------------------------
+   Wariant „na hero” — tylko strona główna (klasa site-header--overlay).
+   Nagłówek leży przezroczysty na pełnoekranowym zdjęciu i zestala się dopiero,
+   gdy strona odjedzie od góry (klasa .is-compact dokładana przez main.js).
+   -------------------------------------------------------------------------- */
+.site-header--overlay {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: transparent;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  transition: border-color .3s var(--ease), background-color .3s var(--ease), backdrop-filter .3s var(--ease);
+}
+.site-header--overlay.is-compact {
+  background: rgba(255,255,255,.94);
+  backdrop-filter: saturate(135%) blur(16px);
+  -webkit-backdrop-filter: saturate(135%) blur(16px);
+}
+
+/* Zamiana znaku jasny/ciemny bez migotania: oba leżą na sobie, przełącza opacity. */
+.site-header--overlay .brand { position: relative; display: block; line-height: 0; }
+.site-header--overlay .brand-logo { height: 30px; width: auto; transition: opacity .3s var(--ease); }
+.site-header--overlay .brand-logo--dark { position: absolute; inset: 0; opacity: 0; }
+.site-header--overlay.is-compact .brand-logo--light { opacity: 0; }
+.site-header--overlay.is-compact .brand-logo--dark { opacity: 1; }
+
+.site-header--overlay:not(.is-compact) .desktop-nav a { color: rgba(255,255,255,.82); }
+.site-header--overlay:not(.is-compact) .desktop-nav a:hover { color: var(--white); }
+.site-header--overlay:not(.is-compact) .header-phone { color: var(--white); }
+.site-header--overlay:not(.is-compact) .header-phone:hover { color: #A7C0D4; }
+.site-header--overlay:not(.is-compact) .btn--header {
+  background: rgba(255,255,255,.1); color: var(--white);
+  border-color: rgba(255,255,255,.34);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.site-header--overlay:not(.is-compact) .btn--header:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
+
+/* Pasek postępu czytania — 2 px na dolnej krawędzi nagłówka. */
+.scroll-progress {
+  position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
+  transform: scaleX(var(--progress, 0)); transform-origin: 0 50%;
+  background: var(--blue);
+  opacity: 0; transition: opacity .3s var(--ease);
+}
+.site-header.is-compact .scroll-progress { opacity: 1; }
 
 .menu-toggle {
   display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
@@ -274,10 +325,23 @@ em { font-style: normal; color: var(--blue); }
   border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--white); cursor: pointer;
 }
-.menu-toggle span { height: 1.5px; background: var(--ink); transition: transform .22s var(--ease), opacity .22s var(--ease); }
+.menu-toggle span { height: 1.5px; background: var(--ink); transition: transform .22s var(--ease), opacity .22s var(--ease), background-color .3s var(--ease); }
+.site-header--overlay:not(.is-compact) .menu-toggle { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.3); }
+.site-header--overlay:not(.is-compact) .menu-toggle span { background: var(--white); }
 .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Otwarte menu mobilne zawsze na białym — inaczej pasek nad nim zostaje przezroczysty. */
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) {
+  background: var(--white);
+  border-bottom-color: var(--line);
+}
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .brand-logo--light { opacity: 0; }
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .brand-logo--dark { opacity: 1; }
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .menu-toggle { background: var(--white); border-color: var(--line); }
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .menu-toggle span { background: var(--ink); }
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .header-phone { color: var(--text); }
 
 .mobile-nav { background: var(--white); border-top: 1px solid var(--line); }
 .mobile-nav-inner { display: flex; flex-direction: column; padding-block: 8px 20px; }
@@ -295,14 +359,17 @@ em { font-style: normal; color: var(--blue); }
    Hero — bardziej naturalny, mniej „AI”, z pełnym obrazem w tle
    ========================================================================== */
 
-.hero { background: var(--white); padding: 0 0 clamp(54px, 7vw, 92px); overflow: clip; }
-.hero-stage {
+/* Hero zajmuje całe okno. Zdjęcie jest tłem sekcji (nie osobnej „sceny”),
+   nagłówek leży na nim przezroczysty, a tekst siedzi w lewej kolumnie —
+   tam, gdzie zdjęcie jest najciemniejsze i najmniej się dzieje. */
+.hero {
   position: relative;
-  min-height: min(760px, calc(100svh - var(--header-h)));
-  overflow: hidden;
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  overflow: clip;
   background: var(--ink);
   color: var(--white);
-  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 0;
 }
 .hero-media,
 .hero-media img {
@@ -310,34 +377,38 @@ em { font-style: normal; color: var(--blue); }
 }
 .hero-media img {
   object-fit: cover;
-  object-position: center right;
-  filter: saturate(.86) contrast(.96) brightness(.72);
+  object-position: 68% center;
+  filter: saturate(.88) contrast(.98) brightness(.76);
 }
 .hero-shade {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(7,14,20,.96) 0%, rgba(7,14,20,.9) 28%, rgba(7,14,20,.72) 48%, rgba(7,14,20,.3) 72%, rgba(7,14,20,.08) 100%),
-    linear-gradient(180deg, rgba(7,14,20,.28) 0%, rgba(7,14,20,.08) 34%, rgba(7,14,20,.5) 100%);
+    linear-gradient(90deg, rgba(7,14,20,.95) 0%, rgba(7,14,20,.88) 26%, rgba(7,14,20,.66) 46%, rgba(7,14,20,.24) 70%, rgba(7,14,20,0) 92%),
+    linear-gradient(180deg, rgba(7,14,20,.62) 0%, rgba(7,14,20,.1) 26%, rgba(7,14,20,.06) 58%, rgba(7,14,20,.58) 100%);
 }
 .hero-main {
   position: relative; z-index: 2;
-  min-height: min(760px, calc(100svh - var(--header-h)));
+  flex: 1;
   display: flex; align-items: center;
+  padding-top: var(--header-h);
 }
 .hero-copy {
   width: 100%;
-  max-width: 650px;
-  padding: clamp(84px, 10vw, 132px) 0 clamp(112px, 11vw, 156px);
+  max-width: 660px;
+  padding: clamp(40px, 5vw, 64px) 0 clamp(48px, 6vw, 72px);
 }
 .hero .eyebrow { color: #A7C0D4; margin-bottom: 26px; }
+/* Rozmiar jest związany z max-width kolumny: „Finansowanie” to najdłuższe słowo
+   w nagłówku i to ono wyznacza górną granicę — powyżej niej .hero-line
+   (overflow: hidden) zaczyna je przycinać. */
 .hero-copy h1 {
   color: var(--white);
   margin-bottom: 22px;
-  font-size: clamp(3rem, 6.6vw, 6.2rem);
+  font-size: clamp(2.7rem, 5vw, 4.7rem);
   font-weight: 500;
-  line-height: .93;
-  letter-spacing: -.055em;
-  max-width: 8.2ch;
+  line-height: .96;
+  letter-spacing: -.045em;
+  max-width: 13ch;
   text-wrap: initial;
 }
 .hero-copy h1 em { color: #A7C0D4; }
@@ -355,16 +426,70 @@ em { font-style: normal; color: var(--blue); }
 .hero .btn--ghost { color: var(--white); border-color: rgba(255,255,255,.24); background: rgba(255,255,255,.02); }
 .hero .btn--ghost:hover { border-color: rgba(255,255,255,.58); background: rgba(255,255,255,.07); }
 
+/* Trzy konkrety pod przyciskami — zbijają najczęstsze obawy, zanim padnie pytanie. */
+.hero-proof {
+  display: flex; flex-wrap: wrap; gap: 10px 26px;
+  margin-top: 34px; padding-top: 26px;
+  border-top: 1px solid rgba(255,255,255,.14);
+  list-style: none;
+}
+.hero-proof li {
+  display: flex; align-items: center; gap: 9px;
+  font-size: .84rem; color: rgba(255,255,255,.74);
+}
+.hero-proof svg {
+  flex: none; width: 15px; height: 15px;
+  fill: none; stroke: #A7C0D4; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Zachęta do przewinięcia — dolna krawędź hero, kreska „oddycha” w pętli. */
+.hero-scroll {
+  position: relative; z-index: 3;
+  align-self: flex-start;
+  display: flex; align-items: center; gap: 14px;
+  margin: 0 0 clamp(26px, 4vh, 44px) var(--gutter);
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.62); text-decoration: none;
+  transition: color .3s var(--ease);
+}
+.hero-scroll:hover { color: var(--white); }
+.hero-scroll-line { display: block; width: 56px; height: 1px; background: rgba(255,255,255,.24); overflow: hidden; }
+.hero-scroll-line i { display: block; width: 100%; height: 100%; background: var(--white); transform-origin: 0 50%; animation: scrollHint 2.4s var(--ease) infinite; }
+@keyframes scrollHint {
+  0%   { transform: scaleX(0); transform-origin: 0 50%; }
+  45%  { transform: scaleX(1); transform-origin: 0 50%; }
+  55%  { transform: scaleX(1); transform-origin: 100% 50%; }
+  100% { transform: scaleX(0); transform-origin: 100% 50%; }
+}
+
 @media (max-width: 899px) {
-  .hero-stage, .hero-main { min-height: auto; }
-  .hero-media img { object-position: 74% center; }
+  /* Na wąskim ekranie pełny ekran zostaje, ale zdjęcie schodzi pod tekst
+     przyciemnione od góry — inaczej nagłówek trafia w jasne okno. */
+  .hero { min-height: 100svh; }
+  .hero-media img { object-position: 72% center; }
   .hero-shade {
     background:
-      linear-gradient(180deg, rgba(7,14,20,.9) 0%, rgba(7,14,20,.82) 44%, rgba(7,14,20,.58) 72%, rgba(7,14,20,.42) 100%);
+      linear-gradient(180deg, rgba(7,14,20,.92) 0%, rgba(7,14,20,.84) 40%, rgba(7,14,20,.6) 70%, rgba(7,14,20,.5) 100%);
   }
-  .hero-copy { padding: 74px 0 90px; max-width: 100%; }
-  .hero-copy h1 { font-size: clamp(3rem, 12vw, 5rem); max-width: 8.5ch; }
-  .hero-lead { max-width: 34ch; }
+  .hero-copy { padding: 40px 0 64px; max-width: 100%; }
+  .hero-copy h1 { font-size: clamp(2.8rem, 12vw, 5rem); max-width: 9ch; }
+  .hero-lead { max-width: 36ch; }
+  .hero-proof { gap: 8px 20px; margin-top: 26px; padding-top: 20px; }
+  .hero-proof li { font-size: .8rem; }
+}
+@media (max-width: 560px) {
+  /* Poniżej tej szerokości trzeci punkt i tak zawija się brzydko. */
+  .hero-proof li:nth-child(3) { display: none; }
+  .hero-scroll { display: none; }
+  .hide-sm { display: none; }
+}
+@media (max-width: 899px) {
+  /* Pasek CTA przyklejony do dołu zasłaniałby ostatnią linijkę hero. */
+  .hero-copy { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-line i { animation: none; transform: none; }
 }
 
 
@@ -412,19 +537,33 @@ em { font-style: normal; color: var(--blue); }
   opacity: .28;
 }
 
-/* Pasek raty — jasny, techniczny detal pod ciemnym hero. */
+/* --------------------------------------------------------------------------
+   Sekcja „Zacznij tutaj” — pierwszy przystanek po hero.
+   Suwak raty jest tu celowo przed listą produktów: daje coś do ruszenia,
+   zanim padnie prośba o numer telefonu.
+   -------------------------------------------------------------------------- */
+.rate-section { padding-block: clamp(64px, 8vw, 112px); }
+.rate-layout { display: grid; gap: clamp(32px, 5vw, 56px); align-items: start; }
+.rate-intro h2 { margin-top: 14px; }
+.rate-intro .section-lead { margin-top: 18px; }
+@media (min-width: 1000px) {
+  .rate-layout { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(48px, 6vw, 88px); }
+}
+
+/* Pasek raty — jasny, techniczny detal. */
 .rate-bar {
-  position: relative; z-index: 4; margin-top: -26px;
+  position: relative; z-index: 4;
   display: grid; gap: 22px; padding: 24px;
   background: var(--white); color: var(--ink);
   border: 1px solid var(--line); border-radius: var(--radius-lg);
   box-shadow: 0 18px 50px rgba(19,38,52,.09);
 }
 .rate-bar-kicker {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+  display: flex; flex-direction: column; gap: 6px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--line-soft);
   font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
 }
-.rate-bar-kicker span { color: var(--ink); }
+.rate-bar-kicker span { color: var(--ink); letter-spacing: .1em; }
 .rate-bar-controls { display: grid; gap: 20px; }
 .rate-bar-out { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .rate-bar-out > span { font-size: .78rem; color: var(--muted); }
@@ -437,14 +576,16 @@ em { font-style: normal; color: var(--blue); }
 }
 .rate-bar-cta:hover { background: var(--blue-dark); transform: translateY(-1px); }
 .rate-bar-cta svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-@media (min-width: 760px) {
-  .rate-bar { grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 34px; padding: 22px 26px; }
-  .rate-bar-kicker { display: block; max-width: 14ch; letter-spacing: .12em; }
-  .rate-bar-kicker span { display: block; margin-top: 5px; letter-spacing: .1em; }
-  .rate-bar-controls { grid-template-columns: 1fr 1fr; gap: 28px; }
-  .rate-bar-out { flex-direction: column; align-items: flex-end; gap: 2px; }
+/* Kafel, nie pasek: w układzie dwukolumnowym suwaki mają własną kolumnę,
+   więc rozkładamy je w pionie i zostawiamy wynikowi dużo powietrza. */
+@media (min-width: 560px) {
+  .rate-bar { padding: 30px 32px; gap: 26px; }
+  .rate-bar-controls { grid-template-columns: 1fr 1fr; gap: 30px; }
 }
-@media (max-width: 759px) { .rate-bar { margin-top: -10px; } }
+.rate-bar-out {
+  padding-top: 22px;
+  border-top: 1px solid var(--line-soft);
+}
 
 .trust-bar {
   list-style: none; margin: clamp(44px, 5vw, 68px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr);
@@ -703,6 +844,44 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .stat span { display: block; margin-top: 8px; font-size: .83rem; color: rgba(255,255,255,.7); line-height: 1.4; }
 
 @media (min-width: 900px) { .stats-inner { grid-template-columns: .8fr 1.2fr; } }
+
+/* ==========================================================================
+   Opinie — ostatni dowód przed FAQ i formularzem
+   ========================================================================== */
+
+.quote-grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.quote-card {
+  background: var(--white);
+  padding: clamp(28px, 3.4vw, 40px);
+  display: flex; flex-direction: column;
+}
+.quote-mark {
+  font-family: var(--font-display); font-size: 3.4rem; line-height: .6;
+  color: var(--blue); opacity: .32; margin-bottom: 18px;
+}
+.quote-card blockquote { margin: 0; flex: 1; }
+.quote-card blockquote p {
+  font-size: 1.02rem; line-height: 1.62; color: var(--text);
+  text-wrap: pretty;
+}
+.quote-meta {
+  margin-top: 26px; padding-top: 20px;
+  border-top: 1px solid var(--line-soft);
+  display: flex; flex-direction: column; gap: 3px;
+}
+.quote-meta strong { font-size: .92rem; font-weight: 600; color: var(--ink); }
+.quote-meta span { font-size: .8rem; color: var(--muted); }
+
+#opinie .fineprint { margin-top: clamp(28px, 3vw, 40px); max-width: 72ch; }
+
+@media (min-width: 860px) { .quote-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* ==========================================================================
    Formularz

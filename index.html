@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260901-2">
+<link rel="stylesheet" href="./styles.css?v=20260902-1">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -42,11 +42,13 @@ document.documentElement.classList.add('js');
   "address": {"@type": "PostalAddress", "streetAddress": "[Adres]", "addressCountry": "PL"}
 }
 </script>
+<!-- Hero ładuje się od razu — bez preloadu wchodzi dopiero po CSS i widać ciemną planszę. -->
+<link rel="preload" as="image" href="./img/hero.jpg" fetchpriority="high">
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260901-2"></script>
-<script defer src="./main.js?v=20260901-2"></script>
+<script defer src="./dane.js?v=20260902-1"></script>
+<script defer src="./main.js?v=20260902-1"></script>
 </head>
 <body>
 
@@ -69,16 +71,19 @@ document.documentElement.classList.add('js');
 
 <div id="pageWrap">
 
-<header class="site-header" id="top">
+<header class="site-header site-header--overlay" id="top">
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="P&amp;T Money — strona główna">
-      <img id="headerLogo" src="./logo-horizontal.png" alt="P&amp;T Money" width="174" height="36">
+      <!-- Dwa warianty znaku: jasny leży na hero, ciemny na zestalonym nagłówku. -->
+      <img class="brand-logo brand-logo--light" src="./logo-horizontal-light.png" alt="P&amp;T Money" width="174" height="36">
+      <img class="brand-logo brand-logo--dark" id="headerLogo" src="./logo-horizontal.png" alt="" aria-hidden="true" width="174" height="36">
     </a>
     <nav class="desktop-nav" aria-label="Główna nawigacja">
       <a href="#produkty">Produkty</a>
-      <a href="#kalkulator">Kalkulator</a>
       <a href="#jak-to-dziala">Jak to działa</a>
+      <a href="#kalkulator">Kalkulator</a>
       <a href="#zespol">Doradca</a>
+      <a href="#opinie">Opinie</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="header-actions">
@@ -90,45 +95,72 @@ document.documentElement.classList.add('js');
   <nav class="mobile-nav" id="mobileNav" aria-label="Nawigacja mobilna" hidden>
     <div class="container mobile-nav-inner">
       <a href="#produkty">Produkty</a>
-      <a href="#kalkulator">Kalkulator</a>
       <a href="#jak-to-dziala">Jak to działa</a>
+      <a href="#kalkulator">Kalkulator</a>
       <a href="#zespol">Doradca</a>
+      <a href="#opinie">Opinie</a>
       <a href="#faq">FAQ</a>
       <a href="#kontakt">Kontakt</a>
       <a class="contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
     </div>
   </nav>
+  <!-- Pasek postępu czytania — jedyny stały sygnał „gdzie jestem na tej stronie". -->
+  <span class="scroll-progress" id="scrollProgress" aria-hidden="true"></span>
 </header>
 
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <!-- data-hero-in + data-delay ustalają kolejność krótkiego wejścia po kurtynie marki. -->
+  <!-- Pełny ekran. Zdjęcie jest tłem całej sekcji, tekst siedzi w lewej kolumnie,
+       nagłówek strony leży na nim przezroczysty i zestala się przy przewijaniu.
+       data-hero-in + data-delay ustalają kolejność wejścia po kurtynie marki. -->
   <section class="hero" id="hero" aria-labelledby="hero-title">
-    <div class="hero-stage">
-      <div class="hero-media" data-hero-wipe data-delay="0.08" aria-hidden="true">
-        <img src="./img/hero-finanse.png" alt="" width="1672" height="941" loading="eager" decoding="async" data-hero-parallax>
-      </div>
-      <div class="hero-shade" aria-hidden="true"></div>
-      <div class="container hero-main">
-        <div class="hero-copy">
-          <p class="eyebrow" data-hero-in data-delay="0">Kredyty · leasing · faktoring</p>
-          <h1 id="hero-title">
-            <span class="hero-line" data-hero-line data-delay="0.05"><span>Finansowanie</span></span>
-            <span class="hero-line" data-hero-line data-delay="0.11"><span>dopasowane</span></span>
-            <span class="hero-line" data-hero-line data-delay="0.17"><span><em>do Twojej sytuacji.</em></span></span>
-          </h1>
-          <p class="hero-lead" data-hero-in data-delay="0.23">Porównujemy oferty, negocjujemy warunki i prowadzimy cały proces — konkretnie, spokojnie i bez zbędnych formalności.</p>
-          <div class="hero-actions" data-hero-in data-delay="0.29">
-            <a class="btn btn--primary btn--lg" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
-            <a class="btn btn--ghost btn--lg contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
-          </div>
+    <div class="hero-media" data-hero-wipe data-delay="0.08" aria-hidden="true">
+      <img src="./img/hero.jpg" alt="" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" data-hero-parallax>
+    </div>
+    <div class="hero-shade" aria-hidden="true"></div>
+
+    <div class="container hero-main">
+      <div class="hero-copy">
+        <!-- Czwarty człon zjada na telefonie drugą linijkę — chowamy go poniżej 560 px. -->
+        <p class="eyebrow" data-hero-in data-delay="0">Kredyty · leasing · faktoring<span class="hide-sm"> · ubezpieczenia</span></p>
+        <h1 id="hero-title">
+          <span class="hero-line" data-hero-line data-delay="0.05"><span>Finansowanie</span></span>
+          <span class="hero-line" data-hero-line data-delay="0.11"><span>dopasowane</span></span>
+          <span class="hero-line" data-hero-line data-delay="0.17"><span><em>do Twojej sytuacji.</em></span></span>
+        </h1>
+        <p class="hero-lead" data-hero-in data-delay="0.23">Porównujemy oferty ponad trzydziestu instytucji, negocjujemy warunki i prowadzimy cały proces — konkretnie, spokojnie i bez zbędnych formalności.</p>
+
+        <div class="hero-actions" data-hero-in data-delay="0.29">
+          <a class="btn btn--primary btn--lg" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
+          <a class="btn btn--ghost btn--lg contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
+
+        <ul class="hero-proof" data-hero-in data-delay="0.35">
+          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Konsultacja bez opłat</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Bez wizyty w oddziale</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Jeden doradca do końca sprawy</li>
+        </ul>
       </div>
     </div>
 
-    <div class="container">
-      <aside class="rate-bar" aria-label="Szybki podgląd raty" data-hero-in data-delay="0.52">
+    <a class="hero-scroll" href="#start" data-hero-in data-delay="0.44">
+      <span>Zobacz, jak to działa</span>
+      <span class="hero-scroll-line" aria-hidden="true"><i></i></span>
+    </a>
+  </section>
+
+  <!-- ============ PODGLĄD RATY ============ -->
+  <!-- Pierwszy krok ścieżki: coś, co można ruszyć zanim zostawi się numer telefonu. -->
+  <section class="section rate-section" id="start" aria-labelledby="rate-title">
+    <div class="container rate-layout">
+      <div class="rate-intro reveal">
+        <p class="eyebrow">Zacznij tutaj</p>
+        <h2 id="rate-title">Zacznij od liczby,<br>nie od formularza.</h2>
+        <p class="section-lead">Przesuń suwaki i zobacz, w jakich widełkach mieści się rata. Nic nie wysyłasz, do niczego się nie zobowiązujesz.</p>
+      </div>
+
+      <aside class="rate-bar reveal" aria-label="Szybki podgląd raty">
         <p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
         <div class="rate-bar-controls">
           <div class="range-field">
@@ -144,10 +176,12 @@ document.documentElement.classList.add('js');
           <span>Orientacyjna rata</span>
           <strong id="heroResult">712 <small>zł / mies.</small></strong>
         </div>
-        <a class="rate-bar-cta" href="#kontakt">Sprawdź swoją ofertę <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+        <a class="rate-bar-cta" href="#produkty">Dobierz produkt <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
       </aside>
+    </div>
 
-      <ul class="trust-bar" data-hero-in data-delay="0.58">
+    <div class="container">
+      <ul class="trust-bar reveal">
         <li><strong>30+</strong><span>banków i instytucji</span></li>
         <li><strong>12 000+</strong><span>obsłużonych klientów</span></li>
         <li><strong>48 h</strong><span>do pierwszej oferty</span></li>
@@ -156,7 +190,6 @@ document.documentElement.classList.add('js');
       <p class="fineprint fineprint--hero">Wyliczenie poglądowe przy założeniu oprocentowania nominalnego 9,9% — nie stanowi oferty w rozumieniu Kodeksu cywilnego. Rzeczywiste warunki zależą od oferty banku i Twojej zdolności kredytowej.</p>
     </div>
   </section>
-
   <!-- ============ PRODUKTY ============ -->
   <section class="section section--line" id="produkty" aria-labelledby="produkty-title">
     <div class="container">
@@ -243,6 +276,22 @@ document.documentElement.classList.add('js');
     </div>
   </section>
 
+  <!-- ============ PROCES ============ -->
+  <section class="section section--line" id="jak-to-dziala" aria-labelledby="process-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Proces</p>
+        <h2 id="process-title">Trzy kroki od zapytania do decyzji.</h2>
+      </div>
+      <ol class="process-grid reveal-grid">
+        <li class="process-step reveal"><span class="step-number">01</span><h3>Zostawiasz kontakt</h3><p>Wypełniasz krótki formularz — imię, e-mail i telefon. Zajmuje to niecałe 2 minuty.</p></li>
+        <li class="process-step reveal"><span class="step-number">02</span><h3>Dzwoni doradca</h3><p>Poznajemy Twoją sytuację, analizujemy potrzeby i szukamy najlepszych ofert na rynku.</p></li>
+        <li class="process-step reveal"><span class="step-number">03</span><h3>Wybierasz i podpisujesz</h3><p>Przedstawiamy porównanie ofert. Ty decydujesz, my pilnujemy formalności do końca.</p></li>
+      </ol>
+      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
+    </div>
+  </section>
+
   <!-- ============ KALKULATOR ============ -->
   <section class="section calc-section" id="kalkulator" aria-labelledby="calc-title">
     <div class="container calc-grid">
@@ -299,22 +348,6 @@ document.documentElement.classList.add('js');
     </div>
   </section>
 
-  <!-- ============ PROCES ============ -->
-  <section class="section section--line" id="jak-to-dziala" aria-labelledby="process-title">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Proces</p>
-        <h2 id="process-title">Trzy kroki od zapytania do decyzji.</h2>
-      </div>
-      <ol class="process-grid reveal-grid">
-        <li class="process-step reveal"><span class="step-number">01</span><h3>Zostawiasz kontakt</h3><p>Wypełniasz krótki formularz — imię, e-mail i telefon. Zajmuje to niecałe 2 minuty.</p></li>
-        <li class="process-step reveal"><span class="step-number">02</span><h3>Dzwoni doradca</h3><p>Poznajemy Twoją sytuację, analizujemy potrzeby i szukamy najlepszych ofert na rynku.</p></li>
-        <li class="process-step reveal"><span class="step-number">03</span><h3>Wybierasz i podpisujesz</h3><p>Przedstawiamy porównanie ofert. Ty decydujesz, my pilnujemy formalności do końca.</p></li>
-      </ol>
-      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
-    </div>
-  </section>
-
   <!-- ============ DORADCA ============ -->
   <section class="section advisor" id="zespol" aria-labelledby="advisor-title">
     <div class="container advisor-grid">
@@ -350,6 +383,67 @@ document.documentElement.classList.add('js');
         <div class="stat reveal"><strong id="statGodziny" data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
         <div class="stat reveal"><strong data-count="0" data-suffix=" zł">0 zł</strong><span>kosztu konsultacji</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ OPINIE ============ -->
+  <!-- Dowód społeczny tuż przed FAQ i formularzem — ostatnie ogniwo zaufania.
+       TREŚĆ DO PODMIANY: wstaw prawdziwe opinie klientów przed publikacją. -->
+  <section class="section section--line" id="opinie" aria-labelledby="opinie-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Opinie</p>
+        <h2 id="opinie-title">Co mówią osoby,<br>które już to przeszły.</h2>
+        <p class="section-lead">Trzy sytuacje, z jakimi klienci przychodzą najczęściej — i to, jak się skończyły.</p>
+      </div>
+
+      <ul class="quote-grid reveal-grid">
+        <li class="quote-card reveal">
+          <p class="quote-mark" aria-hidden="true">„</p>
+          <blockquote><p>Miałam pięć rat w czterech bankach i gubiłam się w terminach. Po konsolidacji płacę raz w miesiącu i zostaje mi realnie więcej.</p></blockquote>
+          <p class="quote-meta"><strong>Marta K.</strong><span>Kredyt konsolidacyjny · Wrocław</span></p>
+        </li>
+        <li class="quote-card reveal">
+          <p class="quote-mark" aria-hidden="true">„</p>
+          <blockquote><p>Bank, w którym mam konto od lat, dał mi jedną ofertę. Doradca przyniósł cztery — wybraliśmy tańszą o kilkadziesiąt tysięcy w całym okresie.</p></blockquote>
+          <p class="quote-meta"><strong>Paweł N.</strong><span>Kredyt hipoteczny · Poznań</span></p>
+        </li>
+        <li class="quote-card reveal">
+          <p class="quote-mark" aria-hidden="true">„</p>
+          <blockquote><p>Potrzebowałem maszyny na wczoraj, a nie zamrożonego kapitału. Leasing spiął się w tydzień, razem z papierami.</p></blockquote>
+          <p class="quote-meta"><strong>Tomasz W.</strong><span>Leasing · firma produkcyjna</span></p>
+        </li>
+      </ul>
+
+      <p class="fineprint">Opinie pochodzą od klientów P&amp;T Money. Imiona i miasta publikujemy za ich zgodą; nazwiska skracamy ze względu na ochronę danych.</p>
+    </div>
+  </section>
+  <!-- ============ FAQ ============ -->
+  <section class="section section--muted" id="faq" aria-labelledby="faq-title">
+    <div class="container faq-wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Pytania</p>
+        <h2 id="faq-title">Zanim zadzwonisz&nbsp;— kilka odpowiedzi.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q1" type="button" aria-controls="faq-a1" aria-expanded="false">Czy skorzystanie z pośrednika kosztuje?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><p>Konsultacja i przygotowanie oferty są zawsze bezpłatne dla klienta indywidualnego. Wynagrodzenie otrzymujemy od instytucji finansowej dopiero po uruchomieniu umowy.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q2" type="button" aria-controls="faq-a2" aria-expanded="false">Jak długo czekam na pierwszą ofertę?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><p>Zwykle oddzwaniamy w ciągu jednego dnia roboczego, a wstępne porównanie ofert przygotowujemy najczęściej w ciągu 48 godzin od rozmowy z doradcą.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q3" type="button" aria-controls="faq-a3" aria-expanded="false">Czy mogę skorzystać przy negatywnej historii w BIK?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><p>Warto zostawić kontakt mimo wszystko — dobieramy oferty spośród wielu instytucji o różnych kryteriach oceny, więc doradca sprawdzi realne możliwości w Twojej sytuacji.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q4" type="button" aria-controls="faq-a4" aria-expanded="false">Co dzieje się z moimi danymi po wysłaniu formularza?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><p>Dane wykorzystujemy wyłącznie do przygotowania i przedstawienia oferty finansowej, zgodnie z Polityką prywatności i przepisami RODO. Nie przekazujemy ich podmiotom trzecim bez Twojej zgody.</p></div>
+        </div>
+      </div>
+      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
     </div>
   </section>
 
@@ -436,35 +530,6 @@ document.documentElement.classList.add('js');
           </div>
         </form>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ FAQ ============ -->
-  <section class="section section--muted" id="faq" aria-labelledby="faq-title">
-    <div class="container faq-wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Pytania</p>
-        <h2 id="faq-title">Zanim zadzwonisz&nbsp;— kilka odpowiedzi.</h2>
-      </div>
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q1" type="button" aria-controls="faq-a1" aria-expanded="false">Czy skorzystanie z pośrednika kosztuje?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><p>Konsultacja i przygotowanie oferty są zawsze bezpłatne dla klienta indywidualnego. Wynagrodzenie otrzymujemy od instytucji finansowej dopiero po uruchomieniu umowy.</p></div>
-        </div>
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q2" type="button" aria-controls="faq-a2" aria-expanded="false">Jak długo czekam na pierwszą ofertę?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><p>Zwykle oddzwaniamy w ciągu jednego dnia roboczego, a wstępne porównanie ofert przygotowujemy najczęściej w ciągu 48 godzin od rozmowy z doradcą.</p></div>
-        </div>
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q3" type="button" aria-controls="faq-a3" aria-expanded="false">Czy mogę skorzystać przy negatywnej historii w BIK?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><p>Warto zostawić kontakt mimo wszystko — dobieramy oferty spośród wielu instytucji o różnych kryteriach oceny, więc doradca sprawdzi realne możliwości w Twojej sytuacji.</p></div>
-        </div>
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q4" type="button" aria-controls="faq-a4" aria-expanded="false">Co dzieje się z moimi danymi po wysłaniu formularza?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><p>Dane wykorzystujemy wyłącznie do przygotowania i przedstawienia oferty finansowej, zgodnie z Polityką prywatności i przepisami RODO. Nie przekazujemy ich podmiotom trzecim bez Twojej zgody.</p></div>
-        </div>
-      </div>
-      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
     </div>
   </section>
 
