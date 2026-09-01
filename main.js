@@ -614,6 +614,14 @@
         return;
       }
 
+      // Pole-pułapka wypełnia tylko automat. Udajemy sukces, żeby nie podpowiadać botowi,
+      // że został rozpoznany, ale zgłoszenia nigdzie nie wysyłamy.
+      if ($('#fCompany', form)?.value) {
+        if (success) success.hidden = false;
+        form.reset();
+        return;
+      }
+
       const submittedPhone = phoneField?.value || '';
       const submit = $('button[type="submit"]', form);
       const originalText = submit?.textContent;

@@ -745,6 +745,8 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .form-details[open] summary::before { content: "– "; }
 .form-details-grid { display: grid; gap: 18px; margin-top: 20px; }
 
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
 .consent-wrap { margin-top: 24px; }
 .consent { display: flex; gap: 11px; align-items: flex-start; font-size: .8rem; line-height: 1.55; color: var(--muted); cursor: pointer; }
 .consent input { width: 17px; height: 17px; flex: none; margin-top: 2px; accent-color: var(--blue); }

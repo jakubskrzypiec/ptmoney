@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nie ma takiej strony | P&amp;T Money</title>
+<meta name="description" content="Ta strona nie istnieje albo została przeniesiona. Wróć na stronę główną P&amp;T Money.">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#FFFFFF">
+<!-- Strona celowo nie wciąga żadnych plików z zewnątrz: serwer podaje ją pod
+     dowolnym błędnym adresem, także zagnieżdżonym, gdzie ścieżki względne by nie
+     trafiły. Dzięki temu wygląda tak samo pod każdą domeną i na każdej głębokości. -->
+<style>
+  :root { --ink:#08090B; --muted:#5C6472; --line:#DEE1E7; --blue:#1330F0; --blue-dark:#0C22B8; }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; min-height:100vh; display:flex; flex-direction:column;
+    background:#fff; color:var(--ink);
+    font:16px/1.6 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { width:100%; max-width:720px; margin-inline:auto; padding-inline:clamp(20px,5vw,48px); }
+  header { border-bottom:1px solid var(--line); }
+  header .wrap { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:76px; }
+  .brand { font-size:1.1rem; font-weight:400; letter-spacing:-.03em; text-decoration:none; color:var(--ink); }
+  .brand b { font-weight:700; }
+  .brand i { font-style:normal; color:var(--blue); }
+  main { flex:1; padding-block:clamp(56px,10vw,112px); }
+  .eyebrow { margin:0 0 20px; font-size:.7rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--blue); }
+  h1 { margin:0 0 24px; font-size:clamp(2.1rem,5.5vw,3.2rem); font-weight:600; letter-spacing:-.03em; line-height:1.05; }
+  p { margin:0; color:var(--muted); max-width:52ch; }
+  ul { list-style:none; margin:44px 0 0; padding:0; border-top:1px solid var(--line); }
+  li { display:flex; gap:20px; align-items:baseline; padding:20px 0; border-bottom:1px solid var(--line); }
+  li span { font-size:.76rem; font-weight:600; letter-spacing:.06em; color:var(--blue); }
+  li a { color:var(--ink); text-decoration:none; font-weight:500; }
+  li a:hover { color:var(--blue); }
+  .btn {
+    display:inline-flex; align-items:center; min-height:52px; margin-top:44px; padding:15px 28px;
+    background:var(--blue); color:#fff; border-radius:4px;
+    font-size:.95rem; font-weight:600; text-decoration:none;
+  }
+  .btn:hover { background:var(--blue-dark); }
+  footer { border-top:1px solid var(--line); padding-block:24px; font-size:.8rem; color:var(--muted); }
+  a:focus-visible, .btn:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/ptmoney/">P<i>&amp;</i>T <b>money</b></a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Błąd 404</p>
+    <h1>Tej strony u nas nie ma.</h1>
+    <p>Adres jest nieaktualny albo zawiera literówkę. Nic straconego — niżej to, po co zaglądają tu najczęściej.</p>
+    <ul>
+      <li><span>01</span><a href="/ptmoney/#produkty">Produkty — kredyty, leasing, faktoring, ubezpieczenia</a></li>
+      <li><span>02</span><a href="/ptmoney/kalkulator.html">Kalkulator refinansowania kredytu hipotecznego</a></li>
+      <li><span>03</span><a href="/ptmoney/#kontakt">Zostaw kontakt — doradca oddzwoni w 24 h</a></li>
+    </ul>
+    <a class="btn" href="/ptmoney/">Wróć na stronę główną</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 P&amp;T Money</div>
+</footer>
+
+</body>
+</html>

@@ -7,11 +7,14 @@ otwierasz `index.html` albo wrzucasz cały katalog na hosting.
 
 | Plik | Rola |
 |---|---|
+| `dane.js` | **dane klienta — jedyny plik do wypełnienia przed publikacją** |
 | `index.html` | strona główna |
 | `styles.css` | style strony głównej i podstron dokumentowych |
 | `main.js` | intro sterowane przewijaniem, kalkulatory, formularz, FAQ |
 | `kalkulator.html` / `kalkulator.css` / `kalkulator.js` | kalkulator refinansowania hipoteki (osobne narzędzie) |
 | `polityka-prywatnosci.html`, `regulamin.html` | dokumenty |
+| `404.html` | strona błędu — samowystarczalna, nie wciąga plików z zewnątrz |
+| `PRZEKAZANIE.md` | lista kontrolna przed oddaniem strony klientowi |
 | `img/` | zdjęcia doradcy — patrz `img/README.md` |
 | `robots.txt`, `sitemap.xml` | SEO |
 
@@ -56,18 +59,15 @@ Przeglądarki bez `mask-composite` dostają wariant zapasowy: zwykły znak skalo
 
 ## Do uzupełnienia przed publikacją
 
-- **Zdjęcia doradcy** — `img/doradca.jpg` i `img/doradca-2.jpg` (szczegóły w `img/README.md`).
-- **Telefon i e-mail** — wszystkie miejsca są oznaczone `data-contact-placeholder="true"`,
-  numer zastępczy to `+48 000 000 000`, adres `kontakt@ptmoney.pl`.
-- **Imię i nazwisko doradcy** — `[Imię i nazwisko]` w sekcji „Doradca”.
-- **Dane rejestrowe** — pola `[…]` w stopce oraz w JSON-LD w `<head>`.
-- **Liczby w sekcji „Liczby, nie obietnice”** i data `[MM.RRRR]` pod nimi.
-- **Odbiór formularza** — formularz obecnie tylko pokazuje potwierdzenie.
-  Podaj adres endpointu w `data-endpoint` na `<form id="leadForm">`; skrypt wyśle tam `FormData`
-  metodą POST i uzna zgłoszenie za przyjęte przy odpowiedzi 2xx.
-- **Adresy w `sitemap.xml`, `robots.txt` i `<link rel="canonical">`** — jeśli domena inna niż
-  `jakubskrzypiec.github.io/finanse/`.
-- **Dokumenty prawne** — `polityka-prywatnosci.html` i `regulamin.html` to szkice do weryfikacji.
+Wszystkie dane klienta siedzą w jednym pliku: **`dane.js`**. Wpisujesz je raz,
+rozchodzą się po nagłówku, stopce, formularzu, obu dokumentach prawnych
+i danych dla Google. Pole zostawione puste zostaje na stronie jako widoczny
+znacznik (`[NIP]`, numer `+48 000 000 000`) — łatwiej wyłapać braki.
+
+Osobno zostają **zdjęcia doradcy** (`img/`) i **weryfikacja prawna dokumentów**.
+
+Pełna lista kontrolna z instrukcją podłączenia formularza i zmiany domeny:
+**`PRZEKAZANIE.md`**.
 
 ## Ścieżka sprzedażowa
 

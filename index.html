@@ -10,18 +10,17 @@
 <meta property="og:locale" content="pl_PL">
 <meta property="og:title" content="P&amp;T Money | Kredyty, leasing i faktoring — cała Polska">
 <meta property="og:description" content="Porównujemy oferty banków i instytucji finansowych. Zostaw kontakt — doradca oddzwoni w jeden dzień roboczy.">
-<meta property="og:image" content="https://jakubskrzypiec.github.io/finanse/logo-horizontal.png">
-<meta property="og:url" content="https://jakubskrzypiec.github.io/finanse/">
+<meta property="og:image" content="https://jakubskrzypiec.github.io/ptmoney/logo-horizontal.png">
+<meta property="og:url" content="https://jakubskrzypiec.github.io/ptmoney/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="P&amp;T Money | Pośrednictwo finansowe">
 <meta name="twitter:description" content="Kredyty, leasing i faktoring — cała Polska.">
-<meta name="twitter:image" content="https://jakubskrzypiec.github.io/finanse/logo-horizontal.png">
-<link rel="canonical" href="https://jakubskrzypiec.github.io/finanse/">
-<link rel="icon" type="image/png" href="./logo-mark.png">
+<meta name="twitter:image" content="https://jakubskrzypiec.github.io/ptmoney/logo-horizontal.png">
+<link rel="canonical" href="https://jakubskrzypiec.github.io/ptmoney/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260831-1">
+<link rel="stylesheet" href="./styles.css?v=20260901-1">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -40,14 +39,18 @@ document.documentElement.classList.add('js');
   "@context": "https://schema.org",
   "@type": "FinancialService",
   "name": "P&T Money",
-  "url": "https://jakubskrzypiec.github.io/finanse/",
+  "url": "https://jakubskrzypiec.github.io/ptmoney/",
   "areaServed": {"@type": "Country", "name": "Polska"},
   "description": "Pośrednictwo finansowe: kredyty, leasing, faktoring i ubezpieczenia.",
   "taxID": "[NIP]",
   "address": {"@type": "PostalAddress", "streetAddress": "[Adres]", "addressCountry": "PL"}
 }
 </script>
-<script defer src="./main.js?v=20260831-1"></script>
+<link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
+<script defer src="./dane.js?v=20260901-1"></script>
+<script defer src="./main.js?v=20260901-1"></script>
 </head>
 <body>
 
@@ -128,8 +131,8 @@ document.documentElement.classList.add('js');
       </div>
 
       <figure class="portrait portrait--hero" data-hero-wipe data-delay="0.16">
-        <img src="./img/doradca.png" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1431" loading="eager" decoding="async" data-portrait data-hero-parallax>
-        <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradcy</span></figcaption>
+        <img src="./img/doradca.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1431" loading="eager" decoding="async" data-portrait data-hero-parallax>
+        <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
       </figure>
     </div>
 
@@ -325,15 +328,15 @@ document.documentElement.classList.add('js');
   <section class="section advisor" id="zespol" aria-labelledby="advisor-title">
     <div class="container advisor-grid">
       <figure class="portrait portrait--advisor reveal">
-        <img src="./img/doradca.png" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1431" loading="lazy" decoding="async" data-portrait>
-        <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradcy</span></figcaption>
+        <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="700" height="875" loading="lazy" decoding="async" data-portrait>
+        <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
       </figure>
       <div class="advisor-copy">
         <p class="eyebrow reveal">Doradca</p>
         <blockquote class="advisor-quote reveal">
           <p>Nie sprzedajemy Ci kredytu — pomagamy wybrać taki, który się naprawdę opłaca. Zadzwoń, opowiedz o swojej sytuacji, a nasz zespół zajmie się resztą.</p>
         </blockquote>
-        <p class="advisor-meta reveal"><strong>[Imię i nazwisko]</strong><span>Doradca finansowy · P&amp;T Money</span></p>
+        <p class="advisor-meta reveal"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
         <div class="advisor-actions reveal">
           <a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a>
           <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
@@ -351,9 +354,9 @@ document.documentElement.classList.add('js');
         <p class="stats-date">dane na [MM.RRRR]</p>
       </div>
       <div class="stats-grid" id="statsGrid">
-        <div class="stat reveal"><strong data-count="12000" data-suffix="+">12 000+</strong><span>obsłużonych klientów</span></div>
-        <div class="stat reveal"><strong data-count="30" data-suffix="+">30+</strong><span>banków i instytucji w ofercie</span></div>
-        <div class="stat reveal"><strong data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
+        <div class="stat reveal"><strong id="statKlienci" data-count="12000" data-suffix="+">12 000+</strong><span>obsłużonych klientów</span></div>
+        <div class="stat reveal"><strong id="statBanki" data-count="30" data-suffix="+">30+</strong><span>banków i instytucji w ofercie</span></div>
+        <div class="stat reveal"><strong id="statGodziny" data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
         <div class="stat reveal"><strong data-count="0" data-suffix=" zł">0 zł</strong><span>kosztu konsultacji</span></div>
       </div>
     </div>
@@ -423,6 +426,10 @@ document.documentElement.classList.add('js');
               </div>
             </details>
           </div>
+          <div class="hp-field" aria-hidden="true">
+            <label for="fCompany">Nie wypełniaj tego pola</label>
+            <input id="fCompany" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
           <div class="consent-wrap">
             <label class="consent" for="fConsent">
               <input id="fConsent" name="consent" type="checkbox" required aria-describedby="fConsentError">
@@ -446,7 +453,7 @@ document.documentElement.classList.add('js');
     <div class="container faq-wrap">
       <div class="section-head reveal">
         <p class="eyebrow">Pytania</p>
-        <h2 id="faq-title">Zanim zadzwonisz —<br>kilka odpowiedzi.</h2>
+        <h2 id="faq-title">Zanim zadzwonisz&nbsp;— kilka odpowiedzi.</h2>
       </div>
       <div class="faq-list reveal">
         <div class="faq-item">
@@ -484,7 +491,7 @@ document.documentElement.classList.add('js');
       </div>
       <div class="footer-col"><h2>Produkty</h2><a href="#produkty">Kredyt gotówkowy</a><a href="#produkty">Kredyt hipoteczny</a><a href="#produkty">Kredyt firmowy</a><a href="#produkty">Leasing i faktoring</a></div>
       <div class="footer-col"><h2>Firma</h2><a href="#jak-to-dziala">Jak działamy</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
-      <div class="footer-col"><h2>Kontakt</h2><a class="contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">+48 000 000 000</a><a class="contact-placeholder" data-contact-placeholder="true" href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a><a href="https://ptmoney.pl/">ptmoney.pl</a></div>
+      <div class="footer-col"><h2>Kontakt</h2><a class="contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">+48 000 000 000</a><a class="contact-placeholder" data-contact-placeholder="true" href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a><a id="stronaWww" href="https://jakubskrzypiec.github.io/ptmoney/">ptmoney.pl</a></div>
     </div>
     <div class="footer-registry" aria-label="Dane rejestrowe"><span>Pełna nazwa: [Pełna nazwa firmy]</span><span>NIP: [NIP]</span><span>KRS/CEIDG: [KRS/CEIDG]</span><span>Nr wpisu KNF: [Nr wpisu KNF]</span><span>Siedziba: [Adres]</span></div>
     <div class="footer-bottom">
