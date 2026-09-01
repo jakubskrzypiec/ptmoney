@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-5">
+<link rel="stylesheet" href="./styles.css?v=20260902-6">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -47,8 +47,8 @@ document.documentElement.classList.add('js');
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260902-5"></script>
-<script defer src="./main.js?v=20260902-5"></script>
+<script defer src="./dane.js?v=20260902-6"></script>
+<script defer src="./main.js?v=20260902-6"></script>
 </head>
 <body>
 
@@ -351,41 +351,38 @@ document.documentElement.classList.add('js');
   </section>
 
   <!-- ============ DORADCA ============ -->
-  <!-- Wcześniej: duży portret i dwa zdania obok, reszta sekcji pusta.
-       Teraz prawa kolumna niesie konkret — co ta osoba faktycznie robi —
-       więc sekcja ma czym wypełnić wysokość, a nie tylko rozstawia powietrze. -->
+  <!-- Podpis siedzi pod zdjęciem, nie w kolumnie obok — tożsamość ma być przy
+       twarzy. Lead z nagłówka wyleciał: zapowiadał dosłownie to, co stoi
+       w czterech punktach niżej, przez co sekcja mówiła to samo dwa razy.
+       Punkty są ponumerowane i idą przez całą szerokość prawej kolumny. -->
   <section class="section section--muted advisor" id="zespol" aria-labelledby="advisor-title">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Doradca</p>
-        <h2 id="advisor-title">Jedna osoba prowadzi<br>Twoją sprawę do końca.</h2>
-        <p class="section-lead">Nie przekazujemy Cię między działami. Ten sam doradca zbiera dokumenty, rozmawia z bankami i jest pod telefonem, gdy coś się zmienia.</p>
-      </div>
-
-      <div class="advisor-grid">
-        <figure class="portrait portrait--advisor reveal">
+    <div class="container advisor-grid">
+      <div class="advisor-side reveal">
+        <figure class="portrait portrait--advisor">
           <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1374" loading="lazy" decoding="async" data-portrait>
           <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
         </figure>
-
-        <div class="advisor-copy">
-          <blockquote class="advisor-quote reveal">
-            <p>Nie sprzedajemy Ci kredytu — pomagamy wybrać taki, który się naprawdę opłaca.</p>
-          </blockquote>
-          <p class="advisor-meta reveal"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
-
-          <ul class="advisor-duties reveal-grid">
-            <li class="reveal"><strong>Zbiera dokumenty</strong><span>Mówi dokładnie, co przygotować — i sprawdza komplet, zanim trafi do banku.</span></li>
-            <li class="reveal"><strong>Rozmawia z bankami</strong><span>Składa wnioski, pilnuje terminów i negocjuje marżę oraz prowizję.</span></li>
-            <li class="reveal"><strong>Tłumaczy warunki</strong><span>Pokazuje różnice między ofertami po ludzku, razem z tym, co Cię będzie kosztować.</span></li>
-            <li class="reveal"><strong>Zostaje po decyzji</strong><span>Jest pod telefonem także przy aneksach, refinansowaniu i zmianie sytuacji.</span></li>
-          </ul>
-
-          <div class="advisor-actions reveal">
-            <a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a>
-            <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
-          </div>
+        <p class="advisor-meta"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
+        <div class="advisor-actions">
+          <a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a>
+          <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
+      </div>
+
+      <div class="advisor-copy">
+        <p class="eyebrow reveal">Doradca</p>
+        <h2 id="advisor-title" class="reveal">Jedna osoba prowadzi<br>Twoją sprawę do końca.</h2>
+
+        <blockquote class="advisor-quote reveal">
+          <p>Nie sprzedajemy Ci kredytu — pomagamy wybrać taki, który się naprawdę opłaca.</p>
+        </blockquote>
+
+        <ol class="advisor-duties reveal-grid">
+          <li class="reveal"><span class="duty-num">01</span><div><strong>Zbiera dokumenty</strong><span>Mówi dokładnie, co przygotować — i sprawdza komplet, zanim trafi do banku.</span></div></li>
+          <li class="reveal"><span class="duty-num">02</span><div><strong>Rozmawia z bankami</strong><span>Składa wnioski, pilnuje terminów i negocjuje marżę oraz prowizję.</span></div></li>
+          <li class="reveal"><span class="duty-num">03</span><div><strong>Tłumaczy warunki</strong><span>Pokazuje różnice między ofertami po ludzku, razem z tym, co Cię będzie kosztować.</span></div></li>
+          <li class="reveal"><span class="duty-num">04</span><div><strong>Zostaje po decyzji</strong><span>Jest pod telefonem także przy aneksach, refinansowaniu i zmianie sytuacji.</span></div></li>
+        </ol>
       </div>
     </div>
   </section>
@@ -411,45 +408,73 @@ document.documentElement.classList.add('js');
   </section>
 
   <!-- ============ OPINIE ============ -->
-  <!-- Dowód społeczny tuż przed FAQ i formularzem — ostatnie ogniwo zaufania.
-       DO UZUPEŁNIENIA: układ jest gotowy, treść czeka na prawdziwe opinie.
-       Wpisz je w miejsce znaczników [Opinia N] — tak samo jak [NIP] w stopce.
-       Nie wolno tu wstawiać wymyślonych wypowiedzi: to publiczna referencja
-       klienta, a nie tekst poglądowy. Jeśli opinii nie będzie — usuń całą sekcję
-       oraz odnośniki „Opinie" w nagłówku, menu mobilnym i stopce. -->
-  <section class="section section--line" id="opinie" aria-labelledby="opinie-title">
+  <!-- Karuzela przewija się sama, zatrzymuje na najechaniu i na fokusie,
+       ma też strzałki i kropki. Sterowanie w main.js (initOpinieSlider).
+
+       UWAGA — TREŚĆ JEST ZMYŚLONA. Imiona, miasta i wypowiedzi to materiał
+       poglądowy wstawiony na życzenie, żeby dało się ocenić układ. Na żywo
+       czytają się jak prawdziwe referencje klientów, więc PRZED PROMOWANIEM
+       STRONY trzeba je podmienić na autentyczne (za pisemną zgodą klientów)
+       albo usunąć całą sekcję. Wszystkie kafle mają data-placeholder="true"
+       — łatwo je znaleźć. Szczegóły: PRZEKAZANIE.md, punkt 2a. -->
+  <section class="section section--line opinions" id="opinie" aria-labelledby="opinie-title">
     <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Opinie</p>
-        <h2 id="opinie-title">Co mówią osoby,<br>które już to przeszły.</h2>
-        <p class="section-lead">Trzy sytuacje, z jakimi klienci przychodzą najczęściej — i to, jak się skończyły.</p>
+      <div class="opinions-head reveal">
+        <div>
+          <p class="eyebrow">Opinie</p>
+          <h2 id="opinie-title">Co mówią osoby,<br>które już to przeszły.</h2>
+        </div>
+        <div class="opinions-nav">
+          <button class="opinions-arrow" id="opiniePrev" type="button" aria-label="Poprzednia opinia">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H6M12 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="opinions-arrow" id="opinieNext" type="button" aria-label="Następna opinia">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg>
+          </button>
+        </div>
       </div>
 
-      <ul class="quote-grid reveal-grid">
-        <li class="quote-card reveal">
-          <p class="quote-mark" aria-hidden="true">„</p>
-          <blockquote><p>[Opinia 1 — wypowiedź klienta własnymi słowami, 2–3 zdania. Najlepiej działa konkret: co było problemem i co się zmieniło.]</p></blockquote>
-          <p class="quote-meta"><strong>[Imię i inicjał]</strong><span>[Produkt] · [Miasto]</span></p>
-        </li>
-        <li class="quote-card reveal">
-          <p class="quote-mark" aria-hidden="true">„</p>
-          <blockquote><p>[Opinia 2 — najlepiej z innego produktu niż pierwsza, żeby pokazać zakres.]</p></blockquote>
-          <p class="quote-meta"><strong>[Imię i inicjał]</strong><span>[Produkt] · [Miasto]</span></p>
-        </li>
-        <li class="quote-card reveal">
-          <p class="quote-mark" aria-hidden="true">„</p>
-          <blockquote><p>[Opinia 3 — dobrze, żeby jedna dotyczyła klienta firmowego.]</p></blockquote>
-          <p class="quote-meta"><strong>[Imię i inicjał]</strong><span>[Produkt] · [Miasto]</span></p>
-        </li>
-      </ul>
+      <div class="opinions-viewport reveal" id="opinieSlider" aria-roledescription="karuzela" aria-label="Opinie klientów">
+        <ul class="opinions-track" id="opinieTrack">
+          <li class="quote-card" data-placeholder="true" role="group" aria-roledescription="slajd">
+            <p class="quote-mark" aria-hidden="true">„</p>
+            <blockquote><p>Miałam pięć rat w czterech bankach i gubiłam się w terminach. Po konsolidacji płacę raz w miesiącu i realnie zostaje mi więcej.</p></blockquote>
+            <p class="quote-meta"><strong>Marta K.</strong><span>Kredyt konsolidacyjny · Wrocław</span></p>
+          </li>
+          <li class="quote-card" data-placeholder="true" role="group" aria-roledescription="slajd">
+            <p class="quote-mark" aria-hidden="true">„</p>
+            <blockquote><p>Bank, w którym mam konto od lat, dał mi jedną ofertę. Doradca przyniósł cztery — wybraliśmy tańszą o kilkadziesiąt tysięcy w całym okresie.</p></blockquote>
+            <p class="quote-meta"><strong>Paweł N.</strong><span>Kredyt hipoteczny · Poznań</span></p>
+          </li>
+          <li class="quote-card" data-placeholder="true" role="group" aria-roledescription="slajd">
+            <p class="quote-mark" aria-hidden="true">„</p>
+            <blockquote><p>Potrzebowałem maszyny na wczoraj, a nie zamrożonego kapitału. Leasing spiął się w tydzień, razem z papierami.</p></blockquote>
+            <p class="quote-meta"><strong>Tomasz W.</strong><span>Leasing · firma produkcyjna</span></p>
+          </li>
+          <li class="quote-card" data-placeholder="true" role="group" aria-roledescription="slajd">
+            <p class="quote-mark" aria-hidden="true">„</p>
+            <blockquote><p>Bałam się, że przy umowie zlecenie nikt ze mną nie pogada. Doradczyni znalazła dwa banki, które takie dochody liczą normalnie.</p></blockquote>
+            <p class="quote-meta"><strong>Aleksandra R.</strong><span>Kredyt gotówkowy · Katowice</span></p>
+          </li>
+          <li class="quote-card" data-placeholder="true" role="group" aria-roledescription="slajd">
+            <p class="quote-mark" aria-hidden="true">„</p>
+            <blockquote><p>Faktury z terminem sześćdziesiąt dni zabijały mi płynność. Faktoring rozwiązał to w dwa tygodnie i nie musiałem brać kredytu.</p></blockquote>
+            <p class="quote-meta"><strong>Grzegorz S.</strong><span>Faktoring · firma transportowa</span></p>
+          </li>
+          <li class="quote-card" data-placeholder="true" role="group" aria-roledescription="slajd">
+            <p class="quote-mark" aria-hidden="true">„</p>
+            <blockquote><p>Najbardziej doceniam to, że przez cały czas rozmawiałem z jedną osobą. Zero tłumaczenia sprawy od nowa za każdym telefonem.</p></blockquote>
+            <p class="quote-meta"><strong>Michał D.</strong><span>Kredyt firmowy · Gdańsk</span></p>
+          </li>
+        </ul>
+      </div>
 
-      <p class="fineprint">Opinie pochodzą od klientów P&amp;T Money. Imiona i miasta publikujemy za ich zgodą; nazwiska skracamy ze względu na ochronę danych.</p>
+      <div class="opinions-foot">
+        <div class="opinions-dots" id="opinieDots" role="tablist" aria-label="Wybierz opinię"></div>
+        <p class="fineprint">Opinie pochodzą od klientów P&amp;T Money. Imiona i miasta publikujemy za ich zgodą; nazwiska skracamy ze względu na ochronę danych.</p>
+      </div>
     </div>
   </section>
-  <!-- ============ FORMULARZ ============ -->
-  <section class="section contact-section" id="kontakt" aria-labelledby="contact-title">
-    <div class="container contact-grid">
-      <div class="contact-copy reveal">
         <p class="eyebrow">Zostaw kontakt</p>
         <h2 id="contact-title">Podaj dane raz.<br><em>Resztę załatwiamy my.</em></h2>
         <p class="contact-lead">Oddzwaniamy zwykle w ciągu jednego dnia roboczego. Konsultacja i przygotowanie oferty są zawsze bezpłatne.</p>

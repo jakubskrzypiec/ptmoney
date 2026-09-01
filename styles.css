@@ -148,7 +148,7 @@ em { font-style: normal; color: var(--blue); }
 
 .btn-sub { white-space: nowrap; }
 @media (max-width: 480px) { .btn-sub { display: none; } }
-.btn--submit { width: 100%; min-height: 54px; margin-top: 22px; font-size: 1rem; }
+.btn--submit { width: 100%; min-height: 64px; margin-top: 28px; font-size: 1.08rem; }
 
 /* --------------------------------------------------------------------------
    Reveal przy przewijaniu
@@ -433,11 +433,14 @@ em { font-style: normal; color: var(--blue); }
   padding-top: var(--header-h);
 }
 /* Napisy leżą wprost na zdjęciu — bez ramki i bez płyty. Czytelność robi
-   elipsa w .hero-shade. */
+   elipsa w .hero-shade. Blok jest dosunięty do samego narożnika: margines
+   dolny i boczny są mniejsze niż standardowy rytm strony, bo tu chodzi
+   o zakotwiczenie w rogu, a nie o wyrównanie do siatki sekcji. */
+.hero-main { padding-inline: 0; }
 .hero-copy {
   width: 100%;
   max-width: 720px;
-  padding: 0 0 clamp(56px, 8vh, 104px);
+  padding: 0 var(--gutter) clamp(36px, 4.5vh, 56px) clamp(24px, 3.6vw, 52px);
 }
 .hero .eyebrow { color: #A7C0D4; margin-bottom: 26px; }
 /* Rozmiar jest związany z max-width kolumny: „Finansowanie” to najdłuższe słowo
@@ -476,7 +479,7 @@ em { font-style: normal; color: var(--blue); }
   /* Na wąskim ekranie kadr tnie się mocno w pionie. 38% trzyma w kadrze kubek,
      notes i widok z okna — czyli to, po co to zdjęcie w ogóle jest. */
   .hero-media img { object-position: 38% center; }
-  .hero-copy { max-width: 100%; padding: 0 0 clamp(40px, 6vh, 64px); }
+  .hero-copy { max-width: 100%; padding: 0 var(--gutter) clamp(28px, 4vh, 44px) var(--gutter); }
   /* Na wąskim ekranie elipsa z rogu nie obejmie całej szerokości napisów,
      więc dokładamy do niej klin od dołu. */
   .hero-shade {
@@ -494,7 +497,7 @@ em { font-style: normal; color: var(--blue); }
   .hero-copy h1 { font-size: clamp(2.1rem, 11.5vw, 5rem); max-width: none; }
   .hero-lead { max-width: 36ch; }
   /* Pasek CTA przyklejony do dołu zasłaniałby ostatnią linijkę hero. */
-  .hero-copy { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+  .hero-copy { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 }
 @media (max-width: 560px) {
   .hide-sm { display: none; }
@@ -574,15 +577,27 @@ em { font-style: normal; color: var(--blue); }
   box-shadow: 0 18px 50px rgba(19,38,52,.07);
 }
 .rate-bar-note { margin-top: 10px; font-size: .92rem; color: var(--muted); letter-spacing: 0; text-transform: none; font-weight: 400; }
-.rate-bar-head { padding-bottom: 20px; border-bottom: 1px solid var(--line-soft); }
+.rate-bar-head { padding-bottom: 22px; border-bottom: 1px solid var(--line-soft); }
 .rate-bar-kicker {
-  display: flex; flex-direction: column; gap: 6px;
-  font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+  display: flex; flex-direction: column; gap: 8px;
+  font-size: .78rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: var(--muted);
 }
-.rate-bar-kicker span { color: var(--ink); letter-spacing: .1em; }
-.rate-bar-controls { display: grid; gap: 20px; }
+.rate-bar-kicker span { color: var(--ink); letter-spacing: .09em; font-size: .92rem; }
+.rate-bar-controls { display: grid; gap: 24px; }
 .rate-bar-out { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.rate-bar-out > span { font-size: .88rem; color: var(--muted); }
+.rate-bar-out > span { font-size: .92rem; color: var(--muted); }
+
+/* Suwaki w tym pasku są grubsze niż w kalkulatorze — to główne narzędzie
+   na stronie i ma się dać złapać bez celowania. */
+.rate-bar .range-label { margin-bottom: 14px; }
+.rate-bar .range-label label { font-size: .95rem; }
+.rate-bar .range-label output { font-size: 1.24rem; }
+.rate-bar input[type="range"] { height: 30px; }
+.rate-bar input[type="range"]::-webkit-slider-runnable-track { height: 5px; }
+.rate-bar input[type="range"]::-moz-range-track { height: 5px; }
+.rate-bar input[type="range"]::-moz-range-progress { height: 5px; }
+.rate-bar input[type="range"]::-webkit-slider-thumb { width: 26px; height: 26px; margin-top: -10.5px; border-width: 2px; }
+.rate-bar input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border-width: 2px; }
 .rate-bar-out strong { font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 600; letter-spacing: -.04em; color: var(--ink); font-variant-numeric: tabular-nums; }
 .rate-bar-out small { font-size: .82rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
 .rate-bar-cta {
@@ -596,23 +611,27 @@ em { font-style: normal; color: var(--blue); }
 
 @media (min-width: 560px) {
   .rate-bar { padding: 38px 42px; gap: 32px; }
-  .rate-bar-controls { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .rate-bar-controls { grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  /* Reguła .range-field + .range-field { margin-top } jest pomyślana dla układu
+     pionowego (kalkulator). Tutaj suwaki stoją obok siebie, więc ten margines
+     spychał drugi o 18 px w dół i oba rzędy się rozjeżdżały. */
+  .rate-bar-controls .range-field + .range-field { margin-top: 0; }
 }
 /* Powyżej 1040 px całość układa się w jeden rząd: opis | suwaki | wynik | wyjście.
    Wtedy kreski poziome znikają, bo rozdzielenie robią już kolumny. */
 @media (min-width: 1040px) {
   .rate-bar {
-    grid-template-columns: minmax(200px, auto) minmax(0, 1fr) auto auto;
-    align-items: center; gap: 52px; padding: 36px 44px;
+    grid-template-columns: minmax(220px, auto) minmax(0, 1fr) auto auto;
+    align-items: center; gap: 56px; padding: 44px 52px;
   }
   .rate-bar-head { padding-bottom: 0; border-bottom: 0; }
   .rate-bar-out {
-    flex-direction: column; align-items: flex-end; gap: 2px;
-    padding-top: 0; padding-left: 40px;
+    flex-direction: column; align-items: flex-end; gap: 4px;
+    padding-top: 0; padding-left: 48px;
     border-top: 0; border-left: 1px solid var(--line-soft);
     align-self: stretch; justify-content: center;
   }
-  .rate-bar-cta { min-height: 62px; }
+  .rate-bar-cta { min-height: 66px; padding: 18px 34px; font-size: 1.05rem; }
 }
 
 
@@ -852,43 +871,56 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
    Doradca
    ========================================================================== */
 
-.advisor-grid { display: grid; gap: clamp(32px, 4vw, 60px); align-items: start; }
+.advisor-grid { display: grid; gap: clamp(36px, 4.5vw, 72px); align-items: start; }
+
+/* Lewa kolumna: zdjęcie, podpis i przyciski jako jeden blok — tożsamość
+   trzyma się twarzy zamiast wisieć w kolumnie obok. */
+.advisor-side { display: flex; flex-direction: column; }
 /* Portret ma tę samą proporcję co plik (4:5), więc nic się nie przycina. */
-.portrait--advisor { max-width: 420px; border-radius: var(--radius-lg); }
-.advisor-copy { max-width: min(100%, 640px); }
-.advisor-quote { margin: 0; }
+.portrait--advisor { max-width: 460px; border-radius: var(--radius-lg); }
+.advisor-meta {
+  display: flex; flex-direction: column; gap: 5px;
+  margin-top: 26px; padding-top: 24px;
+  border-top: 2px solid var(--ink);
+  max-width: 460px;
+}
+.advisor-meta strong { font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+.advisor-meta span { font-size: .92rem; color: var(--muted); }
+.advisor-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.advisor .btn--ghost { background: var(--white); }
+
+.advisor-copy { max-width: min(100%, 700px); }
+.advisor-copy h2 { margin-bottom: clamp(28px, 3vw, 40px); }
+.advisor-quote { margin: 0 0 clamp(36px, 4vw, 52px); padding-left: clamp(20px, 2.4vw, 32px); border-left: 3px solid var(--blue); }
 .advisor-quote p {
   font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.2vw, 1.75rem);
-  font-weight: 500; line-height: 1.26; letter-spacing: -0.028em; color: var(--ink);
+  font-size: clamp(1.4rem, 2.4vw, 2.05rem);
+  font-weight: 500; line-height: 1.24; letter-spacing: -0.03em; color: var(--ink);
   text-wrap: balance;
 }
-.advisor-meta { display: flex; flex-direction: column; gap: 3px; margin-top: 24px; }
-.advisor-meta strong { font-size: .98rem; }
-.advisor-meta span { font-size: .84rem; color: var(--muted); }
 
-/* Cztery konkrety: to one wypełniają sekcję treścią zamiast powietrzem. */
+/* Cztery konkrety — ponumerowane, jeden pod drugim przez całą szerokość
+   kolumny. Wcześniej stały w siatce 2x2 i czytały się jak kafelki cech,
+   a to jest kolejność działań. */
 .advisor-duties {
-  list-style: none; margin: clamp(30px, 3.5vw, 44px) 0 0; padding: 0;
-  display: grid; gap: 0;
+  list-style: none; margin: 0; padding: 0;
   border-top: 1px solid var(--line);
 }
 .advisor-duties li {
-  padding: 20px 0;
+  display: flex; align-items: baseline; gap: clamp(18px, 2vw, 28px);
+  padding: 22px 0;
   border-bottom: 1px solid var(--line);
-  display: grid; gap: 5px;
 }
-.advisor-duties strong { font-size: .95rem; font-weight: 600; color: var(--ink); }
-.advisor-duties span { font-size: .88rem; line-height: 1.55; color: var(--muted); }
-
-.advisor-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-.advisor .btn--ghost { background: var(--white); }
-
-@media (min-width: 620px) {
-  .advisor-duties { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+.duty-num {
+  flex: none;
+  font-family: var(--font-display); font-size: .88rem; font-weight: 600;
+  letter-spacing: .04em; color: var(--blue); font-variant-numeric: tabular-nums;
 }
+.advisor-duties strong { display: block; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.advisor-duties div > span { display: block; font-size: .95rem; line-height: 1.55; color: var(--muted); }
+
 @media (min-width: 960px) {
-  .advisor-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+  .advisor-grid { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); }
 }
 
 /* ==========================================================================
@@ -924,18 +956,66 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
    Opinie — ostatni dowód przed FAQ i formularzem
    ========================================================================== */
 
-.quote-grid {
+.opinions-head {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
+  margin-bottom: clamp(40px, 4.5vw, 64px);
+}
+.opinions-nav { display: none; gap: 12px; flex: none; }
+.opinions-arrow {
+  width: 56px; height: 56px; display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: var(--white); cursor: pointer;
+  transition: border-color .2s var(--ease), background-color .2s var(--ease);
+}
+.opinions-arrow:hover { border-color: var(--ink); background: var(--paper); }
+.opinions-arrow svg { width: 22px; height: 22px; fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+@media (min-width: 760px) { .opinions-nav { display: flex; } }
+
+/* Przewijanie robi natywny scroll — palec na telefonie działa bez JS-a,
+   a scroll-snap ustawia kafle na miejscu. */
+.opinions-viewport {
+  overflow-x: auto;
+  /* proximity, nie mandatory: przy mandatory przeglądarka cofała programowe
+     przewinięcia do najbliższego punktu i ostatni kafel był nieosiągalny. */
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  /* Bez tego snap dosuwa kafel do krawędzi elementu, a nie do marginesu strony —
+     pierwsza opinia lądowała wtedy przy samej krawędzi ekranu. */
+  scroll-padding-inline: var(--gutter);
+}
+.opinions-viewport::-webkit-scrollbar { display: none; }
+.opinions-track {
   list-style: none; margin: 0; padding: 0;
-  display: grid; gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  display: flex; gap: 20px;
 }
 .quote-card {
+  scroll-snap-align: start;
+  flex: 0 0 min(88%, 420px);
   background: var(--white);
-  padding: clamp(28px, 3.4vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: clamp(30px, 3.4vw, 44px);
   display: flex; flex-direction: column;
+}
+@media (min-width: 760px) { .quote-card { flex-basis: min(60%, 440px); } }
+@media (min-width: 1100px) { .quote-card { flex-basis: calc((100% - 40px) / 3); } }
+
+.opinions-foot {
+  display: flex; flex-direction: column; gap: 24px;
+  margin-top: clamp(32px, 3.5vw, 44px);
+}
+.opinions-dots { display: flex; gap: 10px; }
+.opinions-dot {
+  width: 34px; height: 4px; padding: 0; border: 0; border-radius: 999px;
+  background: var(--line); cursor: pointer;
+  transition: background-color .3s var(--ease), width .3s var(--ease);
+}
+.opinions-dot.is-active { background: var(--blue); width: 52px; }
+@media (min-width: 900px) {
+  .opinions-foot { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; }
+  .opinions-foot .fineprint { max-width: 62ch; text-align: right; }
 }
 .quote-mark {
   font-family: var(--font-display); font-size: 3.4rem; line-height: .6;
@@ -943,7 +1023,7 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 }
 .quote-card blockquote { margin: 0; flex: 1; }
 .quote-card blockquote p {
-  font-size: 1.02rem; line-height: 1.62; color: var(--text);
+  font-size: 1.1rem; line-height: 1.62; color: var(--text);
   text-wrap: pretty;
 }
 .quote-meta {
@@ -951,12 +1031,8 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
   border-top: 1px solid var(--line-soft);
   display: flex; flex-direction: column; gap: 3px;
 }
-.quote-meta strong { font-size: .92rem; font-weight: 600; color: var(--ink); }
-.quote-meta span { font-size: .8rem; color: var(--muted); }
-
-#opinie .fineprint { margin-top: clamp(28px, 3vw, 40px); max-width: 72ch; }
-
-@media (min-width: 860px) { .quote-grid { grid-template-columns: repeat(3, 1fr); } }
+.quote-meta strong { font-size: 1rem; font-weight: 600; color: var(--ink); }
+.quote-meta span { font-size: .86rem; color: var(--muted); }
 
 /* ==========================================================================
    Formularz
@@ -978,27 +1054,48 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .trust-list strong { display: block; font-size: .95rem; }
 .trust-list span { display: block; margin-top: 3px; font-size: .86rem; color: var(--muted); }
 
-/* Karta na bieli z wyraźnym cieniem zamiast szarej plamy — formularz ma być
-   najbardziej „namacalnym” elementem strony, bo to na nim kończy się ścieżka. */
+/* Karta jest najbardziej „namacalnym” elementem strony — to na niej kończy się
+   ścieżka. Granatowy pasek u góry wiąże ją z marką i oddziela nagłówek kroku
+   od pól bez dokładania kolejnej kreski. */
 .form-card {
+  position: relative;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: clamp(26px, 3.2vw, 40px);
-  box-shadow: 0 22px 60px rgba(19,38,52,.09);
+  padding: clamp(30px, 3.4vw, 48px);
+  box-shadow: 0 28px 70px rgba(19,38,52,.1);
+  overflow: hidden;
+}
+.form-card::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
 }
 .form-step {
-  font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 12px;
+  font-size: .74rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
   color: var(--blue);
-  margin-bottom: 24px; padding-bottom: 20px;
-  border-bottom: 1px solid var(--line-soft);
+  margin-bottom: 30px;
 }
+.form-step::after { content: ""; flex: 1; height: 1px; background: var(--line-soft); }
+
+.form-card .field label { margin-bottom: 10px; font-size: .92rem; }
 .form-card .field input,
 .form-card .field select,
-.form-card .field textarea { background: var(--paper); }
+.form-card .field textarea {
+  background: var(--paper);
+  border-color: transparent;
+  padding: 16px 18px;
+  font-size: 1.02rem;
+}
+.form-card .field input::placeholder,
+.form-card .field textarea::placeholder { color: #9BA6B1; }
+.form-card .field input:hover,
+.form-card .field select:hover,
+.form-card .field textarea:hover { background: var(--paper-2); }
 .form-card .field input:focus,
 .form-card .field select:focus,
-.form-card .field textarea:focus { background: var(--white); }
+.form-card .field textarea:focus { background: var(--white); border-color: var(--blue); }
+.form-primary { gap: 22px; }
 .form-primary { display: grid; gap: 18px; }
 @media (min-width: 620px) { .form-primary { grid-template-columns: 1fr 1fr; } .field--full { grid-column: 1 / -1; } }
 
@@ -1022,23 +1119,23 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .field.is-invalid input, .field.is-invalid select { border-color: var(--error); }
 .field.is-invalid .field-error { display: block; }
 
-.form-details { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 18px; }
-.form-details summary { cursor: pointer; font-size: .87rem; font-weight: 600; color: var(--blue); list-style: none; }
+.form-details { margin-top: 24px; border-top: 1px solid var(--line-soft); padding-top: 22px; }
+.form-details summary { cursor: pointer; font-size: .95rem; font-weight: 600; color: var(--blue); list-style: none; }
 .form-details summary::-webkit-details-marker { display: none; }
 .form-details summary::before { content: "+ "; }
 .form-details[open] summary::before { content: "– "; }
-.form-details-grid { display: grid; gap: 18px; margin-top: 20px; }
+.form-details-grid { display: grid; gap: 22px; margin-top: 24px; }
 
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
-.consent-wrap { margin-top: 24px; }
-.consent { display: flex; gap: 11px; align-items: flex-start; font-size: .8rem; line-height: 1.55; color: var(--muted); cursor: pointer; }
-.consent input { width: 17px; height: 17px; flex: none; margin-top: 2px; accent-color: var(--blue); }
+.consent-wrap { margin-top: 28px; padding: 18px 20px; background: var(--paper); border-radius: var(--radius); }
+.consent { display: flex; gap: 13px; align-items: flex-start; font-size: .86rem; line-height: 1.55; color: var(--muted); cursor: pointer; }
+.consent input { width: 20px; height: 20px; flex: none; margin-top: 2px; accent-color: var(--blue); }
 .consent a { color: var(--blue); }
 .consent-wrap.is-invalid .field-error { display: block; }
 .consent-wrap.is-invalid .consent { color: var(--error); }
 
-.form-note { margin-top: 14px; font-size: .76rem; color: var(--muted); }
+.form-note { margin-top: 18px; font-size: .82rem; color: var(--muted); }
 
 .form-success {
   display: flex; align-items: center; gap: 11px; margin-top: 18px;

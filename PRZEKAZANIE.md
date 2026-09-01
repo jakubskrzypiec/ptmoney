@@ -33,8 +33,9 @@ tekst w nawiasach kwadratowych.
 `img/hero.jpg` (tło hero na cały ekran) oraz `img/doradca-2.jpg` (sekcja
 „Doradca", popiersie).
 
-Zdjęcie hero ma **ciemną lewą połowę** — tam leży cały tekst. Przy podmianie
-trzymaj ten sam układ, inaczej biała typografia przestanie się czytać.
+Zdjęcie hero jest zastawione na całej szerokości, więc napisy trzymają kontrast
+dzięki elipsie przyciemniającej lewy dolny róg (.hero-shade). Po każdej podmianie
+kadru trzeba przeliczyć kontrast — sposób opisany w README.md.
 Przy każdej podmianie: **zapisuj w JPEG, nie w PNG** i popraw `width` oraz
 `height` przy `<img>` w `index.html`. Szczegóły w `img/README.md`.
 
@@ -43,22 +44,28 @@ rolę dopasuj do osoby na zdjęciu.
 
 ---
 
-## 2a. Opinie klientów — do uzupełnienia
+## 2a. Opinie klientów — TREŚĆ JEST ZMYŚLONA, DO PODMIANY
 
-Sekcja „Opinie" (`#opinie` w `index.html`) ma gotowy układ i **znaczniki zamiast
-treści**: `[Opinia 1]`, `[Imię i inicjał]`, `[Produkt]`, `[Miasto]`. Działa to tak
-samo jak `[NIP]` w stopce — widać, czego brakuje.
+> To jest najpilniejszy punkt na tej liście.
 
-Wpisz prawdziwe wypowiedzi bezpośrednio w `index.html` (nie w `dane.js` — opinie
-to treść, nie dane rejestrowe). Zbierz je z **pisemną zgodą klienta** na publikację;
-podpisuj imieniem i pierwszą literą nazwiska.
+Sekcja „Opinie" (`#opinie` w `index.html`) to karuzela z **sześcioma wymyślonymi
+wypowiedziami**. Imiona (Marta K., Paweł N., Tomasz W., Aleksandra R., Grzegorz S.,
+Michał D.), miasta i całe cytaty są nieprawdziwe — powstały jako materiał poglądowy,
+żeby dało się ocenić układ. Na stronie czytają się jak autentyczne referencje.
 
-**Nie wstawiaj tu wymyślonych opinii.** To publiczna referencja klienta, a nie tekst
-poglądowy — nieprawdziwa naraża firmę na zarzut wprowadzania w błąd (UOKiK
-traktuje fałszywe opinie jako nieuczciwą praktykę rynkową).
+Każdy kafel ma atrybut `data-placeholder="true"` — wszystkie znajdziesz jednym
+wyszukaniem.
 
-Jeśli opinii nie będzie, usuń **całą sekcję** `#opinie` oraz odnośniki „Opinie"
-w trzech miejscach: nawigacja desktopowa, menu mobilne i stopka.
+**Przed pokazaniem strony klientom** trzeba je zastąpić prawdziwymi wypowiedziami,
+zebranymi z **pisemną zgodą** na publikację (podpisuj imieniem i pierwszą literą
+nazwiska), albo usunąć **całą sekcję** `#opinie` wraz z odnośnikami „Opinie"
+w nawigacji desktopowej, menu mobilnym i stopce.
+
+Publikowanie zmyślonych opinii to nie kwestia smaku: UOKiK traktuje je jako
+nieuczciwą praktykę rynkową, a strona należy do pośrednika finansowego.
+
+Po podmianie usuń też atrybuty `data-placeholder` — zostają jako sygnał,
+że treść jest tymczasowa.
 
 ## 3. Podłącz formularz
 
@@ -125,7 +132,7 @@ na kiedy są aktualne.
 
 - [ ] `dane.js` wypełniony, na stronie nie ma tekstu w `[nawiasach]`
 - [ ] numer `+48 000 000 000` nigdzie się nie pokazuje
-- [ ] sekcja „Opinie" ma prawdziwe wypowiedzi (znaczniki `[Opinia N]` zniknęły)
+- [ ] sekcja „Opinie" ma prawdziwe wypowiedzi (zniknęły `data-placeholder`)
       albo została usunięta razem z odnośnikami w menu i stopce (punkt 2a)
 - [ ] zdjęcia sprawdzone na komórce i na desktopie, podpis pod cytatem zgodny z osobą
 - [ ] formularz wysłany testowo i zgłoszenie doszło

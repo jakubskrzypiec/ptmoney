@@ -434,6 +434,132 @@
   }
 
   /* ==========================================================================
+     Opinie — karuzela przewijająca się sama
+     ==========================================================================
+     Przewijanie robi natywny scroll kontenera, nie transform: dzięki temu
+     na telefonie działa palec, a klawiatura i czytniki ekranu dostają zwykłą
+     listę. Autoprzewijanie zatrzymuje się przy najechaniu, fokusie, dotknięciu
+     i gdy sekcja jest poza ekranem — żeby nie kręciło się w tle bez sensu.
+
+     Pozycje liczymy raz, do tablicy, i przycinamy do maksymalnego przewinięcia.
+     Bez tego ostatni przystanek bywa nieosiągalny: gdy za ostatnim kaflem nie ma
+     już treści, docelowe przewinięcie wypada poza zakres, a scroll-snap cofa
+     widok do poprzedniego punktu. Stąd też `proximity` zamiast `mandatory` —
+     przy `mandatory` przeglądarka nadpisywała programowe przewinięcia. */
+
+  const slider = $('#opinieSlider');
+  const track = $('#opinieTrack');
+
+  if (slider && track && track.children.length > 1) {
+    const slides = [...track.children];
+    const dotsBox = $('#opinieDots');
+    const KROK_MS = 5200;
+
+    let pozycje = [];
+    let index = 0;
+    let timer = 0;
+    let wstrzymane = false;
+    let widoczne = true;
+    let przewijamProgramowo = 0;
+
+    /* Lista realnych przystanków: początek każdego kafla przycięty do zakresu,
+       bez powtórzeń. Tyle samo jest kropek. */
+    function policzPozycje() {
+      const pad = parseFloat(getComputedStyle(slider).paddingLeft) || 0;
+      const max = slider.scrollWidth - slider.clientWidth;
+      const bazaLewa = slider.getBoundingClientRect().left + pad;
+      const surowe = slides.map(s => {
+        const wzgledna = s.getBoundingClientRect().left - bazaLewa + slider.scrollLeft;
+        return Math.round(Math.min(Math.max(wzgledna, 0), max));
+      });
+      pozycje = surowe.filter((v, i) => i === 0 || v !== surowe[i - 1]);
+      if (index > pozycje.length - 1) index = pozycje.length - 1;
+    }
+
+    function rysujKropki() {
+      if (!dotsBox) return;
+      if (dotsBox.children.length !== pozycje.length) {
+        dotsBox.textContent = '';
+        pozycje.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'opinions-dot';
+          dot.setAttribute('role', 'tab');
+          dot.setAttribute('aria-label', `Opinia ${i + 1} z ${pozycje.length}`);
+          dot.addEventListener('click', () => { idzDo(i); restart(); });
+          dotsBox.appendChild(dot);
+        });
+      }
+      [...dotsBox.children].forEach((dot, i) => {
+        const aktywna = i === index;
+        dot.classList.toggle('is-active', aktywna);
+        dot.setAttribute('aria-selected', String(aktywna));
+        dot.tabIndex = aktywna ? 0 : -1;
+      });
+    }
+
+    function idzDo(i, gladko = true) {
+      if (!pozycje.length) policzPozycje();
+      index = Math.min(Math.max(i, 0), pozycje.length - 1);
+      const plynnie = gladko && !reduceMotion;
+      window.clearTimeout(przewijamProgramowo);
+      przewijamProgramowo = window.setTimeout(() => { przewijamProgramowo = 0; }, plynnie ? 850 : 60);
+      slider.scrollTo({ left: pozycje[index], behavior: plynnie ? 'smooth' : 'auto' });
+      rysujKropki();
+    }
+
+    const dalej = () => idzDo(index >= pozycje.length - 1 ? 0 : index + 1);
+    const wstecz = () => idzDo(index <= 0 ? pozycje.length - 1 : index - 1);
+
+    function start() {
+      if (reduceMotion || timer || wstrzymane || !widoczne) return;
+      timer = window.setInterval(dalej, KROK_MS);
+    }
+    function stop() { window.clearInterval(timer); timer = 0; }
+    function restart() { stop(); start(); }
+
+    $('#opinieNext')?.addEventListener('click', () => { dalej(); restart(); });
+    $('#opiniePrev')?.addEventListener('click', () => { wstecz(); restart(); });
+
+    ['mouseenter', 'focusin', 'touchstart', 'pointerdown'].forEach(zdarzenie => {
+      slider.addEventListener(zdarzenie, () => { wstrzymane = true; stop(); }, { passive: true });
+    });
+    ['mouseleave', 'focusout'].forEach(zdarzenie => {
+      slider.addEventListener(zdarzenie, () => { wstrzymane = false; start(); });
+    });
+
+    // Ręczne przewinięcie palcem ma zaktualizować kropki.
+    let scrollTick = 0;
+    slider.addEventListener('scroll', () => {
+      if (przewijamProgramowo) return;
+      window.clearTimeout(scrollTick);
+      scrollTick = window.setTimeout(() => {
+        let blisko = 0, dystans = Infinity;
+        pozycje.forEach((p, i) => {
+          const d = Math.abs(p - slider.scrollLeft);
+          if (d < dystans) { dystans = d; blisko = i; }
+        });
+        if (blisko !== index) { index = blisko; rysujKropki(); }
+      }, 120);
+    }, { passive: true });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        widoczne = entries[0].isIntersecting;
+        if (widoczne) start(); else stop();
+      }, { threshold: 0.2 }).observe(slider);
+    }
+
+    window.addEventListener('resize', () => { policzPozycje(); rysujKropki(); }, { passive: true });
+    // Pozycje zależą od szerokości kafli, a te od wczytanych fontów.
+    window.addEventListener('load', () => { policzPozycje(); rysujKropki(); });
+
+    policzPozycje();
+    rysujKropki();
+    start();
+  }
+
+  /* ==========================================================================
      FAQ
      ========================================================================== */
 
