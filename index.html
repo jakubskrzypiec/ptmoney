@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-2">
+<link rel="stylesheet" href="./styles.css?v=20260902-3">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -47,8 +47,8 @@ document.documentElement.classList.add('js');
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260902-2"></script>
-<script defer src="./main.js?v=20260902-2"></script>
+<script defer src="./dane.js?v=20260902-3"></script>
+<script defer src="./main.js?v=20260902-3"></script>
 </head>
 <body>
 
@@ -147,17 +147,18 @@ document.documentElement.classList.add('js');
   </section>
 
   <!-- ============ PODGLĄD RATY ============ -->
-  <!-- Pierwszy krok ścieżki: coś, co można ruszyć zanim zostawi się numer telefonu. -->
+  <!-- Pierwszy przystanek po hero: narzędzie, nie manifest. Wcześniej stał tu
+       nagłówek na pół ekranu („Zacznij od liczby, nie od formularza") — dużo
+       deklaracji, mało treści. Została sama rzecz do ruszenia. -->
   <section class="section rate-section" id="start" aria-labelledby="rate-title">
-    <div class="container rate-layout">
-      <div class="rate-intro reveal">
-        <p class="eyebrow">Zacznij tutaj</p>
-        <h2 id="rate-title">Zacznij od liczby,<br>nie od formularza.</h2>
-        <p class="section-lead">Przesuń suwaki i zobacz, w jakich widełkach mieści się rata. Nic nie wysyłasz, do niczego się nie zobowiązujesz.</p>
-      </div>
+    <div class="container">
+      <h2 id="rate-title" class="sr-only">Szybki podgląd raty</h2>
 
-      <aside class="rate-bar reveal" aria-label="Szybki podgląd raty">
-        <p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
+      <div class="rate-bar reveal" aria-label="Szybki podgląd raty">
+        <div class="rate-bar-head">
+          <p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
+          <p class="rate-bar-note">Nic nie wysyłasz — to tylko rząd wielkości.</p>
+        </div>
         <div class="rate-bar-controls">
           <div class="range-field">
             <div class="range-label"><label for="heroAmount">Kwota</label><output for="heroAmount" id="heroAmountVal">30 000 zł</output></div>
@@ -173,10 +174,8 @@ document.documentElement.classList.add('js');
           <strong id="heroResult">712 <small>zł / mies.</small></strong>
         </div>
         <a class="rate-bar-cta" href="#produkty">Dobierz produkt <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
-      </aside>
-    </div>
+      </div>
 
-    <div class="container">
       <ul class="trust-bar reveal">
         <li><strong>30+</strong><span>banków i instytucji</span></li>
         <li><strong>12 000+</strong><span>obsłużonych klientów</span></li>
@@ -345,35 +344,57 @@ document.documentElement.classList.add('js');
   </section>
 
   <!-- ============ DORADCA ============ -->
-  <section class="section advisor" id="zespol" aria-labelledby="advisor-title">
-    <div class="container advisor-grid">
-      <figure class="portrait portrait--advisor reveal">
-        <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="700" height="875" loading="lazy" decoding="async" data-portrait>
-        <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
-      </figure>
-      <div class="advisor-copy">
-        <p class="eyebrow reveal">Doradca</p>
-        <blockquote class="advisor-quote reveal">
-          <p>Nie sprzedajemy Ci kredytu — pomagamy wybrać taki, który się naprawdę opłaca. Zadzwoń, opowiedz o swojej sytuacji, a nasz zespół zajmie się resztą.</p>
-        </blockquote>
-        <p class="advisor-meta reveal"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
-        <div class="advisor-actions reveal">
-          <a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a>
-          <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
+  <!-- Wcześniej: duży portret i dwa zdania obok, reszta sekcji pusta.
+       Teraz prawa kolumna niesie konkret — co ta osoba faktycznie robi —
+       więc sekcja ma czym wypełnić wysokość, a nie tylko rozstawia powietrze. -->
+  <section class="section section--muted advisor" id="zespol" aria-labelledby="advisor-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Doradca</p>
+        <h2 id="advisor-title">Jedna osoba prowadzi<br>Twoją sprawę do końca.</h2>
+        <p class="section-lead">Nie przekazujemy Cię między działami. Ten sam doradca zbiera dokumenty, rozmawia z bankami i jest pod telefonem, gdy coś się zmienia.</p>
+      </div>
+
+      <div class="advisor-grid">
+        <figure class="portrait portrait--advisor reveal">
+          <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1374" loading="lazy" decoding="async" data-portrait>
+          <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
+        </figure>
+
+        <div class="advisor-copy">
+          <blockquote class="advisor-quote reveal">
+            <p>Nie sprzedajemy Ci kredytu — pomagamy wybrać taki, który się naprawdę opłaca.</p>
+          </blockquote>
+          <p class="advisor-meta reveal"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
+
+          <ul class="advisor-duties reveal-grid">
+            <li class="reveal"><strong>Zbiera dokumenty</strong><span>Mówi dokładnie, co przygotować — i sprawdza komplet, zanim trafi do banku.</span></li>
+            <li class="reveal"><strong>Rozmawia z bankami</strong><span>Składa wnioski, pilnuje terminów i negocjuje marżę oraz prowizję.</span></li>
+            <li class="reveal"><strong>Tłumaczy warunki</strong><span>Pokazuje różnice między ofertami po ludzku, razem z tym, co Cię będzie kosztować.</span></li>
+            <li class="reveal"><strong>Zostaje po decyzji</strong><span>Jest pod telefonem także przy aneksach, refinansowaniu i zmianie sytuacji.</span></li>
+          </ul>
+
+          <div class="advisor-actions reveal">
+            <a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a>
+            <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ LICZBY ============ -->
-  <section class="stats-band" aria-label="Liczby, nie obietnice">
-    <div class="container stats-inner">
-      <div class="stats-copy reveal">
+  <!-- Wcześniej: niebieski kafelek z siatką 2x2 i nagłówkiem z boku — czytało się
+       jak wstawka z szablonu. Teraz jeden ciemny pas, nagłówek nad liczbami,
+       a same liczby w rzędzie oddzielone włosowymi kreskami. -->
+  <section class="stats-band" aria-labelledby="stats-title">
+    <div class="container">
+      <div class="stats-head reveal">
         <p class="eyebrow eyebrow--on-dark">Liczby, nie obietnice</p>
-        <h2>Zanim zapytasz,<br>czy nam zaufać.</h2>
+        <h2 id="stats-title">Zanim zapytasz, czy nam zaufać.</h2>
         <p class="stats-date">dane na [MM.RRRR]</p>
       </div>
-      <div class="stats-grid" id="statsGrid">
+      <div class="stats-grid reveal-grid" id="statsGrid">
         <div class="stat reveal"><strong id="statKlienci" data-count="12000" data-suffix="+">12 000+</strong><span>obsłużonych klientów</span></div>
         <div class="stat reveal"><strong id="statBanki" data-count="30" data-suffix="+">30+</strong><span>banków i instytucji w ofercie</span></div>
         <div class="stat reveal"><strong id="statGodziny" data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
