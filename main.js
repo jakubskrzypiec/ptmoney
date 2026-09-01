@@ -111,8 +111,30 @@
      ========================================================================== */
 
   const header = $('.site-header');
-  const updateHeader = () => header?.classList.toggle('is-compact', window.scrollY > 40);
+  const progress = $('#scrollProgress');
+
+  /* Nagłówek zestala się po odjechaniu od góry; pasek pod nim pokazuje,
+     ile strony zostało. Bez requestAnimationFrame — w ukrytej karcie rAF nie chodzi
+     i nagłówek zostawałby w stanie sprzed przewinięcia. Wysokość dokumentu
+     trzymamy w zmiennej, żeby nie wymuszać przeliczenia układu przy każdym scrollu. */
+  let scrollSpan = 0;
+  const measureSpan = () => {
+    scrollSpan = document.documentElement.scrollHeight - window.innerHeight;
+  };
+  const updateHeader = () => {
+    const y = window.scrollY;
+    header?.classList.toggle('is-compact', y > 40);
+    if (!progress) return;
+    progress.style.setProperty('--progress', scrollSpan > 0 ? String(Math.min(1, y / scrollSpan)) : '0');
+  };
+  const remeasure = () => { measureSpan(); updateHeader(); };
+
+  measureSpan();
   window.addEventListener('scroll', updateHeader, { passive: true });
+  window.addEventListener('resize', remeasure, { passive: true });
+  window.addEventListener('load', remeasure);
+  // Sekcje rozwijane (FAQ) i wchodzące animacje zmieniają wysokość strony.
+  if ('ResizeObserver' in window) new ResizeObserver(measureSpan).observe(document.body);
   updateHeader();
 
   const menuToggle = $('#menuToggle');

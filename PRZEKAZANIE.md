@@ -30,15 +30,35 @@ tekst w nawiasach kwadratowych.
 
 ## 2. Zdjęcia — są na miejscu
 
-`img/doradca.jpg` (hero, pełna sylwetka) i `img/doradca-2.jpg` (sekcja
-„Doradca", popiersie) — oba wykadrowane z jednego zdjęcia, żeby ta sama
-grafika nie pojawiała się dwa razy w identycznym ujęciu.
+`img/hero.jpg` (tło hero na cały ekran) oraz `img/doradca-2.jpg` (sekcja
+„Doradca", popiersie).
 
-Przy podmianie na inną osobę: **zapisuj w JPEG, nie w PNG** i popraw `width`
-oraz `height` przy `<img>` w `index.html`. Szczegóły w `img/README.md`.
+Zdjęcie hero ma **ciemną lewą połowę** — tam leży cały tekst. Przy podmianie
+trzymaj ten sam układ, inaczej biała typografia przestanie się czytać.
+Przy każdej podmianie: **zapisuj w JPEG, nie w PNG** i popraw `width` oraz
+`height` przy `<img>` w `index.html`. Szczegóły w `img/README.md`.
 
 Podpis pod cytatem bierze się z pól `doradca` i `doradcaRola` w `dane.js` —
 rolę dopasuj do osoby na zdjęciu.
+
+---
+
+## 2a. Opinie klientów — do uzupełnienia
+
+Sekcja „Opinie" (`#opinie` w `index.html`) ma gotowy układ i **znaczniki zamiast
+treści**: `[Opinia 1]`, `[Imię i inicjał]`, `[Produkt]`, `[Miasto]`. Działa to tak
+samo jak `[NIP]` w stopce — widać, czego brakuje.
+
+Wpisz prawdziwe wypowiedzi bezpośrednio w `index.html` (nie w `dane.js` — opinie
+to treść, nie dane rejestrowe). Zbierz je z **pisemną zgodą klienta** na publikację;
+podpisuj imieniem i pierwszą literą nazwiska.
+
+**Nie wstawiaj tu wymyślonych opinii.** To publiczna referencja klienta, a nie tekst
+poglądowy — nieprawdziwa naraża firmę na zarzut wprowadzania w błąd (UOKiK
+traktuje fałszywe opinie jako nieuczciwą praktykę rynkową).
+
+Jeśli opinii nie będzie, usuń **całą sekcję** `#opinie` oraz odnośniki „Opinie"
+w trzech miejscach: nawigacja desktopowa, menu mobilne i stopka.
 
 ## 3. Podłącz formularz
 
@@ -105,6 +125,8 @@ na kiedy są aktualne.
 
 - [ ] `dane.js` wypełniony, na stronie nie ma tekstu w `[nawiasach]`
 - [ ] numer `+48 000 000 000` nigdzie się nie pokazuje
+- [ ] sekcja „Opinie" ma prawdziwe wypowiedzi (znaczniki `[Opinia N]` zniknęły)
+      albo została usunięta razem z odnośnikami w menu i stopce (punkt 2a)
 - [ ] zdjęcia sprawdzone na komórce i na desktopie, podpis pod cytatem zgodny z osobą
 - [ ] formularz wysłany testowo i zgłoszenie doszło
 - [ ] adresy w `sitemap.xml` i `robots.txt` zgodne z docelową domeną
