@@ -280,9 +280,8 @@ em { font-style: normal; color: var(--blue); }
    Nagłówek leży przezroczysty na pełnoekranowym zdjęciu i zestala się dopiero,
    gdy strona odjedzie od góry (klasa .is-compact dokładana przez main.js).
 
-   Zdjęcie hero jest jasne, więc treść nagłówka zostaje ciemna w obu stanach —
-   zmienia się tylko tło. Gdyby kiedyś wróciło ciemne zdjęcie, trzeba tu dodać
-   jasny wariant znaku i nawigacji.
+   Zdjęcie hero jest ciemne u góry, więc treść nagłówka jest jasna, dopóki
+   pasek nie zestali się w biel.
    -------------------------------------------------------------------------- */
 .site-header--overlay {
   position: fixed; top: 0; left: 0; right: 0;
@@ -295,6 +294,31 @@ em { font-style: normal; color: var(--blue); }
   backdrop-filter: saturate(135%) blur(16px);
   -webkit-backdrop-filter: saturate(135%) blur(16px);
 }
+
+/* Zamiana znaku jasny/ciemny bez migotania: oba leżą na sobie, przełącza opacity. */
+.site-header--overlay .brand { position: relative; display: block; line-height: 0; }
+.site-header--overlay .brand-logo { height: 30px; width: auto; transition: opacity .3s var(--ease); }
+.site-header--overlay .brand-logo--dark { position: absolute; inset: 0; opacity: 0; }
+.site-header--overlay.is-compact .brand-logo--light { opacity: 0; }
+.site-header--overlay.is-compact .brand-logo--dark { opacity: 1; }
+
+.site-header--overlay:not(.is-compact) .desktop-nav a { color: rgba(255,255,255,.84); }
+.site-header--overlay:not(.is-compact) .desktop-nav a:hover { color: var(--white); }
+.site-header--overlay:not(.is-compact) .header-phone { color: var(--white); }
+.site-header--overlay:not(.is-compact) .header-phone:hover { color: #A7C0D4; }
+.site-header--overlay:not(.is-compact) .btn--header {
+  background: rgba(255,255,255,.12); color: var(--white);
+  border-color: rgba(255,255,255,.36);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.site-header--overlay:not(.is-compact) .btn--header:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
+.site-header--overlay:not(.is-compact) .menu-toggle { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.32); }
+.site-header--overlay:not(.is-compact) .menu-toggle span { background: var(--white); }
+/* Otwarte menu mobilne kładzie pod paskiem biel — znak musi wtedy być ciemny. */
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .brand-logo--light { opacity: 0; }
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .brand-logo--dark { opacity: 1; }
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .menu-toggle span { background: var(--ink); }
+.site-header--overlay:has(#menuToggle[aria-expanded="true"]) .header-phone { color: var(--text); }
 
 /* Pasek postępu czytania — 2 px na dolnej krawędzi nagłówka. */
 .scroll-progress {
@@ -355,22 +379,22 @@ em { font-style: normal; color: var(--blue); }
 /* Hero zajmuje całe okno. Zdjęcie jest tłem sekcji (nie osobnej „sceny”),
    nagłówek leży na nim przezroczysty.
 
-   Kadr jest JASNY — biała ściana po lewej, marmurowy blat na dole — więc cała
-   typografia jest ciemna.
+   Kadr jest ZASTAWIONY na całej szerokości — nie ma na nim pustego pola,
+   więc tekst nie może leżeć bezpośrednio na zdjęciu. Pomiar na kompozycji
+   1280x800: żeby biała typografia w lewym dolnym rogu przeszła próg 4,5:1,
+   trzeba zdjęciu zabrać 55–66% jasności. To gasi kubek, notes i laptopa
+   ze znakiem, czyli wszystko, po co to zdjęcie powstało.
 
-   Zdjęcie idzie BEZ powłoki rozjaśniającej: w strefie tekstu ma luminancję
-   212–231/255, co przy kolorze --ink daje kontrast ok. 12:1. Powłoka była
-   zbędna i mgliła zdjęcie. Przy podmianie kadru na ciemniejszy trzeba ją
-   przywrócić razem z odwróceniem kolorów typografii.
-
-   Tekst siedzi w LEWYM DOLNYM rogu: obie te strefy zdjęcia są puste. */
+   Dlatego napisy siedzą we WŁASNYM PANELU w lewym dolnym rogu, a zdjęcie
+   zostaje w pełnej jasności. Kontrast bieli na panelu to ok. 15:1 i nie
+   zależy od tego, co akurat wypadnie pod spodem przy danym kadrowaniu. */
 .hero {
   position: relative;
   min-height: 100svh;
   display: flex; flex-direction: column;
   overflow: clip;
-  background: var(--paper);
-  color: var(--text);
+  background: var(--ink);
+  color: var(--white);
   padding: 0;
 }
 .hero-media,
@@ -379,9 +403,14 @@ em { font-style: normal; color: var(--blue); }
 }
 .hero-media img {
   object-fit: cover;
-  object-position: 62% center;
+  object-position: 58% center;
 }
-.hero-shade { display: none; }
+/* Zostaje tylko przygaszenie górnej krawędzi — pod przezroczysty nagłówek.
+   Reszta kadru idzie w pełnej jasności; czytelność robi panel, nie powłoka. */
+.hero-shade {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(8,15,22,.5) 0%, rgba(8,15,22,.16) 12%, rgba(8,15,22,0) 26%);
+}
 .hero-main {
   position: relative; z-index: 2;
   flex: 1;
@@ -389,17 +418,26 @@ em { font-style: normal; color: var(--blue); }
   display: flex; align-items: flex-end;
   padding-top: var(--header-h);
 }
+/* Panel z napisami: ciemna płyta w lewym dolnym rogu. Kontrast bieli na niej
+   to ok. 15:1 niezależnie od tego, co wypadnie pod spodem. */
 .hero-copy {
   width: 100%;
-  max-width: 660px;
-  padding: clamp(40px, 5vw, 64px) 0 clamp(56px, 7vw, 88px);
+  max-width: 620px;
+  margin-bottom: clamp(28px, 5vh, 64px);
+  padding: clamp(28px, 3.4vw, 44px);
+  background: rgba(10,18,26,.82);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 30px 80px rgba(6,12,18,.34);
 }
-.hero .eyebrow { color: var(--blue); margin-bottom: 26px; }
+.hero .eyebrow { color: #A7C0D4; margin-bottom: 26px; }
 /* Rozmiar jest związany z max-width kolumny: „Finansowanie” to najdłuższe słowo
    w nagłówku i to ono wyznacza górną granicę — powyżej niej .hero-line
    (overflow: hidden) zaczyna je przycinać. */
 .hero-copy h1 {
-  color: var(--ink);
+  color: var(--white);
   margin-bottom: 22px;
   font-size: clamp(2.7rem, 5vw, 4.7rem);
   font-weight: 500;
@@ -408,44 +446,28 @@ em { font-style: normal; color: var(--blue); }
   max-width: 13ch;
   text-wrap: initial;
 }
-.hero-copy h1 em { color: var(--blue); }
+.hero-copy h1 em { color: #A7C0D4; }
 .hero-lead {
   max-width: 44ch;
   font-size: clamp(1rem, 1.18vw, 1.08rem);
   line-height: 1.7;
-  color: var(--text);
+  color: rgba(255,255,255,.78);
 }
 .hero-line { display: block; overflow: hidden; padding-bottom: .09em; margin-bottom: -.09em; }
 .hero-line > span { display: block; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
-/* Na jasnym kadrze przyciski zostają w domyślnych barwach marki —
-   granatowy wypełniony i obrysowany — więc .hero nic tu nie nadpisuje. */
+/* Biały przycisk główny: na ciemnym klinie granatowy zlewałby się z tłem. */
+.hero .btn--primary { background: var(--white); color: var(--ink); border-color: var(--white); }
+.hero .btn--primary:hover { background: #EAF0F3; border-color: #EAF0F3; }
+.hero .btn--ghost { color: var(--white); border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.04); }
+.hero .btn--ghost:hover { border-color: rgba(255,255,255,.62); background: rgba(255,255,255,.1); }
 
-/* Trzy konkrety pod przyciskami — zbijają najczęstsze obawy, zanim padnie pytanie. */
-.hero-proof {
-  display: flex; flex-wrap: wrap; gap: 10px 26px;
-  margin-top: 34px; padding-top: 26px;
-  border-top: 1px solid var(--line);
-  list-style: none;
-}
-.hero-proof li {
-  display: flex; align-items: center; gap: 9px;
-  font-size: .84rem; color: var(--muted);
-}
-.hero-proof svg {
-  flex: none; width: 15px; height: 15px;
-  fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-}
 
 @media (max-width: 899px) {
-  /* Na wąskim ekranie kadr przesuwa się tak, żeby laptop nie wchodził pod tekst,
-     a rozjaśniacz działa od dołu — tam, gdzie siedzą napisy. */
-  /* Na wąskim ekranie kadr tnie się mocno w pionie i przy 76% pod tekst
-     wchodził laptop — ciemny ekran, średnia luminancja 182/255, tekst przestawał
-     się czytać. 34% zostawia ścianę i krawędź okna: 228/255, czysto pod napisy.
-     To jest powód, dla którego hero obywa się bez powłoki rozjaśniającej. */
-  .hero-media img { object-position: 34% center; }
-  .hero-copy { max-width: 100%; padding-top: 40px; }
+  /* Na wąskim ekranie kadr tnie się mocno w pionie. 38% trzyma w kadrze kubek,
+     notes i widok z okna — czyli to, po co to zdjęcie w ogóle jest. */
+  .hero-media img { object-position: 38% center; }
+  .hero-copy { max-width: 100%; padding: clamp(24px, 5vw, 32px); }
   /* Dwa zabezpieczenia przed ucięciem „Finansowanie” przez maskę .hero-line
      (overflow: hidden — ona nie zawija, tylko tnie):
      1. dolna granica rozmiaru schodzi razem z szerokością okna,
@@ -454,14 +476,11 @@ em { font-style: normal; color: var(--blue); }
         gdyby Google Fonts nie doszło. */
   .hero-copy h1 { font-size: clamp(2.1rem, 11.5vw, 5rem); max-width: none; }
   .hero-lead { max-width: 36ch; }
-  .hero-proof { gap: 8px 20px; margin-top: 26px; padding-top: 20px; }
-  .hero-proof li { font-size: .8rem; }
-  /* Pasek CTA przyklejony do dołu zasłaniałby ostatnią linijkę hero. */
-  .hero-copy { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  /* Panel musi skończyć się nad przyklejonym paskiem CTA, inaczej pasek
+     zasłania jego dolną krawędź. Odsuwamy panel, nie dopychamy go paddingiem. */
+  .hero-copy { margin-bottom: calc(72px + env(safe-area-inset-bottom)); }
 }
 @media (max-width: 560px) {
-  /* Poniżej tej szerokości trzeci punkt i tak zawija się brzydko. */
-  .hero-proof li:nth-child(3) { display: none; }
   .hide-sm { display: none; }
 }
 
@@ -469,11 +488,10 @@ em { font-style: normal; color: var(--blue); }
    przelewało się o kilkadziesiąt pikseli poza ekran i „pełny ekran” przestawał
    być pełnym ekranem. Ścieśniamy odstępy zamiast zmniejszać typografię. */
 @media (max-width: 899px) and (max-height: 700px) {
-  .hero-copy { padding-top: 24px; }
+  .hero-copy { padding: 22px; margin-bottom: calc(66px + env(safe-area-inset-bottom)); }
   .hero .eyebrow { margin-bottom: 16px; }
   .hero-copy h1 { margin-bottom: 16px; }
   .hero-actions { margin-top: 24px; }
-  .hero-proof { margin-top: 20px; padding-top: 14px; }
 }
 
 

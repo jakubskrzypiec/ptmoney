@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-3">
+<link rel="stylesheet" href="./styles.css?v=20260902-4">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -47,8 +47,8 @@ document.documentElement.classList.add('js');
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260902-3"></script>
-<script defer src="./main.js?v=20260902-3"></script>
+<script defer src="./dane.js?v=20260902-4"></script>
+<script defer src="./main.js?v=20260902-4"></script>
 </head>
 <body>
 
@@ -74,7 +74,9 @@ document.documentElement.classList.add('js');
 <header class="site-header site-header--overlay" id="top">
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="P&amp;T Money — strona główna">
-      <img id="headerLogo" src="./logo-horizontal.png" alt="P&amp;T Money" width="174" height="36">
+      <!-- Dwa warianty znaku: jasny leży na ciemnym hero, ciemny na zestalonym pasku. -->
+      <img class="brand-logo brand-logo--light" src="./logo-horizontal-light.png" alt="P&amp;T Money" width="174" height="36">
+      <img class="brand-logo brand-logo--dark" id="headerLogo" src="./logo-horizontal.png" alt="" aria-hidden="true" width="174" height="36">
     </a>
     <nav class="desktop-nav" aria-label="Główna nawigacja">
       <a href="#produkty">Produkty</a>
@@ -109,14 +111,14 @@ document.documentElement.classList.add('js');
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <!-- Pełny ekran, zdjęcie jako tło całej sekcji. Kadr jest JASNY, więc typografia
-       jest ciemna, a nagłówek strony leży na nim w wersji ciemnej — odwrotnie niż
-       przy poprzednim, ciemnym zdjęciu. Tekst siedzi w lewym dolnym rogu: lewa
-       połowa kadru to pusta ściana, dół to blat — obie strefy są spokojne.
+  <!-- Pełny ekran, zdjęcie jako tło całej sekcji. Kadr jest zastawiony na całej
+       szerokości — nie ma na nim pustego pola — więc typografia jest biała,
+       a .hero-shade kładzie pod nią ciemny klin od lewego dolnego rogu.
+       Tekst siedzi w lewym dolnym rogu.
        data-hero-in + data-delay ustalają kolejność wejścia po kurtynie marki. -->
   <section class="hero" id="hero" aria-labelledby="hero-title">
     <div class="hero-media" data-hero-wipe data-delay="0.08" aria-hidden="true">
-      <img src="./img/hero.jpg" alt="" width="2560" height="1440" loading="eager" fetchpriority="high" decoding="async" data-hero-parallax>
+      <img src="./img/hero.jpg" alt="" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" data-hero-parallax>
     </div>
     <div class="hero-shade" aria-hidden="true"></div>
 
@@ -129,18 +131,15 @@ document.documentElement.classList.add('js');
           <span class="hero-line" data-hero-line data-delay="0.11"><span>dopasowane</span></span>
           <span class="hero-line" data-hero-line data-delay="0.17"><span><em>do Twojej sytuacji.</em></span></span>
         </h1>
-        <p class="hero-lead" data-hero-in data-delay="0.23">Porównujemy oferty ponad trzydziestu instytucji, negocjujemy warunki i prowadzimy cały proces — konkretnie, spokojnie i bez zbędnych formalności.</p>
+        <p class="hero-lead" data-hero-in data-delay="0.23">Porównujemy oferty ponad trzydziestu instytucji i prowadzimy cały proces — od pierwszej rozmowy po podpisanie umowy.</p>
 
         <div class="hero-actions" data-hero-in data-delay="0.29">
           <a class="btn btn--primary btn--lg" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
           <a class="btn btn--ghost btn--lg contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
-
-        <ul class="hero-proof" data-hero-in data-delay="0.35">
-          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Konsultacja bez opłat</li>
-          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Bez wizyty w oddziale</li>
-          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Jeden doradca do końca sprawy</li>
-        </ul>
+        <!-- Lista trzech konkretów („konsultacja bez opłat” itd.) wyleciała stąd:
+             powtarzała pasek zaufania jedną sekcję niżej, a rozpychała panel
+             na całą wysokość okna, przez co przestawał być blokiem w rogu. -->
       </div>
     </div>
 
