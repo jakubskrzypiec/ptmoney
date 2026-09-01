@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-4">
+<link rel="stylesheet" href="./styles.css?v=20260902-5">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -47,8 +47,8 @@ document.documentElement.classList.add('js');
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260902-4"></script>
-<script defer src="./main.js?v=20260902-4"></script>
+<script defer src="./dane.js?v=20260902-5"></script>
+<script defer src="./main.js?v=20260902-5"></script>
 </head>
 <body>
 
@@ -175,12 +175,8 @@ document.documentElement.classList.add('js');
         <a class="rate-bar-cta" href="#produkty">Dobierz produkt <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
       </div>
 
-      <ul class="trust-bar reveal">
-        <li><strong>30+</strong><span>banków i instytucji</span></li>
-        <li><strong>12 000+</strong><span>obsłużonych klientów</span></li>
-        <li><strong>48 h</strong><span>do pierwszej oferty</span></li>
-        <li><strong>0 zł</strong><span>za konsultację</span></li>
-      </ul>
+      <!-- Pasek z liczbami (30+, 12 000+, 48 h, 0 zł) wyleciał stąd — te same
+           liczby stoją w sekcji „Liczby, nie obietnice" kilka ekranów niżej. -->
       <p class="fineprint fineprint--hero">Wyliczenie poglądowe przy założeniu oprocentowania nominalnego 9,9% — nie stanowi oferty w rozumieniu Kodeksu cywilnego. Rzeczywiste warunki zależą od oferty banku i Twojej zdolności kredytowej.</p>
     </div>
   </section>
@@ -271,21 +267,50 @@ document.documentElement.classList.add('js');
   </section>
 
   <!-- ============ PROCES ============ -->
+  <!-- Wcześniej trzy kolumny tekstu rozdzielone kreskami — czytało się jak
+       szablon. Teraz każdy krok to kafel z numerem, czasem trwania i tym,
+       co realnie robi klient, a co my. Ostatni kafel jest ciemny: to koniec
+       ścieżki i jednocześnie wyjście do formularza. -->
   <section class="section section--line" id="jak-to-dziala" aria-labelledby="process-title">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow">Proces</p>
-        <h2 id="process-title">Trzy kroki od zapytania do decyzji.</h2>
+        <h2 id="process-title">Trzy kroki od zapytania<br>do decyzji.</h2>
+        <p class="section-lead">Bez wizyt w oddziale i bez wypełniania tego samego wniosku w pięciu bankach. Całą papierkową robotę bierzemy na siebie.</p>
       </div>
-      <ol class="process-grid reveal-grid">
-        <li class="process-step reveal"><span class="step-number">01</span><h3>Zostawiasz kontakt</h3><p>Wypełniasz krótki formularz — imię, e-mail i telefon. Zajmuje to niecałe 2 minuty.</p></li>
-        <li class="process-step reveal"><span class="step-number">02</span><h3>Dzwoni doradca</h3><p>Poznajemy Twoją sytuację, analizujemy potrzeby i szukamy najlepszych ofert na rynku.</p></li>
-        <li class="process-step reveal"><span class="step-number">03</span><h3>Wybierasz i podpisujesz</h3><p>Przedstawiamy porównanie ofert. Ty decydujesz, my pilnujemy formalności do końca.</p></li>
+
+      <ol class="steps reveal-grid">
+        <li class="step-card reveal">
+          <div class="step-card-top">
+            <span class="step-num">01</span>
+            <span class="step-time">2 minuty</span>
+          </div>
+          <h3>Zostawiasz kontakt</h3>
+          <p>Imię, telefon i to, czego szukasz. Tyle wystarczy, żebyśmy wiedzieli, od czego zacząć.</p>
+          <p class="step-who"><span>Ty</span> wypełniasz krótki formularz</p>
+        </li>
+        <li class="step-card reveal">
+          <div class="step-card-top">
+            <span class="step-num">02</span>
+            <span class="step-time">do 24 h</span>
+          </div>
+          <h3>Dzwoni doradca</h3>
+          <p>Pytamy o dochody, zobowiązania i plany. Na tej podstawie sprawdzamy, co realnie jest dla Ciebie dostępne.</p>
+          <p class="step-who"><span>My</span> szukamy ofert w ponad 30 instytucjach</p>
+        </li>
+        <li class="step-card step-card--last reveal">
+          <div class="step-card-top">
+            <span class="step-num">03</span>
+            <span class="step-time">do 48 h</span>
+          </div>
+          <h3>Wybierasz i podpisujesz</h3>
+          <p>Dostajesz porównanie ofert z kosztem całkowitym każdej. Decyzja należy do Ciebie — formalności do nas.</p>
+          <p class="step-who"><span>Ty</span> decydujesz, <span>my</span> pilnujemy papierów</p>
+          <a class="step-cta" href="#kontakt">Zacznij od kroku 1 <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+        </li>
       </ol>
-      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
     </div>
   </section>
-
   <!-- ============ KALKULATOR ============ -->
   <section class="section calc-section" id="kalkulator" aria-labelledby="calc-title">
     <div class="container calc-grid">
@@ -322,23 +347,6 @@ document.documentElement.classList.add('js');
         </div>
         <p class="fineprint fineprint--light">Kalkulacja ma charakter poglądowy i nie uwzględnia prowizji, ubezpieczeń ani ostatecznej oceny zdolności kredytowej. Rzeczywista RRSO i warunki zależą od wybranej oferty banku.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ HIPOTEKA ============ -->
-  <section class="section mortgage" aria-labelledby="mortgage-title">
-    <div class="container mortgage-grid">
-      <div class="mortgage-copy reveal">
-        <p class="eyebrow">Kredyt hipoteczny</p>
-        <h2 id="mortgage-title">Twój dom,<br>nasza robota papierkowa.</h2>
-        <p>Zakup mieszkania, budowa domu czy refinansowanie — porównujemy oferty banków, negocjujemy marżę i prowizję oraz prowadzimy Cię przez cały proces, od symulacji po podpisanie umowy.</p>
-        <a class="btn btn--primary" href="kalkulator.html" aria-label="Otwórz kalkulator refinansowania kredytu hipotecznego">Policz refinansowanie <span aria-hidden="true">→</span></a>
-      </div>
-      <ul class="mortgage-list reveal">
-        <li><span class="mortgage-num">01</span><span>Porównanie ofert kilkunastu banków jednocześnie</span></li>
-        <li><span class="mortgage-num">02</span><span>Negocjacja marży, prowizji i ubezpieczeń</span></li>
-        <li><span class="mortgage-num">03</span><span>Komplet dokumentów przygotowany za Ciebie</span></li>
-      </ul>
     </div>
   </section>
 
@@ -438,35 +446,6 @@ document.documentElement.classList.add('js');
       <p class="fineprint">Opinie pochodzą od klientów P&amp;T Money. Imiona i miasta publikujemy za ich zgodą; nazwiska skracamy ze względu na ochronę danych.</p>
     </div>
   </section>
-  <!-- ============ FAQ ============ -->
-  <section class="section section--muted" id="faq" aria-labelledby="faq-title">
-    <div class="container faq-wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Pytania</p>
-        <h2 id="faq-title">Zanim zadzwonisz&nbsp;— kilka odpowiedzi.</h2>
-      </div>
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q1" type="button" aria-controls="faq-a1" aria-expanded="false">Czy skorzystanie z pośrednika kosztuje?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><p>Konsultacja i przygotowanie oferty są zawsze bezpłatne dla klienta indywidualnego. Wynagrodzenie otrzymujemy od instytucji finansowej dopiero po uruchomieniu umowy.</p></div>
-        </div>
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q2" type="button" aria-controls="faq-a2" aria-expanded="false">Jak długo czekam na pierwszą ofertę?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><p>Zwykle oddzwaniamy w ciągu jednego dnia roboczego, a wstępne porównanie ofert przygotowujemy najczęściej w ciągu 48 godzin od rozmowy z doradcą.</p></div>
-        </div>
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q3" type="button" aria-controls="faq-a3" aria-expanded="false">Czy mogę skorzystać przy negatywnej historii w BIK?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><p>Warto zostawić kontakt mimo wszystko — dobieramy oferty spośród wielu instytucji o różnych kryteriach oceny, więc doradca sprawdzi realne możliwości w Twojej sytuacji.</p></div>
-        </div>
-        <div class="faq-item">
-          <h3><button class="faq-button" id="faq-q4" type="button" aria-controls="faq-a4" aria-expanded="false">Co dzieje się z moimi danymi po wysłaniu formularza?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
-          <div class="faq-panel" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><p>Dane wykorzystujemy wyłącznie do przygotowania i przedstawienia oferty finansowej, zgodnie z Polityką prywatności i przepisami RODO. Nie przekazujemy ich podmiotom trzecim bez Twojej zgody.</p></div>
-        </div>
-      </div>
-      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
-    </div>
-  </section>
-
   <!-- ============ FORMULARZ ============ -->
   <section class="section contact-section" id="kontakt" aria-labelledby="contact-title">
     <div class="container contact-grid">
@@ -550,6 +529,35 @@ document.documentElement.classList.add('js');
           </div>
         </form>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section section--muted" id="faq" aria-labelledby="faq-title">
+    <div class="container faq-wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Pytania</p>
+        <h2 id="faq-title">Zanim zadzwonisz&nbsp;— kilka odpowiedzi.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q1" type="button" aria-controls="faq-a1" aria-expanded="false">Czy skorzystanie z pośrednika kosztuje?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><p>Konsultacja i przygotowanie oferty są zawsze bezpłatne dla klienta indywidualnego. Wynagrodzenie otrzymujemy od instytucji finansowej dopiero po uruchomieniu umowy.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q2" type="button" aria-controls="faq-a2" aria-expanded="false">Jak długo czekam na pierwszą ofertę?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><p>Zwykle oddzwaniamy w ciągu jednego dnia roboczego, a wstępne porównanie ofert przygotowujemy najczęściej w ciągu 48 godzin od rozmowy z doradcą.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q3" type="button" aria-controls="faq-a3" aria-expanded="false">Czy mogę skorzystać przy negatywnej historii w BIK?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><p>Warto zostawić kontakt mimo wszystko — dobieramy oferty spośród wielu instytucji o różnych kryteriach oceny, więc doradca sprawdzi realne możliwości w Twojej sytuacji.</p></div>
+        </div>
+        <div class="faq-item">
+          <h3><button class="faq-button" id="faq-q4" type="button" aria-controls="faq-a4" aria-expanded="false">Co dzieje się z moimi danymi po wysłaniu formularza?<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></h3>
+          <div class="faq-panel" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><p>Dane wykorzystujemy wyłącznie do przygotowania i przedstawienia oferty finansowej, zgodnie z Polityką prywatności i przepisami RODO. Nie przekazujemy ich podmiotom trzecim bez Twojej zgody.</p></div>
+        </div>
+      </div>
+      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
     </div>
   </section>
 

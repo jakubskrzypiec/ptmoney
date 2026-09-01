@@ -33,10 +33,17 @@ Hero zajmuje **cały ekran** (`min-height: 100svh`). Zdjęcie `img/hero.jpg` jes
 całej sekcji, a napisy siedzą w **lewym dolnym rogu** (`align-items: flex-end`) — tam,
 gdzie kadr jest pusty: po lewej ściana, na dole blat.
 
-Kadr jest **jasny**, więc cała typografia hero jest **ciemna**, a `.hero-shade` dokłada
-mleczną warstwę od lewej i od dołu, żeby tekst trzymał kontrast niezależnie od tego,
-jak zdjęcie przytnie się na danym ekranie. Gdyby wróciło ciemne zdjęcie, trzeba odwrócić
-komplet: `.hero-shade`, kolory w `.hero-copy`, `.hero-proof` i nagłówek.
+Kadr jest **zastawiony na całej szerokości** — nie ma na nim pustego pola — więc
+typografia jest **biała**, a `.hero-shade` kładzie pod nią **elipsę zakotwiczoną
+w lewym dolnym rogu**. Elipsa, a nie pas: gaśnie promieniście, więc prawa strona kadru
+(laptop ze znakiem, widok z okna) zostaje w pełnej jasności.
+
+Zmierzone na realnych prostokątach tekstu przy 1440×900: eyebrow 12,5:1, nagłówek 5,2:1,
+lead 16,2:1 — wszystko powyżej progu WCAG AA. **Po każdej podmianie zdjęcia trzeba to
+przeliczyć od nowa**, bo kontrast zależy od tego, co wypadnie pod napisami przy danym
+kadrowaniu. Sposób pomiaru: narysować zdjęcie na `<canvas>` z tym samym `object-fit: cover`
+i `object-position`, nałożyć te same gradienty, a potem próbkować prostokąty
+z `Range.getClientRects()` dla `.eyebrow`, `#hero-title` i `.hero-lead`.
 
 Nagłówek strony **leży na hero przezroczysty** (`.site-header--overlay`) i zestala się
 w biały pasek dopiero po przewinięciu o 40 px — wtedy `main.js` dokłada `.is-compact`
@@ -99,19 +106,22 @@ Kolejność sekcji jest ścieżką klienta — od najmniejszego zobowiązania do
 | # | Sekcja | Po co tu jest |
 |---|---|---|
 | 1 | **Hero** (`#hero`) | jedna obietnica, jedno główne działanie |
-| 2 | **Zacznij tutaj** (`#start`) | suwak raty: coś do ruszenia, zanim padnie prośba o numer |
+| 2 | **Podgląd raty** (`#start`) | suwak: coś do ruszenia, zanim padnie prośba o numer |
 | 3 | **Produkty** (`#produkty`) | klient sam wskazuje, po co przyszedł |
-| 4 | **Jak to działa** (`#jak-to-dziala`) | zdejmuje niepewność „co się stanie po wysłaniu” |
+| 4 | **Jak to działa** (`#jak-to-dziala`) | trzy kafle: co robi klient, co robimy my, ile to trwa |
 | 5 | **Kalkulator** (`#kalkulator`) | dokładniejsze liczby dla już zainteresowanych |
-| 6 | **Hipoteka** | pogłębienie najcięższego produktu |
-| 7 | **Doradca** (`#zespol`) | twarz i ton — zaufanie do człowieka |
-| 8 | **Liczby** | zaufanie do firmy |
-| 9 | **Opinie** (`#opinie`) | dowód od osób z zewnątrz |
-| 10 | **FAQ** (`#faq`) | ostatnie obiekcje przed decyzją |
-| 11 | **Formularz** (`#kontakt`) | konwersja — na końcu, po zbiciu wątpliwości |
+| 6 | **Doradca** (`#zespol`) | twarz i ton — zaufanie do człowieka |
+| 7 | **Liczby** | zaufanie do firmy |
+| 8 | **Opinie** (`#opinie`) | dowód od osób z zewnątrz |
+| 9 | **Formularz** (`#kontakt`) | konwersja |
+| 10 | **FAQ** (`#faq`) | domknięcie dla tych, którzy jeszcze nie wypełnili |
 
 Suwak w sekcji 2 i kalkulator w sekcji 5 to **dwa różne narzędzia**: pierwszy ma dwa
 suwaki i daje rząd wielkości, drugi dokłada oprocentowanie, sumę odsetek i koszt całkowity.
+
+Dwie sekcje zostały usunięte i nie warto ich wracać bez powodu:
+**Hipoteka** (nie było wiadomo, czym różni się od pozycji „kredyt hipoteczny” w produktach)
+oraz **pasek liczb pod podglądem raty** (te same cztery liczby stoją w sekcji „Liczby”).
 
 Postęp czytania pokazuje 2-pikselowy pasek na dolnej krawędzi nagłówka
 (`#scrollProgress`, liczony w `updateHeader()` w `main.js`).
