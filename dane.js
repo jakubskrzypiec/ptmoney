@@ -113,7 +113,7 @@ window.PTM_DANE = {
     const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) ogUrl.content = here;
     document.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]').forEach(tag => {
-      tag.content = `${root}logo-horizontal.png`;
+      tag.content = `${root}img/hero.jpg`;
     });
     const www = document.getElementById('stronaWww');
     if (www) {

@@ -99,6 +99,24 @@ Osobno zostają **zdjęcia doradcy** (`img/`) i **weryfikacja prawna dokumentów
 Pełna lista kontrolna z instrukcją podłączenia formularza i zmiany domeny:
 **`PRZEKAZANIE.md`**.
 
+## Skala i rytm — trzy pokrętła
+
+Gęstość całej strony ustawia się z trzech miejsc w `:root`. Nie rozsiewaj
+odstępów po sekcjach; jeśli coś ma być luźniejsze albo ciaśniejsze, ruszaj tutaj.
+
+| Zmienna | Co robi |
+|---|---|
+| `font-size` na `body` | bazowa skala typografii — wszystkie `rem`-y jadą za nią |
+| `--rytm` | odstęp nad i pod każdą sekcją |
+| `--rytm-glowy` | odstęp między nagłówkiem sekcji a jej treścią (i nad `.section-cta`) |
+
+Jedyne celowe odstępstwo: **podgląd raty** (`.rate-section`) ma od góry 0,6 rytmu,
+żeby trzymał się hero. Reszta sekcji jest symetryczna.
+
+Do tego `--gutter` (margines boczny) i `--max` (szerokość kontenera). Hero
+świadomie wychodzi poza `--max` — napisy mają siedzieć w rogu ekranu, nie
+w rogu siatki.
+
 ## Ścieżka sprzedażowa
 
 Kolejność sekcji jest ścieżką klienta — od najmniejszego zobowiązania do największego:

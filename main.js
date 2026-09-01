@@ -521,6 +521,23 @@
     $('#opinieNext')?.addEventListener('click', () => { dalej(); restart(); });
     $('#opiniePrev')?.addEventListener('click', () => { wstecz(); restart(); });
 
+    /* Strzałkami z klawiatury — karuzela bez tego jest dostępna tylko myszą
+       i palcem, a strzałki są tu naturalnym odruchem. */
+    slider.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight') { event.preventDefault(); dalej(); restart(); }
+      else if (event.key === 'ArrowLeft') { event.preventDefault(); wstecz(); restart(); }
+      else return;
+    });
+    if (dotsBox) {
+      dotsBox.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        if (event.key === 'ArrowRight') dalej(); else wstecz();
+        restart();
+        dotsBox.children[index]?.focus();
+      });
+    }
+
     ['mouseenter', 'focusin', 'touchstart', 'pointerdown'].forEach(zdarzenie => {
       slider.addEventListener(zdarzenie, () => { wstrzymane = true; stop(); }, { passive: true });
     });
@@ -540,7 +557,10 @@
           if (d < dystans) { dystans = d; blisko = i; }
         });
         if (blisko !== index) { index = blisko; rysujKropki(); }
-      }, 120);
+        /* scroll-snap jest na „proximity”, więc przy szybkim geście karuzela
+           potrafi stanąć pomiędzy kaflami. Dociągamy ją do najbliższego. */
+        if (dystans > 4) idzDo(blisko);
+      }, 140);
     }, { passive: true });
 
     if ('IntersectionObserver' in window) {

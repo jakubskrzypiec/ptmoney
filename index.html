@@ -10,17 +10,22 @@
 <meta property="og:locale" content="pl_PL">
 <meta property="og:title" content="P&amp;T Money | Kredyty, leasing i faktoring — cała Polska">
 <meta property="og:description" content="Porównujemy oferty banków i instytucji finansowych. Zostaw kontakt — doradca oddzwoni w jeden dzień roboczy.">
-<meta property="og:image" content="https://jakubskrzypiec.github.io/ptmoney/logo-horizontal.png">
+<!-- Podgląd linku: zdjęcie hero, nie logo. Logo na białym tle daje w komunikatorach
+     pustą, niczego nieznaczącą miniaturę. -->
+<meta property="og:image" content="https://jakubskrzypiec.github.io/ptmoney/img/hero.jpg">
+<meta property="og:image:width" content="1672">
+<meta property="og:image:height" content="941">
+<meta property="og:image:alt" content="Biurko z laptopem i materiałami P&amp;T Money">
 <meta property="og:url" content="https://jakubskrzypiec.github.io/ptmoney/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="P&amp;T Money | Pośrednictwo finansowe">
 <meta name="twitter:description" content="Kredyty, leasing i faktoring — cała Polska.">
-<meta name="twitter:image" content="https://jakubskrzypiec.github.io/ptmoney/logo-horizontal.png">
+<meta name="twitter:image" content="https://jakubskrzypiec.github.io/ptmoney/img/hero.jpg">
 <link rel="canonical" href="https://jakubskrzypiec.github.io/ptmoney/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-7">
+<link rel="stylesheet" href="./styles.css?v=20260902-8">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -47,8 +52,8 @@ document.documentElement.classList.add('js');
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260902-7"></script>
-<script defer src="./main.js?v=20260902-7"></script>
+<script defer src="./dane.js?v=20260902-8"></script>
+<script defer src="./main.js?v=20260902-8"></script>
 </head>
 <body>
 
@@ -56,7 +61,7 @@ document.documentElement.classList.add('js');
 <div class="intro" id="siteIntro" aria-hidden="true">
   <div class="intro-panel">
     <div class="intro-brand">
-      <img src="./logo-mark-light.png" alt="">
+      <img src="./logo-mark-light.png" alt="" width="240" height="216">
       <div>
         <strong>P&amp;T Money</strong>
         <span>Pośrednictwo finansowe</span>
@@ -124,8 +129,11 @@ document.documentElement.classList.add('js');
 
     <div class="container hero-main">
       <div class="hero-copy">
-        <!-- Czwarty człon zjada na telefonie drugą linijkę — chowamy go poniżej 560 px. -->
-        <p class="eyebrow" data-hero-in data-delay="0">Kredyty · leasing · faktoring<span class="hide-sm"> · ubezpieczenia</span></p>
+        <!-- Nie powtarzamy tu „kredyty · leasing · faktoring”: dokładnie to jest
+             wydrukowane na folderze widocznym na zdjęciu, po prawej stronie kadru.
+             Te same trzy słowa dwa razy na jednym ekranie wyglądały na pomyłkę.
+             Drugi człon chowamy poniżej 560 px, bo zawija się na drugą linijkę. -->
+        <p class="eyebrow" data-hero-in data-delay="0">Niezależny pośrednik finansowy<span class="hide-sm"> · cała Polska</span></p>
         <!-- Dwa wersy zamiast trzech: blok jest niższy i siada w rogu,
              a nagłówek rozkłada się szerzej. -->
         <h1 id="hero-title">
@@ -361,7 +369,7 @@ document.documentElement.classList.add('js');
       <div class="advisor-side reveal">
         <figure class="portrait portrait--advisor">
           <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1374" loading="lazy" decoding="async" data-portrait>
-          <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
+          <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt="" width="785" height="707"><span>Zdjęcie doradczyni</span></figcaption>
         </figure>
         <p class="advisor-meta"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
         <div class="advisor-actions">
@@ -435,7 +443,9 @@ document.documentElement.classList.add('js');
         </div>
       </div>
 
-      <div class="opinions-viewport reveal" id="opinieSlider" aria-roledescription="karuzela" aria-label="Opinie klientów">
+      <!-- tabindex="0": kontener przewijany musi dać się złapać klawiaturą,
+           inaczej strzałki nie mają na czym zadziałać. -->
+      <div class="opinions-viewport reveal" id="opinieSlider" tabindex="0" aria-roledescription="karuzela" aria-label="Opinie klientów — przewijaj strzałkami w lewo i w prawo">
         <ul class="opinions-track" id="opinieTrack">
           <li class="quote-card" data-placeholder="true" role="group" aria-roledescription="slajd">
             <p class="quote-mark" aria-hidden="true">„</p>
