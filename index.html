@@ -93,7 +93,7 @@ document.documentElement.classList.add('js');
     </nav>
     <div class="header-actions">
       <a class="header-phone contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000" aria-label="Zadzwoń: +48 000 000 000">+48 000 000 000</a>
-      <a class="btn btn--primary btn--header" href="#kontakt">Zostaw kontakt</a>
+      <a class="btn btn--primary btn--header" href="#kontakt">Sprawdź możliwości</a>
       <button class="menu-toggle" id="menuToggle" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Otwórz menu"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -143,52 +143,31 @@ document.documentElement.classList.add('js');
         <p class="hero-lead" data-hero-in data-delay="0.21">Porównujemy oferty ponad trzydziestu instytucji i prowadzimy cały proces — od pierwszej rozmowy po podpisanie umowy.</p>
 
         <div class="hero-actions" data-hero-in data-delay="0.27">
-          <a class="btn btn--primary" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
+          <a class="btn btn--primary" href="#produkty"><span>Sprawdź możliwości<span class="btn-sub"> — wybierz, czego potrzebujesz</span></span></a>
           <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
-        <!-- Lista trzech konkretów („konsultacja bez opłat” itd.) wyleciała stąd:
-             powtarzała pasek zaufania jedną sekcję niżej, a rozpychała panel
-             na całą wysokość okna, przez co przestawał być blokiem w rogu. -->
       </div>
     </div>
 
   </section>
 
-  <!-- ============ PODGLĄD RATY ============ -->
-  <!-- Pierwszy przystanek po hero: narzędzie, nie manifest. Wcześniej stał tu
-       nagłówek na pół ekranu („Zacznij od liczby, nie od formularza") — dużo
-       deklaracji, mało treści. Została sama rzecz do ruszenia. -->
-  <section class="section rate-section" id="start" aria-labelledby="rate-title">
+  <!-- ============ LICZBY / SZYBKI DOWÓD ZAUFANIA ============ -->
+  <section class="stats-band" id="zaufanie" aria-labelledby="stats-title">
     <div class="container">
-      <h2 id="rate-title" class="sr-only">Szybki podgląd raty</h2>
-
-      <div class="rate-bar reveal" aria-label="Szybki podgląd raty">
-        <div class="rate-bar-head">
-          <p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
-          <p class="rate-bar-note">Nic nie wysyłasz — to tylko rząd wielkości.</p>
-        </div>
-        <div class="rate-bar-controls">
-          <div class="range-field">
-            <div class="range-label"><label for="heroAmount">Kwota</label><output for="heroAmount" id="heroAmountVal">30 000 zł</output></div>
-            <input id="heroAmount" type="range" min="2000" max="150000" step="1000" value="30000" aria-label="Kwota kredytu">
-          </div>
-          <div class="range-field">
-            <div class="range-label"><label for="heroPeriod">Okres</label><output for="heroPeriod" id="heroPeriodVal">48 mies.</output></div>
-            <input id="heroPeriod" type="range" min="6" max="120" step="6" value="48" aria-label="Okres spłaty">
-          </div>
-        </div>
-        <div class="rate-bar-out" aria-live="polite">
-          <span>Orientacyjna rata</span>
-          <strong id="heroResult">712 <small>zł / mies.</small></strong>
-        </div>
-        <a class="rate-bar-cta" href="#produkty">Dobierz produkt <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+      <div class="stats-head reveal">
+        <p class="eyebrow eyebrow--on-dark">Liczby, nie obietnice</p>
+        <h2 id="stats-title">Najważniejsze konkrety na początek.</h2>
+        <p class="stats-date">dane na [MM.RRRR]</p>
       </div>
-
-      <!-- Pasek z liczbami (30+, 12 000+, 48 h, 0 zł) wyleciał stąd — te same
-           liczby stoją w sekcji „Liczby, nie obietnice" kilka ekranów niżej. -->
-      <p class="fineprint fineprint--hero">Wyliczenie poglądowe przy założeniu oprocentowania nominalnego 9,9% — nie stanowi oferty w rozumieniu Kodeksu cywilnego. Rzeczywiste warunki zależą od oferty banku i Twojej zdolności kredytowej.</p>
+      <div class="stats-grid reveal-grid" id="statsGrid">
+        <div class="stat reveal"><strong id="statKlienci" data-count="12000" data-suffix="+">12 000+</strong><span>obsłużonych klientów</span></div>
+        <div class="stat reveal"><strong id="statBanki" data-count="30" data-suffix="+">30+</strong><span>banków i instytucji w ofercie</span></div>
+        <div class="stat reveal"><strong id="statGodziny" data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
+        <div class="stat reveal"><strong data-count="0" data-suffix=" zł">0 zł</strong><span>kosztu konsultacji</span></div>
+      </div>
     </div>
   </section>
+
   <!-- ============ PRODUKTY ============ -->
   <section class="section section--line" id="produkty" aria-labelledby="produkty-title">
     <div class="container">
@@ -271,7 +250,42 @@ document.documentElement.classList.add('js');
         </li>
       </ul>
 
-      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a></div>
+      <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Porozmawiaj bezpłatnie</a></div>
+    </div>
+  </section>
+
+  <!-- ============ DORADCA ============ -->
+  <!-- Człowiek pojawia się wcześnie: zanim klient wejdzie w proces i kalkulator,
+       widzi, kto będzie prowadzić jego sprawę. -->
+  <section class="section section--muted advisor" id="zespol" aria-labelledby="advisor-title">
+    <div class="container advisor-grid">
+      <div class="advisor-side reveal">
+        <figure class="portrait portrait--advisor">
+          <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1374" loading="lazy" decoding="async" data-portrait>
+          <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt="" width="785" height="707"><span>Zdjęcie doradczyni</span></figcaption>
+        </figure>
+        <p class="advisor-meta"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
+        <div class="advisor-actions">
+          <a class="btn btn--primary" href="#kontakt">Porozmawiaj bezpłatnie</a>
+          <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
+        </div>
+      </div>
+
+      <div class="advisor-copy">
+        <p class="eyebrow reveal">Twój opiekun</p>
+        <h2 id="advisor-title" class="reveal">Jedna osoba prowadzi<br>Twoją sprawę do końca.</h2>
+
+        <blockquote class="advisor-quote reveal">
+          <p>Nie zostajesz sam z dokumentami i decyzjami — na każdym etapie wiesz, co dzieje się dalej.</p>
+        </blockquote>
+
+        <ol class="advisor-duties reveal-grid">
+          <li class="reveal"><span class="duty-num">01</span><div><strong>Zbiera dokumenty</strong><span>Mówi dokładnie, co przygotować — i sprawdza komplet, zanim trafi do banku.</span></div></li>
+          <li class="reveal"><span class="duty-num">02</span><div><strong>Rozmawia z bankami</strong><span>Składa wnioski, pilnuje terminów i negocjuje marżę oraz prowizję.</span></div></li>
+          <li class="reveal"><span class="duty-num">03</span><div><strong>Tłumaczy warunki</strong><span>Pokazuje różnice między ofertami po ludzku, razem z tym, co Cię będzie kosztować.</span></div></li>
+          <li class="reveal"><span class="duty-num">04</span><div><strong>Zostaje po decyzji</strong><span>Jest pod telefonem także przy aneksach, refinansowaniu i zmianie sytuacji.</span></div></li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -335,7 +349,7 @@ document.documentElement.classList.add('js');
             <div><dt>Całkowity koszt</dt><dd id="calcTotal">0 zł</dd></div>
           </dl>
         </div>
-        <a class="btn btn--light" href="#kontakt" id="calcCta">Zostaw kontakt</a>
+        <a class="btn btn--light" href="#kontakt" id="calcCta">Porozmawiaj o wyniku</a>
       </div>
 
       <div class="calc-panel reveal">
@@ -355,63 +369,6 @@ document.documentElement.classList.add('js');
           <div class="range-minmax"><span>7,2%</span><span>12,5%</span></div>
         </div>
         <p class="fineprint fineprint--light">Kalkulacja ma charakter poglądowy i nie uwzględnia prowizji, ubezpieczeń ani ostatecznej oceny zdolności kredytowej. Rzeczywista RRSO i warunki zależą od wybranej oferty banku.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ DORADCA ============ -->
-  <!-- Podpis siedzi pod zdjęciem, nie w kolumnie obok — tożsamość ma być przy
-       twarzy. Lead z nagłówka wyleciał: zapowiadał dosłownie to, co stoi
-       w czterech punktach niżej, przez co sekcja mówiła to samo dwa razy.
-       Punkty są ponumerowane i idą przez całą szerokość prawej kolumny. -->
-  <section class="section section--muted advisor" id="zespol" aria-labelledby="advisor-title">
-    <div class="container advisor-grid">
-      <div class="advisor-side reveal">
-        <figure class="portrait portrait--advisor">
-          <img src="./img/doradca-2.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1374" loading="lazy" decoding="async" data-portrait>
-          <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt="" width="785" height="707"><span>Zdjęcie doradczyni</span></figcaption>
-        </figure>
-        <p class="advisor-meta"><strong>[Imię i nazwisko]</strong><span id="doradcaRola">Doradca finansowy · P&amp;T Money</span></p>
-        <div class="advisor-actions">
-          <a class="btn btn--primary" href="#kontakt">Zostaw kontakt</a>
-          <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
-        </div>
-      </div>
-
-      <div class="advisor-copy">
-        <p class="eyebrow reveal">Doradca</p>
-        <h2 id="advisor-title" class="reveal">Jedna osoba prowadzi<br>Twoją sprawę do końca.</h2>
-
-        <blockquote class="advisor-quote reveal">
-          <p>Nie sprzedajemy Ci kredytu — pomagamy wybrać taki, który się naprawdę opłaca.</p>
-        </blockquote>
-
-        <ol class="advisor-duties reveal-grid">
-          <li class="reveal"><span class="duty-num">01</span><div><strong>Zbiera dokumenty</strong><span>Mówi dokładnie, co przygotować — i sprawdza komplet, zanim trafi do banku.</span></div></li>
-          <li class="reveal"><span class="duty-num">02</span><div><strong>Rozmawia z bankami</strong><span>Składa wnioski, pilnuje terminów i negocjuje marżę oraz prowizję.</span></div></li>
-          <li class="reveal"><span class="duty-num">03</span><div><strong>Tłumaczy warunki</strong><span>Pokazuje różnice między ofertami po ludzku, razem z tym, co Cię będzie kosztować.</span></div></li>
-          <li class="reveal"><span class="duty-num">04</span><div><strong>Zostaje po decyzji</strong><span>Jest pod telefonem także przy aneksach, refinansowaniu i zmianie sytuacji.</span></div></li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ LICZBY ============ -->
-  <!-- Wcześniej: niebieski kafelek z siatką 2x2 i nagłówkiem z boku — czytało się
-       jak wstawka z szablonu. Teraz jeden ciemny pas, nagłówek nad liczbami,
-       a same liczby w rzędzie oddzielone włosowymi kreskami. -->
-  <section class="stats-band" aria-labelledby="stats-title">
-    <div class="container">
-      <div class="stats-head reveal">
-        <p class="eyebrow eyebrow--on-dark">Liczby, nie obietnice</p>
-        <h2 id="stats-title">Zanim zapytasz, czy nam zaufać.</h2>
-        <p class="stats-date">dane na [MM.RRRR]</p>
-      </div>
-      <div class="stats-grid reveal-grid" id="statsGrid">
-        <div class="stat reveal"><strong id="statKlienci" data-count="12000" data-suffix="+">12 000+</strong><span>obsłużonych klientów</span></div>
-        <div class="stat reveal"><strong id="statBanki" data-count="30" data-suffix="+">30+</strong><span>banków i instytucji w ofercie</span></div>
-        <div class="stat reveal"><strong id="statGodziny" data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
-        <div class="stat reveal"><strong data-count="0" data-suffix=" zł">0 zł</strong><span>kosztu konsultacji</span></div>
       </div>
     </div>
   </section>
@@ -491,19 +448,14 @@ document.documentElement.classList.add('js');
   <section class="section contact-section" id="kontakt" aria-labelledby="contact-title">
     <div class="container contact-grid">
       <div class="contact-copy reveal">
-        <p class="eyebrow">Zostaw kontakt</p>
-        <h2 id="contact-title">Podaj dane raz.<br><em>Resztę załatwiamy my.</em></h2>
+        <p class="eyebrow">Bezpłatna rozmowa</p>
+        <h2 id="contact-title">Podaj dane raz.<br><em>Resztę załatwiamy.</em></h2>
         <p class="contact-lead">Oddzwaniamy zwykle w ciągu jednego dnia roboczego. Konsultacja i przygotowanie oferty są zawsze bezpłatne.</p>
-        <ul class="trust-list">
-          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/><path d="M12 7v5l3 2"/></svg><div><strong>Szybki kontakt</strong><span>Oddzwaniamy w ciągu 24 godzin roboczych.</span></div></li>
-          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><div><strong>Porównanie ofert</strong><span>Sprawdzamy warunki u kilkunastu instytucji naraz.</span></div></li>
-          <li><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><div><strong>Twoje dane są bezpieczne</strong><span>Przetwarzamy je wyłącznie w celu przygotowania oferty.</span></div></li>
-        </ul>
       </div>
 
       <div class="form-card reveal">
         <form id="leadForm" method="post" action="" data-endpoint="" novalidate>
-          <p class="form-step">Krok 1 z 1 · zajmie 2 minuty</p>
+          <p class="form-step">Zajmie mniej niż minutę</p>
           <div class="form-grid">
             <div class="form-primary">
               <div class="field">
@@ -562,7 +514,7 @@ document.documentElement.classList.add('js');
             </label>
             <p class="field-error" id="fConsentError">Zaznacz zgodę, aby wysłać formularz.</p>
           </div>
-          <button class="btn btn--primary btn--submit" type="submit">Wyślij zgłoszenie</button>
+          <button class="btn btn--primary btn--submit" type="submit">Poproś o kontakt</button>
           <p class="form-note">Po wysłaniu formularza skontaktuje się doradca P&amp;T Money. Dane wykorzystamy wyłącznie do obsługi tego zgłoszenia.</p>
           <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>
             <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.25 2.25L15.5 9.5"/></svg>
@@ -570,6 +522,49 @@ document.documentElement.classList.add('js');
           </div>
         </form>
       </div>
+
+      <ul class="trust-list">
+        <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/><path d="M12 7v5l3 2"/></svg><div><strong>Szybki kontakt</strong><span>Oddzwaniamy w ciągu 24 godzin roboczych.</span></div></li>
+        <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><div><strong>Porównanie ofert</strong><span>Sprawdzamy warunki u kilkunastu instytucji naraz.</span></div></li>
+        <li><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><div><strong>Twoje dane są bezpieczne</strong><span>Przetwarzamy je wyłącznie w celu przygotowania oferty.</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ SZYBKI PODGLĄD RATY ============ -->
+  <!-- Dodatkowe narzędzie dla osób, które po formularzu chcą jeszcze sprawdzić
+       orientacyjną ratę. Nie przerywa już głównej ścieżki do kontaktu. -->
+  <section class="section rate-section section--line" id="start" aria-labelledby="rate-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Dodatkowe narzędzie</p>
+        <h2 id="rate-title">Chcesz jeszcze szybko sprawdzić ratę?</h2>
+        <p class="section-lead">Ustaw kwotę i okres, aby zobaczyć orientacyjny rząd wielkości.</p>
+      </div>
+
+      <div class="rate-bar reveal" aria-label="Szybki podgląd raty">
+        <div class="rate-bar-head">
+          <p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
+          <p class="rate-bar-note">Nic nie wysyłasz — to tylko rząd wielkości.</p>
+        </div>
+        <div class="rate-bar-controls">
+          <div class="range-field">
+            <div class="range-label"><label for="heroAmount">Kwota</label><output for="heroAmount" id="heroAmountVal">30 000 zł</output></div>
+            <input id="heroAmount" type="range" min="2000" max="150000" step="1000" value="30000" aria-label="Kwota kredytu">
+          </div>
+          <div class="range-field">
+            <div class="range-label"><label for="heroPeriod">Okres</label><output for="heroPeriod" id="heroPeriodVal">48 mies.</output></div>
+            <input id="heroPeriod" type="range" min="6" max="120" step="6" value="48" aria-label="Okres spłaty">
+          </div>
+        </div>
+        <div class="rate-bar-out" aria-live="polite">
+          <span>Orientacyjna rata</span>
+          <strong id="heroResult">712 <small>zł / mies.</small></strong>
+        </div>
+        <a class="rate-bar-cta" href="#kontakt">Porozmawiaj o wyniku <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <p class="fineprint fineprint--hero">Wyliczenie poglądowe przy założeniu oprocentowania nominalnego 9,9% — nie stanowi oferty w rozumieniu Kodeksu cywilnego. Rzeczywiste warunki zależą od oferty banku i Twojej zdolności kredytowej.</p>
     </div>
   </section>
 
