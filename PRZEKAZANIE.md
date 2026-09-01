@@ -28,18 +28,17 @@ tekst w nawiasach kwadratowych.
 
 ---
 
-## 2. Wrzuć zdjęcia doradcy
+## 2. Zdjęcia — są na miejscu
 
-Do katalogu `img/`, pod nazwami:
+`img/doradca.jpg` (hero, pełna sylwetka) i `img/doradca-2.jpg` (sekcja
+„Doradca", popiersie) — oba wykadrowane z jednego zdjęcia, żeby ta sama
+grafika nie pojawiała się dwa razy w identycznym ujęciu.
 
-- `doradca.jpg` — sekcja hero
-- `doradca-2.jpg` — sekcja „Doradca"
+Przy podmianie na inną osobę: **zapisuj w JPEG, nie w PNG** i popraw `width`
+oraz `height` przy `<img>` w `index.html`. Szczegóły w `img/README.md`.
 
-Pion, proporcje 4:5, minimum 1100 × 1375 px, twarz w górnej części kadru.
-Do czasu wrzucenia w ich miejscu jest neutralna plansza ze znakiem P&T —
-strona nie pokazuje zepsutego obrazka. Szczegóły w `img/README.md`.
-
----
+Podpis pod cytatem bierze się z pól `doradca` i `doradcaRola` w `dane.js` —
+rolę dopasuj do osoby na zdjęciu.
 
 ## 3. Podłącz formularz
 
@@ -106,7 +105,7 @@ na kiedy są aktualne.
 
 - [ ] `dane.js` wypełniony, na stronie nie ma tekstu w `[nawiasach]`
 - [ ] numer `+48 000 000 000` nigdzie się nie pokazuje
-- [ ] zdjęcia w `img/`, kadr wygląda dobrze na komórce i na desktopie
+- [ ] zdjęcia sprawdzone na komórce i na desktopie, podpis pod cytatem zgodny z osobą
 - [ ] formularz wysłany testowo i zgłoszenie doszło
 - [ ] adresy w `sitemap.xml` i `robots.txt` zgodne z docelową domeną
 - [ ] dokumenty prawne przejrzane, notka robocza usunięta

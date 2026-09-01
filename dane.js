@@ -26,7 +26,7 @@ window.PTM_DANE = {
 
   /* --- Doradca (sekcja „Doradca" na stronie głównej) --------------------- */
   doradca: '',                    // np. 'Anna Kowalska'
-  doradcaRola: 'Doradca finansowy · P&T Money',
+  doradcaRola: 'Doradca finansowy · P&T Money',   // dopasuj do osoby, np. 'Doradczyni finansowa · P&T Money'
 
   /* --- Adres strony ---------------------------------------------------------
      Pełny adres z ukośnikiem na końcu. Trafia do canonical, Open Graph
