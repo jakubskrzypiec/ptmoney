@@ -43,14 +43,22 @@ rolę dopasuj do osoby na zdjęciu.
 
 ---
 
-## 2a. Opinie klientów — treść zastępcza
+## 2a. Opinie klientów — do uzupełnienia
 
-Sekcja „Opinie" (`#opinie` w `index.html`) zawiera **trzy przykładowe wypowiedzi**
-z wymyślonymi imionami. To materiał poglądowy, nie prawdziwe referencje.
+Sekcja „Opinie" (`#opinie` w `index.html`) ma gotowy układ i **znaczniki zamiast
+treści**: `[Opinia 1]`, `[Imię i inicjał]`, `[Produkt]`, `[Miasto]`. Działa to tak
+samo jak `[NIP]` w stopce — widać, czego brakuje.
 
-Przed publikacją albo wstaw prawdziwe opinie (za pisemną zgodą klientów,
-z imieniem i pierwszą literą nazwiska), albo usuń całą sekcję.
-**Nie publikuj tych przykładowych — to wprowadzanie w błąd.**
+Wpisz prawdziwe wypowiedzi bezpośrednio w `index.html` (nie w `dane.js` — opinie
+to treść, nie dane rejestrowe). Zbierz je z **pisemną zgodą klienta** na publikację;
+podpisuj imieniem i pierwszą literą nazwiska.
+
+**Nie wstawiaj tu wymyślonych opinii.** To publiczna referencja klienta, a nie tekst
+poglądowy — nieprawdziwa naraża firmę na zarzut wprowadzania w błąd (UOKiK
+traktuje fałszywe opinie jako nieuczciwą praktykę rynkową).
+
+Jeśli opinii nie będzie, usuń **całą sekcję** `#opinie` oraz odnośniki „Opinie"
+w trzech miejscach: nawigacja desktopowa, menu mobilne i stopka.
 
 ## 3. Podłącz formularz
 
@@ -117,7 +125,8 @@ na kiedy są aktualne.
 
 - [ ] `dane.js` wypełniony, na stronie nie ma tekstu w `[nawiasach]`
 - [ ] numer `+48 000 000 000` nigdzie się nie pokazuje
-- [ ] sekcja „Opinie" ma prawdziwe wypowiedzi albo została usunięta (punkt 2a)
+- [ ] sekcja „Opinie" ma prawdziwe wypowiedzi (znaczniki `[Opinia N]` zniknęły)
+      albo została usunięta razem z odnośnikami w menu i stopce (punkt 2a)
 - [ ] zdjęcia sprawdzone na komórce i na desktopie, podpis pod cytatem zgodny z osobą
 - [ ] formularz wysłany testowo i zgłoszenie doszło
 - [ ] adresy w `sitemap.xml` i `robots.txt` zgodne z docelową domeną
