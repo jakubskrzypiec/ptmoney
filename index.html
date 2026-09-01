@@ -20,18 +20,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260901-1">
+<link rel="stylesheet" href="./styles.css?v=20260901-2">
 <script>
 document.documentElement.classList.add('js');
 (() => {
   const params = new URLSearchParams(window.location.search);
-  const forceIntro = params.get('intro') === '1';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let seen = false;
-  try { seen = sessionStorage.getItem('ptm-intro-seen') === '1'; } catch (e) {}
-  // Dostępność zawsze wygrywa. ?intro=1 pomija pamięć sesji, ale nigdy nie wymusza ruchu.
-  const shouldStart = !reduceMotion && (forceIntro || (!seen && !window.location.hash && window.scrollY === 0));
-  if (shouldStart) document.documentElement.classList.add('js-intro');
+  const skipIntro = reduceMotion || params.get('intro') === '0' || Boolean(window.location.hash);
+  if (!skipIntro) document.documentElement.classList.add('js-intro');
 })();
 </script>
 <script type="application/ld+json">
@@ -49,25 +45,25 @@ document.documentElement.classList.add('js');
 <link rel="icon" type="image/png" sizes="any" href="./logo-mark.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- dane.js musi być przed main.js: rozstawia dane klienta, zanim main.js je odczyta. -->
-<script defer src="./dane.js?v=20260901-1"></script>
-<script defer src="./main.js?v=20260901-1"></script>
+<script defer src="./dane.js?v=20260901-2"></script>
+<script defer src="./main.js?v=20260901-2"></script>
 </head>
 <body>
 
-<!-- ============ INTRO: przewijanie steruje otwarciem logo ============ -->
+<!-- ============ INTRO: krótka, automatyczna kurtyna marki ============ -->
 <div class="intro" id="siteIntro" aria-hidden="true">
-  <div class="intro-plate" id="introPlate"></div>
-  <div class="intro-veil" id="introVeil"></div>
-  <div class="intro-mark-fallback" id="introMarkFallback"><img src="./logo-mark.png" alt=""></div>
-  <div class="intro-copy" id="introCopy">
-    <p class="intro-name">Kredyt, leasing czy faktoring?<span>Sprawdzamy banki, żebyś Ty nie musiał.</span></p>
-    <p class="intro-sub">Pośrednictwo finansowe · cała Polska</p>
-  </div>
-  <div class="intro-hint" id="introHint">
-    <span class="intro-hint-rail"><i></i></span>
+  <div class="intro-panel">
+    <div class="intro-brand">
+      <img src="./logo-mark-light.png" alt="">
+      <div>
+        <strong>P&amp;T Money</strong>
+        <span>Pośrednictwo finansowe</span>
+      </div>
+    </div>
+    <span class="intro-rule" aria-hidden="true"><i></i></span>
+    <p class="intro-foot">Finansowanie bez zbędnego hałasu.</p>
   </div>
 </div>
-<div class="intro-spacer" id="introSpacer" aria-hidden="true"></div>
 
 <a class="skip-link" href="#main">Przejdź do treści</a>
 
@@ -107,44 +103,45 @@ document.documentElement.classList.add('js');
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <!-- Wejście hero jest zsynchronizowane z osią przewijania intro (patrz renderIntro w main.js).
-       data-hero-in + data-delay ustalają kolejność; bez intro odpala się raz, po załadowaniu. -->
+  <!-- data-hero-in + data-delay ustalają kolejność krótkiego wejścia po kurtynie marki. -->
   <section class="hero" id="hero" aria-labelledby="hero-title">
-    <div class="hero-main">
-      <div class="hero-copy">
-        <p class="eyebrow" data-hero-in data-delay="0">Pośrednictwo finansowe · Cała Polska</p>
-        <h1 id="hero-title">
-          <span class="hero-line" data-hero-line data-delay="0.06"><span>Kredyt, leasing</span></span>
-          <span class="hero-line" data-hero-line data-delay="0.13"><span>czy faktoring?</span></span>
-          <span class="hero-line" data-hero-line data-delay="0.20"><span><em>Sprawdzamy banki</em>,</span></span>
-          <span class="hero-line" data-hero-line data-delay="0.27"><span>żebyś Ty nie musiał.</span></span>
-        </h1>
-        <p class="hero-lead" data-hero-in data-delay="0.34">Porównujemy oferty ponad 30 banków i instytucji finansowych, negocjujemy warunki i pilnujemy formalności. Ty zostawiasz dane raz — resztą zajmuje się nasz zespół.</p>
-        <div class="hero-actions" data-hero-in data-delay="0.40">
-          <a class="btn btn--primary btn--lg" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
-          <a class="btn btn--ghost btn--lg contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
+    <div class="hero-stage">
+      <div class="hero-main">
+        <div class="hero-copy">
+          <p class="eyebrow" data-hero-in data-delay="0">Kredyty · leasing · faktoring</p>
+          <h1 id="hero-title">
+            <span class="hero-line" data-hero-line data-delay="0.05"><span>Finansowanie,</span></span>
+            <span class="hero-line" data-hero-line data-delay="0.11"><span>które zaczyna się</span></span>
+            <span class="hero-line" data-hero-line data-delay="0.17"><span><em>od rozmowy.</em></span></span>
+          </h1>
+          <p class="hero-lead" data-hero-in data-delay="0.23">Najpierw poznajemy Twoją sytuację. Potem porównujemy banki i instytucje finansowe, negocjujemy warunki i prowadzimy proces od pierwszej rozmowy do decyzji.</p>
+          <div class="hero-actions" data-hero-in data-delay="0.29">
+            <a class="btn btn--primary btn--lg" href="#kontakt"><span>Zostaw kontakt<span class="btn-sub"> — oddzwonimy w 24 h</span></span></a>
+            <a class="btn btn--ghost btn--lg contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
+          </div>
+          <p class="hero-note" data-hero-in data-delay="0.35">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.25 2.25L15.5 9.5"/></svg>
+            Jedna osoba prowadzi Twój temat od początku do końca.
+          </p>
         </div>
-        <p class="hero-note" data-hero-in data-delay="0.46">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.25 2.25L15.5 9.5"/></svg>
-          Konsultacja zawsze bezpłatna
-        </p>
-      </div>
 
-      <figure class="portrait portrait--hero" data-hero-wipe data-delay="0.16">
-        <img src="./img/doradca.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1431" loading="eager" decoding="async" data-portrait data-hero-parallax>
-        <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
-      </figure>
+        <figure class="portrait portrait--hero" data-hero-wipe data-delay="0.12">
+          <img src="./img/doradca.jpg" alt="Doradczyni finansowa P&amp;T Money" width="1099" height="1431" loading="eager" decoding="async" data-portrait data-hero-parallax>
+          <div class="hero-photo-meta" aria-hidden="true"><span>P&amp;T Money</span><strong>Rozmowa zamiast zbędnych formalności.</strong></div>
+          <figcaption class="portrait-fallback" aria-hidden="true"><img src="./logo-mark.png" alt=""><span>Zdjęcie doradczyni</span></figcaption>
+        </figure>
+      </div>
     </div>
 
     <div class="container">
       <aside class="rate-bar" aria-label="Szybki podgląd raty" data-hero-in data-delay="0.52">
         <p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
         <div class="rate-bar-controls">
-          <div class="range-field range-field--dark">
+          <div class="range-field">
             <div class="range-label"><label for="heroAmount">Kwota</label><output for="heroAmount" id="heroAmountVal">30 000 zł</output></div>
             <input id="heroAmount" type="range" min="2000" max="150000" step="1000" value="30000" aria-label="Kwota kredytu">
           </div>
-          <div class="range-field range-field--dark">
+          <div class="range-field">
             <div class="range-label"><label for="heroPeriod">Okres</label><output for="heroPeriod" id="heroPeriodVal">48 mies.</output></div>
             <input id="heroPeriod" type="range" min="6" max="120" step="6" value="48" aria-label="Okres spłaty">
           </div>

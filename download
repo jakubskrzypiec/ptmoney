@@ -1,0 +1,14 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Edytory
+.vscode/
+.idea/
+*.swp
+
+# Robocze
+node_modules/
+*.log
+*.tmp
+*.opt.png

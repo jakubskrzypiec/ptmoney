@@ -19,18 +19,10 @@
   };
 
   /* ==========================================================================
-     Intro — logo otwiera stronę wraz z przewijaniem
+     Intro + wejście hero — automatyczne, krótkie i bez scroll-scrubbingu
      ========================================================================== */
 
   const intro = $('#siteIntro');
-  const introSpacer = $('#introSpacer');
-  const introVeil = $('#introVeil');
-  const introPlate = $('#introPlate');
-  const introCopy = $('#introCopy');
-  const introHint = $('#introHint');
-  const introFallback = $('#introMarkFallback');
-  const pageWrap = $('#pageWrap');
-
   const hero = $('#hero');
   const heroIn = $$('[data-hero-in]', hero || document);
   const heroLines = $$('[data-hero-line]', hero || document);
@@ -38,162 +30,60 @@
   const heroParallax = $$('[data-hero-parallax]', hero || document);
   const heroAll = [...heroIn, ...heroLines, ...heroWipes];
 
-  // Opóźnienia z HTML-a obsługują obie ścieżki: scrub i jednorazowe wejście na przejściach CSS.
   heroAll.forEach(el => el.style.setProperty('--d', `${(Number(el.dataset.delay) || 0) * 900}ms`));
-  // Stan wyjściowy włączamy dopiero stąd — gdy main.js nie wstanie, hero zostaje widoczne.
   if (heroAll.length) html.classList.add('hero-armed');
 
-  const HERO_SPAN = 0.42;              // ile osi zajmuje jeden element hero
-
-  /* Ustawia hero na zadanym postępie q (0 = ukryte, 1 = na miejscu). */
-  function renderHero(q) {
-    heroIn.forEach(el => {
-      const e = phase(q, Number(el.dataset.delay) || 0, (Number(el.dataset.delay) || 0) + HERO_SPAN);
-      el.style.opacity = String(e);
-      el.style.transform = `translate3d(0, ${26 * (1 - e)}px, 0)`;
-    });
-    heroLines.forEach(el => {
-      const e = phase(q, Number(el.dataset.delay) || 0, (Number(el.dataset.delay) || 0) + HERO_SPAN);
-      el.firstElementChild.style.transform = `translate3d(0, ${105 * (1 - e)}%, 0)`;
-    });
-    heroWipes.forEach(el => {
-      const e = phase(q, Number(el.dataset.delay) || 0, (Number(el.dataset.delay) || 0) + HERO_SPAN * 1.4);
-      el.style.clipPath = `inset(0 0 ${100 * (1 - e)}% 0)`;
-      const img = $('img[data-portrait]', el);
-      if (img) img.style.transform = `scale(${1 + 0.14 * (1 - e)})`;
-    });
-  }
-
-  /* Oddaje sterowanie CSS-owi: kasuje wartości inline i włącza klasę .is-in. */
-  function releaseHero({ animate }) {
-    heroAll.forEach(el => {
-      el.style.opacity = '';
-      el.style.transform = '';
-      el.style.clipPath = '';
-      const img = $('img[data-portrait]', el);
-      if (img) img.style.transform = '';
-      if (!animate) el.style.setProperty('--d', '0ms');
-    });
+  function releaseHero({ animate = true } = {}) {
     if (!hero) return;
-    if (!animate) {
+    if (!animate || reduceMotion) {
+      heroAll.forEach(el => el.style.setProperty('--d', '0ms'));
       hero.classList.add('is-in', 'is-settled');
       return;
     }
-    // Dwie klatki, żeby przeglądarka zdążyła namalować stan wyjściowy — inaczej
-    // dołożenie klasy w tej samej klatce zjada przejście.
     requestAnimationFrame(() => requestAnimationFrame(() => {
       hero.classList.add('is-in');
-      window.setTimeout(() => hero.classList.add('is-settled'), 2200);
+      window.setTimeout(() => hero.classList.add('is-settled'), 1800);
     }));
   }
 
-  const MARK_START = 148;              // px — startowa szerokość znaku
-  const MARK_GROWTH = 1.5;             // krotność największego boku okna na końcu wzrostu
-  let introActive = false;
-  let introTicking = false;
+  let introLeaveTimer = 0;
+  let introFinishTimer = 0;
+  let introLeaving = false;
 
-  const supportsMaskComposite =
-    typeof CSS !== 'undefined' && typeof CSS.supports === 'function' &&
-    (CSS.supports('mask-composite', 'exclude') || CSS.supports('-webkit-mask-composite', 'xor'));
+  const skipIntroNow = () => beginIntroLeave(760);
 
-  function hideIntro({ remember = false, keepViewport = false, heroDone = false } = {}) {
-    if (!intro) return;
-    const zone = introSpacer?.offsetHeight || 0;
-    const y = window.scrollY;
-    introActive = false;
+  function finishIntro() {
+    window.clearTimeout(introLeaveTimer);
+    window.clearTimeout(introFinishTimer);
+    window.removeEventListener('keydown', skipIntroNow);
+    intro?.removeEventListener('click', skipIntroNow);
     html.classList.remove('js-intro');
     html.classList.add('intro-open');
-    intro.style.display = 'none';
-    if (introSpacer) introSpacer.style.display = 'none';
-    if (pageWrap) pageWrap.style.transform = '';
-    if (keepViewport && zone) {
-      // Skok musi być natychmiastowy — globalne scroll-behavior: smooth animowałoby powrót.
-      const top = Math.max(0, y - zone);
-      try { window.scrollTo({ top, left: 0, behavior: 'instant' }); }
-      catch (e) { window.scrollTo(0, top); }
-    }
-    if (remember) { try { sessionStorage.setItem('ptm-intro-seen', '1'); } catch (e) {} }
-    // Po scrubie hero jest już na miejscu — nie odgrywamy wejścia drugi raz.
-    releaseHero({ animate: !heroDone });
+    document.body.classList.remove('intro-lock');
+    if (intro) intro.style.display = 'none';
   }
 
-  function renderIntro() {
-    introTicking = false;
-    if (!introActive || !intro || !introSpacer) return;
-
-    const zone = introSpacer.offsetHeight;
-    const travel = Math.max(1, zone - window.innerHeight);
-    const p = clamp01(window.scrollY / travel);
-
-    // Treść strony stoi nieruchomo pod warstwą intro — przewijamy wyłącznie animację.
-    if (pageWrap) pageWrap.style.transform = `translate3d(0, ${window.scrollY - zone}px, 0)`;
-
-    // 1. Napisy i podpowiedź znikają jako pierwsze.
-    const textOut = phase(p, 0.04, 0.28);
-    if (introCopy) {
-      introCopy.style.opacity = String(1 - textOut);
-      introCopy.style.transform = `translate(-50%, ${18 * textOut}px)`;
-    }
-    if (introHint) {
-      introHint.style.opacity = String(1 - phase(p, 0.02, 0.18));
-      introHint.style.transform = `translateX(-50%) translateY(${16 * textOut}px)`;
-    }
-
-    // 2. Znak rośnie i staje się oknem na stronę.
-    const grow = phase(p, 0.08, 0.60);
-    const maxSide = Math.max(window.innerWidth, window.innerHeight);
-    const size = MARK_START + (maxSide * MARK_GROWTH - MARK_START) * Math.pow(grow, 1.6);
-
-    if (supportsMaskComposite && introVeil) {
-      introVeil.style.webkitMaskSize = `${size}px auto, cover`;
-      introVeil.style.maskSize = `${size}px auto, cover`;
-    } else if (introFallback) {
-      introFallback.style.transform = `translate(-50%, -50%) scale(${size / MARK_START})`;
-    }
-
-    // 3. Kurtyna schodzi w dół i odsłania stronę od góry — tym samym kierunkiem,
-    //    w którym zaraz układają się wiersze nagłówka.
-    const exit = phase(p, 0.58, 0.80);
-    intro.style.clipPath = `inset(${100 * exit}% 0 0 0)`;
-    intro.style.transform = `translate3d(0, ${5 * exit}vh, 0)`;
-    intro.style.opacity = String(1 - phase(p, 0.78, 0.82));
-    html.classList.toggle('intro-open', p > 0.60);
-
-    // 4. Hero składa się jeszcze na tej samej osi — strona wciąż stoi w miejscu.
-    renderHero(phase(p, 0.60, 1));
-
-    if (p >= 1) hideIntro({ remember: true, keepViewport: true, heroDone: true });
+  function beginIntroLeave(finishDelay = 1070) {
+    if (introLeaving) return;
+    introLeaving = true;
+    window.clearTimeout(introLeaveTimer);
+    intro?.classList.add('is-leaving');
+    html.classList.add('intro-open');
+    releaseHero({ animate: true });
+    introFinishTimer = window.setTimeout(finishIntro, finishDelay);
   }
 
-  function requestIntroFrame() {
-    if (!introActive || introTicking) return;
-    introTicking = true;
-    requestAnimationFrame(renderIntro);
-  }
-
-  let introSeen = false;
-  try { introSeen = sessionStorage.getItem('ptm-intro-seen') === '1'; } catch (e) {}
-  const forceIntro = new URLSearchParams(window.location.search).get('intro') === '1';
-  // Po odświeżeniu przeglądarka sama przywraca pozycję przewijania, więc
-  // `window.scrollY > 0` uznawało F5 za wejście w środek strony i chowało
-  // intro — działało raz, potem wyglądało na zepsute.
-  if ('scrollRestoration' in history) {
-    try { history.scrollRestoration = 'manual'; } catch (e) {}
-  }
-  if (!location.hash && window.scrollY > 0) window.scrollTo(0, 0);
-
-  const skipIntro = reduceMotion || (!forceIntro && (introSeen || Boolean(location.hash) || window.scrollY > 0));
-
-  if (!intro || !introSpacer || skipIntro || !html.classList.contains('js-intro')) {
-    hideIntro({ remember: false });
+  if (!intro || !html.classList.contains('js-intro') || reduceMotion) {
+    finishIntro();
+    releaseHero({ animate: !reduceMotion });
   } else {
-    if (!supportsMaskComposite) intro.classList.add('no-mask');
-    introActive = true;
-    renderIntro();
-    window.addEventListener('scroll', requestIntroFrame, { passive: true });
-    window.addEventListener('resize', requestIntroFrame, { passive: true });
-    // Bezpiecznik: gdyby coś zablokowało przewijanie, intro nie zostaje na zawsze.
-    window.setTimeout(() => { if (introActive && window.scrollY === 0) introHint?.classList.add('is-nudged'); }, 6000);
+    document.body.classList.add('intro-lock');
+    // Marka pojawia się spokojnie; po chwili panel odjeżdża i odsłania hero.
+    introLeaveTimer = window.setTimeout(() => beginIntroLeave(1070), 980);
+
+    // Nie blokujemy użytkownika: kliknięcie lub klawisz od razu kończy intro.
+    intro.addEventListener('click', skipIntroNow);
+    window.addEventListener('keydown', skipIntroNow);
   }
 
   /* Portret dryfuje wolniej niż strona, gdy hero odjeżdża w górę. */
