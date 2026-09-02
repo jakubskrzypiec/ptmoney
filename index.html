@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css?v=20260902-9">
+<link rel="stylesheet" href="./styles.css?v=20260902-10">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -129,24 +129,17 @@ document.documentElement.classList.add('js');
 
     <div class="container hero-main">
       <div class="hero-copy">
-        <!-- Nie powtarzamy tu „kredyty · leasing · faktoring”: dokładnie to jest
-             wydrukowane na folderze widocznym na zdjęciu, po prawej stronie kadru.
-             Te same trzy słowa dwa razy na jednym ekranie wyglądały na pomyłkę.
-             Drugi człon chowamy poniżej 560 px, bo zawija się na drugą linijkę. -->
-        <p class="eyebrow hero-eyebrow" data-hero-in data-delay="0"><span class="hero-status" aria-hidden="true"></span>Niezależny pośrednik finansowy<span class="hide-sm"> · cała Polska</span></p>
         <!-- Dwa wersy zamiast trzech: blok jest niższy i siada w rogu,
              a nagłówek rozkłada się szerzej. -->
         <h1 id="hero-title">
           <span class="hero-line" data-hero-line data-delay="0.05"><span>Finansowanie dopasowane</span></span>
           <span class="hero-line" data-hero-line data-delay="0.13"><span><em>do Twojej sytuacji.</em></span></span>
         </h1>
-        <p class="hero-lead" data-hero-in data-delay="0.21">Porównujemy oferty ponad trzydziestu instytucji i prowadzimy cały proces — od pierwszej rozmowy po podpisanie umowy.</p>
-
-        <div class="hero-actions" data-hero-in data-delay="0.27">
+        <div class="hero-actions" data-hero-in data-delay="0.21">
           <a class="btn btn--primary" href="#produkty"><span>Sprawdź możliwości<span class="btn-sub"> — wybierz, czego potrzebujesz</span></span></a>
           <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48000000000">Zadzwoń</a>
         </div>
-        <ul class="hero-assurances" data-hero-in data-delay="0.33" aria-label="Najważniejsze korzyści">
+        <ul class="hero-assurances" data-hero-in data-delay="0.27" aria-label="Najważniejsze korzyści">
           <li><strong>Jedna rozmowa</strong><span>zamiast wielu wniosków</span></li>
           <li><strong>Wiele ofert</strong><span>porównanych w jednym miejscu</span></li>
           <li><strong>Jeden opiekun</strong><span>od kontaktu do umowy</span></li>
@@ -154,23 +147,6 @@ document.documentElement.classList.add('js');
       </div>
     </div>
 
-  </section>
-
-  <!-- ============ LICZBY / SZYBKI DOWÓD ZAUFANIA ============ -->
-  <section class="stats-band" id="zaufanie" aria-labelledby="stats-title">
-    <div class="container">
-      <div class="stats-head reveal">
-        <p class="eyebrow eyebrow--on-dark">Liczby, nie obietnice</p>
-        <h2 id="stats-title">Najważniejsze konkrety na początek.</h2>
-        <p class="stats-date">dane na [MM.RRRR]</p>
-      </div>
-      <div class="stats-grid reveal-grid" id="statsGrid">
-        <div class="stat reveal"><strong id="statKlienci" data-count="12000" data-suffix="+">12 000+</strong><span>obsłużonych klientów</span></div>
-        <div class="stat reveal"><strong id="statBanki" data-count="30" data-suffix="+">30+</strong><span>banków i instytucji w ofercie</span></div>
-        <div class="stat reveal"><strong id="statGodziny" data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
-        <div class="stat reveal"><strong data-count="0" data-suffix=" zł">0 zł</strong><span>kosztu konsultacji</span></div>
-      </div>
-    </div>
   </section>
 
   <!-- ============ PRODUKTY ============ -->
@@ -454,6 +430,22 @@ document.documentElement.classList.add('js');
       <div class="opinions-foot">
         <div class="opinions-dots" id="opinieDots" role="tablist" aria-label="Wybierz opinię"></div>
         <p class="fineprint">Opinie pochodzą od klientów P&amp;T Money. Imiona i miasta publikujemy za ich zgodą; nazwiska skracamy ze względu na ochronę danych.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LICZBY / OSTATNI DOWÓD PRZED KONTAKTEM ============ -->
+  <section class="stats-band" id="zaufanie" aria-labelledby="stats-title">
+    <div class="container">
+      <div class="stats-head reveal">
+        <p class="eyebrow eyebrow--on-dark">Liczby, nie obietnice</p>
+        <h2 id="stats-title">Najważniejsze konkrety przed rozmową.</h2>
+      </div>
+      <div class="stats-grid reveal-grid" id="statsGrid">
+        <div class="stat reveal"><strong id="statKlienci" data-count="12000" data-suffix="+">12 000+</strong><span>obsłużonych klientów</span></div>
+        <div class="stat reveal"><strong id="statBanki" data-count="30" data-suffix="+">30+</strong><span>banków i instytucji w ofercie</span></div>
+        <div class="stat reveal"><strong id="statGodziny" data-count="48" data-suffix="h">48h</strong><span>średni czas pierwszej oferty</span></div>
+        <div class="stat reveal"><strong data-count="0" data-suffix=" zł">0 zł</strong><span>kosztu konsultacji</span></div>
       </div>
     </div>
   </section>
