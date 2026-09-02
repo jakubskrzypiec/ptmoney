@@ -1525,7 +1525,8 @@ h2 { letter-spacing: -.042em; }
   .hero { min-height: 100svh; }
   .hero-media img { object-position: 38% center; }
   .hero-copy { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
-  .hero-copy h1 { max-width: none; font-size: clamp(2.15rem, 10.8vw, 4.6rem); }
+  .hero-copy h1 { max-width: none; font-size: clamp(2.15rem, 10.8vw, 4.6rem); line-height: 1.06; }
+  .hero-line { padding-bottom: .12em; margin-bottom: 0; }
   .hero-assurances { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 22px; padding-top: 16px; }
   .hero-assurances li { min-width: 0; padding-right: 12px; }
   .hero-assurances li + li { padding-left: 12px; }
