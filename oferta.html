@@ -8,7 +8,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="./styles.css?v=20260905-header1to1" rel="stylesheet"/>
+<link href="./styles.css?v=20260905-1" rel="stylesheet"/>
+<link rel="stylesheet" href="./header-shared.css?v=20260905-1">
 <link href="./favicon.png" rel="icon" sizes="128x128" type="image/png"/>
 <link href="./apple-touch-icon.png" rel="apple-touch-icon"/>
 <script>document.documentElement.classList.add('js');</script>
@@ -20,22 +21,33 @@
 </head>
 <body>
 <a class="skip-link" href="#main">Przejdź do treści</a>
-<header class="site-header" id="top" style="background:rgba(252,252,250,.9);border-bottom-color:rgba(217,224,226,.82);box-shadow:0 10px 34px rgba(9,27,39,.055);">
-<div class="container header-inner">
-<a aria-label="P&amp;T Money — strona główna" class="brand" href="index.html">
-<img alt="P&amp;T Money" height="36" src="./logo-horizontal.png" style="height:28px;width:auto" width="174"/>
-</a>
-<nav aria-label="Główna nawigacja" class="desktop-nav"><a href="index.html">Start</a><a aria-current="page" href="oferta.html">Oferta</a><a href="kalkulator.html">Kalkulator</a><a href="kontakt.html">Kontakt</a></nav>
-<div class="header-actions">
-<a aria-label="Zadzwoń: +48 782 972 300" class="header-phone" href="tel:+48782972300">+48 782 972 300</a>
-<a class="btn btn--primary btn--header" href="kontakt.html">Sprawdź możliwości</a>
-<button aria-controls="mobileNav" aria-expanded="false" aria-label="Otwórz menu" class="menu-toggle" id="menuToggle" type="button"><span></span><span></span><span></span></button>
-</div>
-</div>
-<nav aria-label="Nawigacja mobilna" class="mobile-nav" hidden="" id="mobileNav">
-<div class="container mobile-nav-inner"><a href="index.html">Start</a><a aria-current="page" href="oferta.html">Oferta</a><a href="kalkulator.html">Kalkulator</a><a href="kontakt.html">Kontakt</a></div>
-</nav>
-<span aria-hidden="true" class="scroll-progress" id="scrollProgress"></span>
+<header class="pt-header" id="top">
+  <div class="pt-header__inner">
+    <a class="pt-header__brand" href="index.html" aria-label="P&amp;T Money — strona główna">
+      <img src="./logo-horizontal.png" alt="P&amp;T Money" width="174" height="36">
+    </a>
+    <nav class="pt-header__nav" aria-label="Główna nawigacja">
+      <a href="index.html">Start</a>
+      <a aria-current="page" href="oferta.html">Oferta</a>
+      <a href="kalkulator.html">Kalkulator</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="pt-header__actions">
+      <a class="pt-header__phone" href="tel:+48782972300" aria-label="Zadzwoń: +48 782 972 300">+48 782 972 300</a>
+      <a class="pt-header__cta" href="kontakt.html">Sprawdź możliwości</a>
+      <button class="pt-header__toggle" id="menuToggle" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="pt-header__mobile" id="mobileNav" aria-label="Nawigacja mobilna" hidden>
+    <div class="pt-header__mobile-inner">
+      <a href="index.html">Start</a>
+      <a aria-current="page" href="oferta.html">Oferta</a>
+      <a href="kalkulator.html">Kalkulator</a>
+      <a href="kontakt.html">Kontakt</a>
+    </div>
+  </nav>
 </header>
 <main class="subpage-main" id="main">
 <section class="page-hero page-hero--light">

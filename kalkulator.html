@@ -15,7 +15,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="kalkulator.css?v=20260905-header1to1" rel="stylesheet"/>
+<link href="kalkulator.css?v=20260901-2" rel="stylesheet"/>
+<link rel="stylesheet" href="./header-shared.css?v=20260905-1">
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,28 +36,34 @@
 </head>
 <body>
 <a class="skip-link" href="#calculatorMain">Przejdź do kalkulatora</a>
-<header class="start-copy-header" id="top">
-<div class="start-copy-container start-copy-inner">
-<a aria-label="P&amp;T Money — strona główna" class="start-copy-brand" href="index.html"><img alt="P&amp;T Money" height="36" src="logo-horizontal.png" width="174"/></a>
-<nav aria-label="Główna nawigacja" class="start-copy-nav"><a href="index.html">Start</a><a href="oferta.html">Oferta</a><a aria-current="page" href="kalkulator.html">Kalkulator</a><a href="kontakt.html">Kontakt</a></nav>
-<div class="start-copy-actions">
-<a aria-label="Zadzwoń: +48 782 972 300" class="start-copy-phone" href="tel:+48782972300">+48 782 972 300</a>
-<a class="start-copy-btn" href="kontakt.html">Sprawdź możliwości</a>
-<button aria-controls="mobileNav" aria-expanded="false" aria-label="Otwórz menu" class="start-copy-menu" id="menuToggle" type="button"><span></span><span></span><span></span></button>
-</div>
-</div>
-<nav aria-label="Nawigacja mobilna" class="start-copy-mobile" hidden="" id="mobileNav">
-<div class="start-copy-container start-copy-mobile-inner"><a href="index.html">Start</a><a href="oferta.html">Oferta</a><a aria-current="page" href="kalkulator.html">Kalkulator</a><a href="kontakt.html">Kontakt</a></div>
-</nav>
+<header class="pt-header" id="top">
+  <div class="pt-header__inner">
+    <a class="pt-header__brand" href="index.html" aria-label="P&amp;T Money — strona główna">
+      <img src="./logo-horizontal.png" alt="P&amp;T Money" width="174" height="36">
+    </a>
+    <nav class="pt-header__nav" aria-label="Główna nawigacja">
+      <a href="index.html">Start</a>
+      <a href="oferta.html">Oferta</a>
+      <a aria-current="page" href="kalkulator.html">Kalkulator</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="pt-header__actions">
+      <a class="pt-header__phone" href="tel:+48782972300" aria-label="Zadzwoń: +48 782 972 300">+48 782 972 300</a>
+      <a class="pt-header__cta" href="kontakt.html">Sprawdź możliwości</a>
+      <button class="pt-header__toggle" id="menuToggle" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="pt-header__mobile" id="mobileNav" aria-label="Nawigacja mobilna" hidden>
+    <div class="pt-header__mobile-inner">
+      <a href="index.html">Start</a>
+      <a href="oferta.html">Oferta</a>
+      <a aria-current="page" href="kalkulator.html">Kalkulator</a>
+      <a href="kontakt.html">Kontakt</a>
+    </div>
+  </nav>
 </header>
-<section class="calculator-page-hero" aria-labelledby="calculatorPageTitle">
-<div class="page-shell">
-<div class="calculator-page-breadcrumb"><a href="index.html">Start</a><span>/</span><strong>Kalkulator</strong></div>
-<p class="calculator-page-eyebrow">Analiza porównawcza</p>
-<h1 id="calculatorPageTitle">Sprawdź, ile Twój klient<br/><em>naprawdę oszczędza.</em></h1>
-<p class="calculator-page-lead">Wpisz warunki obecnego kredytu i parametry nowego wariantu. Wynik aktualizuje się na bieżąco, a jeśli chcesz przejść od symulacji do realnej analizy, nasz zespół porówna dostępne możliwości.</p>
-</div>
-</section>
 <div aria-label="Narzędzia kalkulatora" class="calc-toolbar">
 <div class="wrap topbar__inner">
 <div class="brand">
@@ -71,6 +78,11 @@
 </div>
 </div>
 <main class="wrap" id="calculatorMain">
+<section class="hero">
+<span class="pill">Analiza porównawcza</span>
+<h1>Sprawdź, ile Twój klient <em>naprawdę</em> oszczędza</h1>
+<p>Wpisz warunki obecnego kredytu i parametry nowego wariantu. Wynik aktualizuje się na bieżąco, a jeśli chcesz przejść od symulacji do realnej analizy, nasz zespół porówna dostępne możliwości.</p>
+</section>
 <section aria-label="Dane wejściowe" class="grid-2">
 <article class="card card--current">
 <div class="card__head"><span class="dot dot--current"></span><h2>Obecny kredyt klienta</h2></div>
