@@ -350,6 +350,7 @@
     'kredyt-firmowy': 'Kredyt firmowy',
     'leasing': 'Leasing',
     'faktoring': 'Faktoring',
+    'oze': 'OZE — finansowanie systemów',
     'ubezpieczenia': 'Ubezpieczenia'
   };
 

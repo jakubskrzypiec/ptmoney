@@ -22,12 +22,13 @@
     "name": "P&T Money",
     "url": "https://ptmoney.pl/",
     "email": "kontakt@ptmoney.pl",
-    "telephone": "+48 000 000 000",
+    "telephone": "+48 782 972 300",
+    "taxID": "6342849173",
     "areaServed": {"@type": "Country", "name": "Polska"}
   }
   </script>
   <script defer src="dane.js?v=20260901-1"></script>
-<link rel="icon" type="image/png" sizes="any" href="logo-mark.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="canonical" href="https://jakubskrzypiec.github.io/ptmoney/kalkulator.html">
 </head>
@@ -38,22 +39,22 @@
     <div class="site-container header-inner">
       <a class="site-brand" href="index.html" aria-label="P&amp;T Money — strona główna"><img src="logo-horizontal.png" alt="P&amp;T Money" width="174" height="36"></a>
       <nav class="desktop-nav" aria-label="Główna nawigacja">
-        <a href="index.html#produkty">Produkty</a>
+        <a href="oferta.html">Oferta</a>
         <a href="kalkulator.html" aria-current="page">Kalkulator</a>
         <a href="index.html#jak-to-dziala">Jak to działa</a>
-        <a href="index.html#zespol">Doradca</a>
+        <a href="index.html#zespol">Zespół</a>
         <a href="index.html#faq">FAQ</a>
-        <a href="index.html#kontakt">Kontakt</a>
+        <a href="kontakt.html">Kontakt</a>
       </nav>
       <div class="header-actions">
-        <a class="header-phone" href="tel:+48000000000" aria-label="Zadzwoń: +48 000 000 000">+48 000 000 000</a>
-        <a class="site-btn site-btn--primary site-btn--header" href="index.html#kontakt">Zostaw kontakt</a>
+        <a class="header-phone" href="tel:+48782972300" aria-label="Zadzwoń: +48 782 972 300">+48 782 972 300</a>
+        <a class="site-btn site-btn--primary site-btn--header" href="kontakt.html">Zostaw kontakt</a>
         <button class="menu-toggle" id="menuToggle" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
       </div>
     </div>
     <nav class="mobile-nav" id="mobileNav" aria-label="Nawigacja mobilna" hidden>
       <div class="site-container mobile-nav-inner">
-        <a href="index.html#produkty">Produkty</a><a href="kalkulator.html">Kalkulator</a><a href="index.html#jak-to-dziala">Jak to działa</a><a href="index.html#zespol">Doradca</a><a href="index.html#faq">FAQ</a><a href="index.html#kontakt">Kontakt</a><a href="tel:+48000000000">Zadzwoń</a>
+        <a href="oferta.html">Oferta</a><a href="kalkulator.html">Kalkulator</a><a href="index.html#jak-to-dziala">Jak to działa</a><a href="index.html#zespol">Zespół</a><a href="index.html#faq">FAQ</a><a href="kontakt.html">Kontakt</a><a href="tel:+48000000000">Zadzwoń</a>
       </div>
     </nav>
   </header>
@@ -76,7 +77,7 @@
     <section class="hero">
       <span class="pill">Analiza porównawcza</span>
       <h1>Sprawdź, ile Twój klient <em>naprawdę</em> oszczędza</h1>
-      <p>Po lewej wpisz warunki obecnego kredytu, po prawej swoją ofertę. Wynik liczy się na bieżąco — razem z kosztami przeniesienia kredytu i momentem, w którym zmiana zaczyna się zwracać.</p>
+      <p>Wpisz warunki obecnego kredytu i parametry nowego wariantu. Wynik aktualizuje się na bieżąco, a jeśli chcesz przejść od symulacji do realnej analizy, nasz zespół porówna dostępne możliwości.</p>
     </section>
 
     <section class="grid-2" aria-label="Dane wejściowe">
@@ -114,25 +115,25 @@
 
     <section class="card card--wide"><div class="card__head card__head--row"><h2>Harmonogram spłaty</h2><div class="seg seg--sm" id="schedMode" role="group" aria-label="Harmonogram kredytu"><button type="button" class="seg__btn is-on" data-v="B">Twoja oferta</button><button type="button" class="seg__btn" data-v="A">Obecny kredyt</button></div></div><div class="table-scroll table-scroll--tall"><table class="sched"><thead><tr><th>Rata</th><th>Kwota raty</th><th>Kapitał</th><th>Odsetki</th><th>Saldo po spłacie</th></tr></thead><tbody id="schedBody"></tbody></table></div><div class="more"><button type="button" class="btn btn--ghost" id="moreBtn">Pokaż kolejne 60 rat</button><span class="more__info" id="moreInfo"></span></div></section>
 
-    <footer class="foot calc-print-foot"><div class="foot__adv"><label class="field field--tight"><span class="field__lab">Doradca</span><input type="text" id="advName" placeholder="Imię i nazwisko" autocomplete="off"></label><label class="field field--tight"><span class="field__lab">Kontakt</span><input type="text" id="advContact" placeholder="telefon / e-mail" autocomplete="off"></label></div><p class="disclaimer">Kalkulacja ma charakter poglądowy i nie stanowi oferty w rozumieniu art. 66 §1 Kodeksu cywilnego. Wyliczenia zakładają stałą stopę procentową przez cały okres kredytowania oraz spłatę rat w terminie; rzeczywiste koszty mogą się różnić i zależą od decyzji banku, ubezpieczeń i marż. Kredyt oparty o zmienną stopę procentową wiąże się z ryzykiem wzrostu raty.</p></footer>
+    <footer class="foot calc-print-foot"><div class="foot__adv"><label class="field field--tight"><span class="field__lab">Zespół</span><input type="text" id="advName" value="P&amp;T Money" aria-label="Zespół P&T Money" autocomplete="off"></label><label class="field field--tight"><span class="field__lab">Kontakt</span><input type="text" id="advContact" placeholder="telefon / e-mail" autocomplete="off"></label></div><p class="disclaimer">Kalkulacja ma charakter poglądowy i nie stanowi oferty w rozumieniu art. 66 §1 Kodeksu cywilnego. Wyliczenia zakładają stałą stopę procentową przez cały okres kredytowania oraz spłatę rat w terminie; rzeczywiste koszty mogą się różnić i zależą od decyzji banku, ubezpieczeń i marż. Kredyt oparty o zmienną stopę procentową wiąże się z ryzykiem wzrostu raty.</p></footer>
   </main>
 
-  <section class="calc-cta" aria-labelledby="calcCtaTitle"><div class="site-container calc-cta-inner"><div><p class="site-eyebrow">P&amp;T Money</p><h2 id="calcCtaTitle">Chcesz sprawdzić, czy to się opłaca w Twoim przypadku?</h2></div><a class="site-btn site-btn--primary" href="index.html#kontakt">Zostaw kontakt</a></div></section>
+  <section class="calc-cta" aria-labelledby="calcCtaTitle"><div class="site-container calc-cta-inner"><div><p class="site-eyebrow">P&amp;T Money</p><h2 id="calcCtaTitle">Chcesz sprawdzić, czy to się opłaca w Twoim przypadku?</h2></div><a class="site-btn site-btn--primary" href="kontakt.html">Zostaw kontakt</a></div></section>
 
   <footer class="site-footer">
     <div class="site-container">
       <div class="footer-grid">
         <div class="footer-brand"><a class="footer-logo" href="index.html" aria-label="P&amp;T Money — strona główna"><img src="logo-mark.png" alt="" width="46" height="42"><span>P&amp;T <strong>money</strong></span></a><p>Niezależne pośrednictwo finansowe. Porównujemy oferty banków, firm leasingowych i faktoringowych oraz towarzystw ubezpieczeniowych, żebyś nie musiał robić tego sam.</p></div>
-        <div class="footer-col"><h2>Produkty</h2><a href="index.html#produkty">Kredyt gotówkowy</a><a href="index.html#produkty">Kredyt hipoteczny</a><a href="index.html#produkty">Kredyt firmowy</a><a href="index.html#produkty">Leasing i faktoring</a></div>
-        <div class="footer-col"><h2>Firma</h2><a href="index.html#jak-to-dziala">Jak działamy</a><a href="index.html#faq">FAQ</a><a href="index.html#kontakt">Kontakt</a></div>
-        <div class="footer-col"><h2>Kontakt</h2><a href="tel:+48000000000">+48 000 000 000</a><a href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a><a href="https://ptmoney.pl/">ptmoney.pl</a></div>
+        <div class="footer-col"><h2>Oferta</h2><a href="oferta.html#klienci">Kredyty</a><a href="oferta.html#firma">Leasing i faktoring</a><a href="oferta.html#oze">OZE — finansowanie systemów</a><a href="oferta.html#ubezpieczenia">Ubezpieczenia</a></div>
+        <div class="footer-col"><h2>Firma</h2><a href="index.html#jak-to-dziala">Jak działamy</a><a href="index.html#faq">FAQ</a><a href="kontakt.html">Kontakt</a></div>
+        <div class="footer-col"><h2>Kontakt</h2><a href="tel:+48782972300">+48 782 972 300</a><a data-phone="secondary" href="tel:+48791739337">+48 791 739 337</a><a href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a><span>NIP: 6342849173</span></div>
       </div>
       <div class="footer-bottom"><p>© 2026 P&amp;T Money. Wszelkie prawa zastrzeżone.</p><p><a href="polityka-prywatnosci.html">Polityka prywatności</a> · <a href="regulamin.html">Regulamin</a></p></div>
       <p class="footer-disclaimer">P&amp;T Money jest pośrednikiem finansowym i nie jest bankiem ani instytucją pożyczkową. Prezentowane kalkulacje mają charakter wyłącznie poglądowy i edukacyjny, nie stanowią oferty w rozumieniu art. 66 Kodeksu cywilnego ani rekomendacji inwestycyjnej. Ostateczne warunki finansowania, w tym RRSO, zależą od indywidualnej oceny zdolności kredytowej dokonanej przez wybraną instytucję finansową.</p>
     </div>
   </footer>
 
-  <div class="mobile-bottom-bar"><a class="site-btn site-btn--ghost" href="tel:+48000000000">Zadzwoń</a><a class="site-btn site-btn--primary" href="index.html#kontakt">Zostaw kontakt</a></div>
+  <div class="mobile-bottom-bar"><a class="site-btn site-btn--ghost" href="tel:+48000000000">Zadzwoń</a><a class="site-btn site-btn--primary" href="kontakt.html">Zostaw kontakt</a></div>
 
   <script>
     (() => {

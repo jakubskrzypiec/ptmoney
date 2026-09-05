@@ -14,19 +14,20 @@ window.PTM_DANE = {
   /* --- Kontakt -------------------------------------------------------------
      Telefon wpisz w formacie międzynarodowym, ze spacjami — tak jak ma się
      wyświetlić. Link „zadzwoń" powstanie z niego automatycznie.              */
-  telefon: '',                    // np. '+48 512 345 678'
-  email: '',                      // np. 'kontakt@ptmoney.pl'
+  telefon: '+48 782 972 300',       // główny numer telefonu
+  telefon2: '+48 791 739 337',      // drugi numer telefonu
+  email: 'kontakt@ptmoney.pl',      // adres kontaktowy
 
   /* --- Dane rejestrowe (stopka + dokumenty prawne) ----------------------- */
   pelnaNazwa: '',                 // np. 'P&T Money Sp. z o.o.'
   adres: '',                      // np. 'ul. Przykładowa 1, 00-001 Warszawa'
-  nip: '',                        // np. '1234567890'
+  nip: '6342849173',               // NIP P&T Money
   krs: '',                        // KRS albo numer wpisu CEIDG
   knf: '',                        // numer wpisu do rejestru KNF
 
   /* --- Doradca (sekcja „Doradca" na stronie głównej) --------------------- */
   doradca: '',                    // np. 'Anna Kowalska'
-  doradcaRola: 'Doradca finansowy · P&T Money',   // dopasuj do osoby, np. 'Doradczyni finansowa · P&T Money'
+  doradcaRola: 'Zespół doradców · P&T Money',   // dopasuj do osoby, np. 'Doradczyni finansowa · P&T Money'
 
   /* --- Adres strony ---------------------------------------------------------
      Pełny adres z ukośnikiem na końcu. Trafia do canonical, Open Graph
@@ -59,8 +60,10 @@ window.PTM_DANE = {
   const set = value => (typeof value === 'string' ? value.trim() : value) || '';
 
   const telefon = set(D.telefon);
+  const telefon2 = set(D.telefon2);
   const email = set(D.email);
   const telHref = telefon ? `tel:${telefon.replace(/[^\d+]/g, '')}` : '';
+  const telHref2 = telefon2 ? `tel:${telefon2.replace(/[^\d+]/g, '')}` : '';
 
   /* 1. Znaczniki [Klucz] w treści — także w dokumentach prawnych. */
   const tokens = {
@@ -71,6 +74,7 @@ window.PTM_DANE = {
     '[Nr wpisu KNF]': set(D.knf),
     '[Imię i nazwisko]': set(D.doradca),
     '[Telefon]': telefon,
+    '[Telefon 2]': telefon2,
     '[E-mail]': email,
     '[MM.RRRR]': set(D.liczby?.aktualneNa)
   };
@@ -91,6 +95,12 @@ window.PTM_DANE = {
 
   /* 2. Odnośniki kontaktowe. Bez danych zostaje numer zastępczy — widać, że do uzupełnienia. */
   document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+    if (link.dataset.phone === 'secondary' && telefon2) {
+      link.href = telHref2;
+      link.setAttribute('aria-label', `Zadzwoń: ${telefon2}`);
+      if (/[\d\s+]{9,}/.test(link.textContent)) link.textContent = telefon2;
+      return;
+    }
     if (!telHref) return;
     link.href = telHref;
     link.setAttribute('aria-label', `Zadzwoń: ${telefon}`);
