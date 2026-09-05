@@ -349,3 +349,6 @@ h1 { line-height: 1.03; font-weight: 700; }
 footer,.footer { border-top: 1px solid var(--line); }
 @media (min-width:900px){ .hero { padding-top: 96px; } }
 
+
+/* FIX 2026-09-05 — kalkulator zawsze w jasnym motywie */
+html, body { color-scheme: light; }

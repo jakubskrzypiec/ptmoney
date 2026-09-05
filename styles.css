@@ -1730,3 +1730,48 @@ h2 { letter-spacing: -.042em; }
 /* aktywna pozycja nawigacji podstron */
 .desktop-nav a[aria-current="page"], .mobile-nav a[aria-current="page"] { color:var(--blue); }
 .desktop-nav a[aria-current="page"]::after { right:0; background:var(--blue); }
+
+
+/* ==========================================================================
+   FIX 2026-09-05 — jasne podstrony + uproszczona nawigacja
+   ========================================================================== */
+.hero-copy h1 em { color: var(--white) !important; }
+
+.product-row:hover .product-go,
+.product-row:focus-within .product-go {
+  color: var(--white);
+}
+.product-row:hover .product-go::before,
+.product-row:focus-within .product-go::before {
+  color: var(--white);
+}
+
+.page-hero--light {
+  background: var(--white);
+  color: var(--ink);
+}
+.page-hero--light::after { display: none; }
+.page-hero--light .page-hero-breadcrumb { color: var(--muted); }
+.page-hero--light .page-hero-breadcrumb span { color: rgba(9,9,9,.24); }
+.page-hero--light h1 { color: var(--ink); }
+.page-hero--light h1 em { color: var(--blue); }
+.page-hero--light .page-hero-lead { color: var(--muted); }
+.page-hero--light .eyebrow { color: var(--blue); }
+.page-hero--light .btn--ghost {
+  color: var(--ink);
+  border-color: var(--line-strong);
+  background: var(--white);
+}
+.page-hero--light .btn--ghost:hover {
+  color: var(--white);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.page-hero {
+  padding: clamp(82px, 8vw, 118px) 0 clamp(64px, 7vw, 92px);
+}
+.page-hero h1 {
+  max-width: 980px;
+  font-size: clamp(3rem, 5.8vw, 5.35rem);
+  line-height: .98;
+}
