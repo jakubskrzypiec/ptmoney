@@ -555,3 +555,59 @@ html, body { color-scheme: light; }
   .calculator-page-hero { display: none !important; }
   #calculatorMain { padding-top: 0; }
 }
+
+/* ========================================================================== 
+   FINAL HEADER SYNC — 2026-09-05
+   Kalkulator ma bazowy font 15px, a reszta strony 18px. Wcześniejsze wartości
+   rem przez to renderowały pasek mniejszy. Poniżej ustawienia odpowiadają 1:1
+   finalnym wymiarom paska z Oferta/Kontakt, bez zmiany kalkulatora.
+   ========================================================================== */
+.site-header .desktop-nav {
+  gap: 28px;
+}
+
+.site-header .desktop-nav a {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 14.76px; /* .82rem przy bazie 18px na pozostałych podstronach */
+  font-weight: 500;
+  line-height: 1.62;
+  letter-spacing: .01em;
+}
+
+.site-header .header-phone {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 15.3px; /* .85rem przy bazie 18px */
+  font-weight: 600;
+  line-height: 1.62;
+  letter-spacing: -.01em;
+}
+
+.site-header .site-btn--header {
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 15.3px; /* .85rem przy bazie 18px */
+  font-weight: 600;
+  line-height: 1.62;
+  letter-spacing: -.005em;
+  box-shadow: 0 8px 24px rgba(9,27,39,.06);
+}
+
+.site-header .site-btn--header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(9,27,39,.11);
+}
+
+.site-header .mobile-nav a {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.62;
+}
+
+/* W głównym styles.css późniejszy premium override utrzymuje 28px także
+   między 900–1199px, więc tutaj robimy dokładnie to samo. */
+@media (min-width: 900px) {
+  .site-header .desktop-nav { gap: 28px; }
+}
