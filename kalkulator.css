@@ -352,3 +352,206 @@ footer,.footer { border-top: 1px solid var(--line); }
 
 /* FIX 2026-09-05 — kalkulator zawsze w jasnym motywie */
 html, body { color-scheme: light; }
+
+/* ========================================================================== 
+   2026-09-05 — ujednolicenie paska i nagłówka podstrony z Oferta/Kontakt
+   Tylko kalkulator: nie wpływa na karty, pola, wyniki ani logikę kalkulatora.
+   ========================================================================== */
+
+/* Pasek nawigacji — te same proporcje co na pozostałych podstronach. */
+.header-shell,
+.page-shell {
+  width: 100%;
+  max-width: 1480px;
+  margin-inline: auto;
+  padding-inline: clamp(22px, 5vw, 72px);
+}
+
+.site-header {
+  min-height: 80px;
+  background: rgba(255,255,255,.94);
+  border-bottom-color: transparent;
+  backdrop-filter: saturate(135%) blur(16px);
+  -webkit-backdrop-filter: saturate(135%) blur(16px);
+  box-shadow: none;
+}
+
+.header-inner {
+  min-height: 80px;
+  gap: 20px;
+}
+
+.site-brand img {
+  height: 30px;
+  width: auto;
+}
+
+.header-actions {
+  margin-left: 0;
+  gap: 14px;
+}
+
+.header-phone {
+  color: var(--text);
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.header-phone:hover { color: var(--blue); }
+
+.site-btn--header {
+  min-height: 44px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(9,27,39,.06);
+}
+
+.site-btn--primary {
+  background: linear-gradient(135deg, #2F3FFF 0%, var(--blue-dark) 100%);
+}
+
+.site-btn--primary:hover {
+  background: linear-gradient(135deg, var(--blue) 0%, #181F94 100%);
+}
+
+.desktop-nav { gap: 28px; }
+.desktop-nav a {
+  color: var(--text);
+  font-size: .82rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+  padding-block: 6px;
+}
+.desktop-nav a::after {
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  width: auto;
+  height: 1px;
+  background: currentColor;
+  transition: right .3s var(--ease);
+}
+.desktop-nav a:hover { color: var(--ink); }
+.desktop-nav a:hover::after,
+.desktop-nav a[aria-current="page"]::after {
+  right: 0;
+  width: auto;
+  background: var(--blue);
+}
+.desktop-nav a[aria-current="page"],
+.mobile-nav a[aria-current="page"] { color: var(--blue); }
+
+.menu-toggle {
+  width: 42px;
+  height: 42px;
+  padding: 0 11px;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.mobile-nav {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  box-shadow: none;
+}
+.mobile-nav-inner {
+  display: flex;
+  flex-direction: column;
+  padding-block: 8px 20px;
+}
+.mobile-nav a {
+  padding: 14px 2px;
+  border-bottom: 1px solid #EFEFEF;
+  font-weight: 600;
+}
+
+@media (min-width: 900px) {
+  .desktop-nav { display: flex; }
+  .site-btn--header { display: inline-flex; }
+  .menu-toggle { display: none; }
+  .mobile-nav { display: none !important; }
+  .header-phone { display: none; }
+  .header-actions { margin-left: 0; }
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  .desktop-nav { gap: 22px; }
+}
+
+@media (min-width: 1200px) {
+  .header-phone { display: inline-flex; }
+}
+
+/* Nagłówek podstrony — ten sam rytm co Oferta i Kontakt. */
+.calculator-page-hero {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  padding: clamp(82px, 8vw, 118px) 0 clamp(64px, 7vw, 92px);
+  border-bottom: 1px solid var(--line);
+}
+
+.calculator-page-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 32px;
+  color: #686868;
+  font-size: 12.16px;
+}
+.calculator-page-breadcrumb a { color: inherit; text-decoration: none; }
+.calculator-page-breadcrumb span { color: rgba(9,9,9,.24); }
+
+.calculator-page-eyebrow {
+  margin: 0 0 24px;
+  color: var(--blue);
+  font-size: 11.84px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.calculator-page-hero h1 {
+  max-width: 980px;
+  margin: 0;
+  color: var(--ink);
+  font-family: "Instrument Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(48px, 5.8vw, 85.6px);
+  font-weight: 550;
+  line-height: .98;
+  letter-spacing: -.05em;
+}
+
+.calculator-page-hero h1 em {
+  color: var(--blue);
+  font-style: normal;
+}
+
+.calculator-page-lead {
+  max-width: 720px;
+  margin: 28px 0 0;
+  color: #686868;
+  font-size: clamp(16px, 1.4vw, 19.52px);
+  line-height: 1.62;
+}
+
+/* Po przeniesieniu nagłówka nad toolbar kalkulator zaczyna się bez sztucznej luki. */
+#calculatorMain { padding-top: 34px; }
+
+@media (max-width: 639px) {
+  .calculator-page-hero {
+    padding-top: 64px;
+    padding-bottom: 54px;
+  }
+  .calculator-page-breadcrumb { margin-bottom: 24px; }
+  .calculator-page-hero h1 { font-size: clamp(42px, 13vw, 58px); }
+  .calculator-page-lead { margin-top: 22px; }
+}
+
+@media print {
+  .calculator-page-hero { display: none !important; }
+  #calculatorMain { padding-top: 0; }
+}
