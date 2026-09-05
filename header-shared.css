@@ -180,3 +180,121 @@
 @media (min-width: 1200px) {
   .pt-header__phone { display: inline-flex; }
 }
+
+/* --------------------------------------------------------------------------
+   START — transparentny header na hero, tak jak w pierwotnej wersji.
+   Po przewinięciu zachowuje dokładnie ten sam biały pasek co podstrony.
+   -------------------------------------------------------------------------- */
+.pt-header--home {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+  box-shadow: none;
+  transition:
+    opacity .42s ease,
+    background-color .28s ease,
+    border-color .28s ease,
+    box-shadow .28s ease,
+    backdrop-filter .28s ease;
+}
+
+/* W trakcie intro header ma być całkowicie niewidoczny. Pojawia się dopiero
+   po zakończeniu animacji, gdy main.js usuwa klasę .js-intro z <html>. */
+.js-intro .pt-header--home {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none !important;
+}
+
+.pt-header--home.is-compact {
+  background: rgba(255,255,255,.94);
+  -webkit-backdrop-filter: saturate(135%) blur(16px);
+  backdrop-filter: saturate(135%) blur(16px);
+  border-bottom-color: rgba(226,226,226,.82);
+  box-shadow: 0 10px 34px rgba(9,27,39,.055);
+}
+
+/* Na samym hero: jasna wersja logo i jasna nawigacja. */
+.pt-header__brand--home {
+  position: relative;
+}
+.pt-header__brand--home .pt-header__logo {
+  display: block;
+  width: auto;
+  height: 30px;
+  transition: opacity .25s ease;
+}
+.pt-header__brand--home .pt-header__logo--light {
+  position: absolute;
+  inset: 0 auto auto 0;
+  opacity: 1;
+}
+.pt-header__brand--home .pt-header__logo--dark {
+  opacity: 0;
+}
+.pt-header--home.is-compact .pt-header__logo--light,
+body.menu-open .pt-header--home .pt-header__logo--light {
+  opacity: 0;
+}
+.pt-header--home.is-compact .pt-header__logo--dark,
+body.menu-open .pt-header--home .pt-header__logo--dark {
+  opacity: 1;
+}
+
+.pt-header--home:not(.is-compact) .pt-header__nav a,
+.pt-header--home:not(.is-compact) .pt-header__phone {
+  color: rgba(255,255,255,.92);
+}
+.pt-header--home:not(.is-compact) .pt-header__nav a:hover,
+.pt-header--home:not(.is-compact) .pt-header__phone:hover,
+.pt-header--home:not(.is-compact) .pt-header__nav a[aria-current="page"] {
+  color: #fff;
+}
+.pt-header--home:not(.is-compact) .pt-header__nav a::after {
+  background: currentColor;
+}
+.pt-header--home:not(.is-compact) .pt-header__cta {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  border-color: rgba(255,255,255,.38);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+}
+.pt-header--home:not(.is-compact) .pt-header__cta:hover {
+  background: #fff;
+  color: #1D1D1D;
+  border-color: #fff;
+}
+.pt-header--home:not(.is-compact) .pt-header__toggle {
+  background: rgba(255,255,255,.72);
+  border-color: rgba(255,255,255,.34);
+}
+.pt-header--home:not(.is-compact) .pt-header__toggle span {
+  background: #111;
+}
+
+/* Po otwarciu menu mobilnego header przechodzi na biel, niezależnie od scrolla. */
+body.menu-open .pt-header--home {
+  background: rgba(255,255,255,.98);
+  -webkit-backdrop-filter: saturate(135%) blur(16px);
+  backdrop-filter: saturate(135%) blur(16px);
+  border-bottom-color: #E2E2E2;
+}
+body.menu-open .pt-header--home .pt-header__nav a,
+body.menu-open .pt-header--home .pt-header__phone {
+  color: #1D1D1D;
+}
+body.menu-open .pt-header--home .pt-header__toggle {
+  background: #fff;
+  border-color: #E2E2E2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-header--home,
+  .pt-header__brand--home .pt-header__logo { transition: none; }
+}

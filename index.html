@@ -27,7 +27,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="./styles.css?v=20260902-12" rel="stylesheet"/>
-<link rel="stylesheet" href="./header-shared.css?v=20260905-1">
+<link rel="stylesheet" href="./header-shared.css?v=20260906-1">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -74,10 +74,11 @@ document.documentElement.classList.add('js');
 </div>
 <a class="skip-link" href="#main">Przejdź do treści</a>
 <div id="pageWrap">
-<header class="pt-header" id="top">
+<header class="pt-header pt-header--home" id="top">
   <div class="pt-header__inner">
-    <a class="pt-header__brand" href="index.html" aria-label="P&amp;T Money — strona główna">
-      <img src="./logo-horizontal.png" alt="P&amp;T Money" width="174" height="36">
+    <a class="pt-header__brand pt-header__brand--home" href="index.html" aria-label="P&amp;T Money — strona główna">
+      <img class="pt-header__logo pt-header__logo--dark" src="./logo-horizontal.png" alt="P&amp;T Money" width="174" height="36">
+      <img class="pt-header__logo pt-header__logo--light" src="./logo-horizontal-light.png" alt="" aria-hidden="true" width="174" height="36">
     </a>
     <nav class="pt-header__nav" aria-label="Główna nawigacja">
       <a aria-current="page" href="index.html">Start</a>
@@ -608,5 +609,20 @@ document.documentElement.classList.add('js');
 <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="phone" href="tel:+48782972300">Zadzwoń</a>
 <a class="btn btn--primary" href="#kontakt">Sprawdź możliwości</a>
 </div>
+
+<script>
+(() => {
+  const header = document.querySelector('.pt-header--home');
+  if (!header) return;
+
+  const syncHomeHeader = () => {
+    header.classList.toggle('is-compact', window.scrollY > 40);
+  };
+
+  syncHomeHeader();
+  window.addEventListener('scroll', syncHomeHeader, { passive: true });
+  window.addEventListener('pageshow', syncHomeHeader);
+})();
+</script>
 </body>
 </html>
