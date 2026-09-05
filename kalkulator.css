@@ -564,6 +564,7 @@ html, body { color-scheme: light; }
    ========================================================================== */
 .site-header .desktop-nav {
   gap: 28px;
+  margin-left: 0; /* ważne: kasuje margin-left:auto z bazowego CSS kalkulatora */
 }
 
 .site-header .desktop-nav a {
