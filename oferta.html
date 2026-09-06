@@ -5,9 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#FFFFFF" name="theme-color"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Czcionki z własnego serwera, nie z Google — patrz fonts/fonts.css -->
+<link rel="stylesheet" href="./fonts/fonts.css?v=1">
 <link href="./styles.css?v=20260905-1" rel="stylesheet"/>
 <link rel="stylesheet" href="./header-shared.css?v=20260905-1">
 <link href="./favicon.png" rel="icon" sizes="128x128" type="image/png"/>
@@ -96,10 +95,12 @@
 <a class="service-link" href="kontakt.html?produkt=kredyt-konsolidacyjny">Sprawdź możliwości</a>
 </article>
 <article class="service-card reveal">
-<div class="service-top"><span class="service-index">03</span><span class="service-kind">Nieruchomości</span></div>
+<div class="service-top"><span class="service-index">03</span><span class="service-kind">Obsługa przez partnera</span></div>
 <h3>Kredyt hipoteczny</h3>
-<p>Finansowanie zakupu, budowy lub remontu nieruchomości. Pomagamy porównać warunki banków i przygotować proces od analizy zdolności po uruchomienie środków.</p>
-<ul class="service-points"><li>analiza zdolności i wkładu własnego</li><li>porównanie marż, prowizji i kosztów</li><li>prowadzenie przez formalności bankowe</li></ul>
+<!-- Spółka nie ma wpisu RPH — opis nie może sugerować, że sama prowadzi
+     pośrednictwo hipoteczne. Patrz PRZEKAZANIE.md. -->
+<p>Finansowanie zakupu, budowy lub remontu nieruchomości. Zapytanie przekazujemy współpracującemu pośrednikowi z uprawnieniami KNF, który poprowadzi sprawę od analizy zdolności po uruchomienie środków.</p>
+<ul class="service-points"><li>wstępna rozmowa o Twojej sytuacji</li><li>przekazanie sprawy pośrednikowi z uprawnieniami KNF</li><li>jeden kontakt po naszej stronie przez cały czas</li></ul>
 <a class="service-link" href="kontakt.html?produkt=kredyt-hipoteczny">Porozmawiaj o hipotece</a>
 </article>
 <article class="service-card reveal" id="ubezpieczenia">
@@ -198,9 +199,9 @@
 </div>
 <div class="footer-bottom">
 <p>© 2026 P&amp;T Money. Wszelkie prawa zastrzeżone.</p>
-<p><a href="polityka-prywatnosci.html">Polityka prywatności</a> · <a href="regulamin.html">Regulamin</a></p>
+<p><a href="polityka-prywatnosci.html">Polityka prywatności</a> · <a href="polityka-cookies.html">Polityka cookies</a> · <a href="regulamin.html">Regulamin</a> · <a href="informacja-o-posredniku.html">Informacja o pośredniku</a></p>
 </div>
-<p class="footer-disclaimer">P&amp;T Money jest pośrednikiem finansowym i nie jest bankiem ani instytucją pożyczkową. Informacje na stronie mają charakter ogólny. Ostateczne warunki finansowania zależą od indywidualnej oceny oraz decyzji wybranej instytucji finansowej.</p>
+<p class="footer-disclaimer">P&amp;T Money to marka MARTOM POLSKA Sp. z o.o., pośrednika kredytu konsumenckiego wpisanego do rejestru KNF pod numerem RPK027234. Spółka nie jest bankiem ani instytucją pożyczkową i nie udziela finansowania we własnym imieniu. Spółka nie jest wpisana do rejestru pośredników kredytu hipotecznego — zapytania o kredyt hipoteczny przekazujemy podmiotom posiadającym stosowne uprawnienia. Informacje na stronie mają charakter ogólny. Ostateczne warunki finansowania zależą od indywidualnej oceny oraz decyzji wybranej instytucji finansowej.</p>
 </div>
 </footer>
 <div aria-label="Szybki kontakt" class="mobile-bottom-bar"><a class="btn btn--ghost" href="tel:+48782972300">Zadzwoń</a><a class="btn btn--primary" href="kontakt.html">Kontakt</a></div>

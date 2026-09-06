@@ -19,11 +19,11 @@ window.PTM_DANE = {
   email: 'kontakt@ptmoney.pl',      // adres kontaktowy
 
   /* --- Dane rejestrowe (stopka + dokumenty prawne) ----------------------- */
-  pelnaNazwa: '',                 // np. 'P&T Money Sp. z o.o.'
-  adres: '',                      // np. 'ul. Przykładowa 1, 00-001 Warszawa'
+  pelnaNazwa: 'MARTOM POLSKA Sp. z o.o.',   // spolka prowadzaca marke P&T Money
+  adres: 'ul. Walerego Sławka 5/16, 40-833 Katowice',
   nip: '6342849173',               // NIP P&T Money
-  krs: '',                        // KRS albo numer wpisu CEIDG
-  knf: '',                        // numer wpisu do rejestru KNF
+  krs: '0000584084',              // REGON: 362876105
+  knf: 'RPK027234',               // Dzial II - posrednik kredytu konsumenckiego
 
   /* --- Doradca (sekcja „Doradca" na stronie głównej) --------------------- */
   doradca: '',                    // np. 'Anna Kowalska'

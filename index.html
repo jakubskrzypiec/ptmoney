@@ -23,9 +23,8 @@
 <meta content="Kredyty, leasing i faktoring — cała Polska." name="twitter:description"/>
 <meta content="https://jakubskrzypiec.github.io/ptmoney/img/hero.jpg" name="twitter:image"/>
 <link href="https://jakubskrzypiec.github.io/ptmoney/" rel="canonical"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Czcionki z własnego serwera, nie z Google — patrz fonts/fonts.css -->
+<link rel="stylesheet" href="./fonts/fonts.css?v=1">
 <link href="./styles.css?v=20260902-12" rel="stylesheet"/>
 <link rel="stylesheet" href="./header-shared.css?v=20260906-1">
 <script>
@@ -177,9 +176,13 @@ document.documentElement.classList.add('js');
 <span aria-hidden="true" class="product-icon"><svg viewbox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7"></path><path d="M5.5 9v11h5v-6h3v6h5V9"></path></svg></span>
 <span class="product-main">
 <span class="product-title">Kredyt hipoteczny</span>
-<span class="product-tag">Nieruchomości</span>
+<span class="product-tag">Obsługa przez partnera</span>
 </span>
-<span class="product-desc">Finansowanie zakupu, budowy lub remontu nieruchomości. Porównujemy oferty banków i negocjujemy marże i prowizje.</span>
+<!-- Spółka nie ma wpisu do rejestru pośredników kredytu hipotecznego (RPH),
+     więc opis NIE MOŻE sugerować, że sama porównuje oferty i negocjuje warunki
+     hipoteki — to byłyby czynności pośrednictwa bez uprawnień. Zapytanie trafia
+     do podmiotu z zezwoleniem KNF. Patrz PRZEKAZANIE.md. -->
+<span class="product-desc">Finansowanie zakupu, budowy lub remontu nieruchomości. Zapytanie przekazujemy współpracującemu pośrednikowi z uprawnieniami KNF, który poprowadzi sprawę.</span>
 <a class="product-go product-select" data-product="Kredyt hipoteczny" href="?produkt=kredyt-hipoteczny#kontakt"><span class="sr-only">Kredyt hipoteczny — zostaw kontakt</span><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"></path></svg></a>
 </li>
 <li class="product-row reveal">
@@ -496,15 +499,52 @@ document.documentElement.classList.add('js');
 <label for="fCompany">Nie wypełniaj tego pola</label>
 <input autocomplete="off" id="fCompany" name="company" tabindex="-1" type="text"/>
 </div>
+<!-- Wariant rekomendowany z klauzula-i-zgody-formularz.md: obowiązek informacyjny
+     oddzielony od zgód marketingowych. Jeden wymagany checkbox obejmujący także
+     marketing oznaczałby, że zgoda marketingowa jest warunkiem usługi, czyli
+     nie jest swobodna. -->
 <div class="consent-wrap">
 <label class="consent" for="fConsent">
-<input aria-describedby="fConsentError" id="fConsent" name="consent" required="" type="checkbox"/>
-<span>Wyrażam zgodę na przetwarzanie moich danych osobowych przez P&amp;T Money w celu przygotowania i przedstawienia oferty finansowej, zgodnie z <a href="./polityka-prywatnosci.html">Polityką prywatności</a>. <span aria-hidden="true">*</span></span>
+<input aria-describedby="fConsentError" id="fConsent" name="zgoda_polityka" required type="checkbox">
+<span>Potwierdzam, że zapoznałem/-am się z <a href="./polityka-prywatnosci.html">Polityką prywatności</a>. Rozumiem, że moje dane będą przetwarzane w celu obsługi zapytania i przygotowania oferty finansowania oraz mogą zostać przekazane współpracującym ekspertom, pośrednikom i instytucjom finansowym w celu przedstawienia mi oferty. <span aria-hidden="true">*</span></span>
 </label>
-<p class="field-error" id="fConsentError">Zaznacz zgodę, aby wysłać formularz.</p>
+<p class="field-error" id="fConsentError">Zaznacz potwierdzenie, aby wysłać formularz.</p>
 </div>
+
+<!-- Zgody opcjonalne — poza .consent-wrap, żeby walidacja ich nie blokowała.
+     Niezaznaczone domyślnie, do wycofania w każdej chwili. -->
+<ul class="consent-optional">
+<li><label class="consent" for="fConsentTel">
+<input id="fConsentTel" name="zgoda_telefon" type="checkbox">
+<span>Wyrażam zgodę na kontakt telefoniczny pod podanym numerem w celu przedstawienia informacji i ofert produktów finansowych. <span class="consent-opt">opcjonalne</span></span>
+</label></li>
+<li><label class="consent" for="fConsentMail">
+<input id="fConsentMail" name="zgoda_elektroniczna" type="checkbox">
+<span>Wyrażam zgodę na otrzymywanie informacji handlowych drogą elektroniczną (e-mail, SMS) na podane dane kontaktowe. <span class="consent-opt">opcjonalne</span></span>
+</label></li>
+</ul>
+
+<!-- Dowód zgody (art. 5 ust. 2 RODO): wersja dokumentów i moment wysyłki jadą
+     razem ze zgłoszeniem. Adresu IP przeglądarka nie zna — dopisuje go odbiorca. -->
+<input type="hidden" name="wersja_dokumentow" value="Polityka prywatności 1.0 / Regulamin 1.0 z 6.09.2026">
+<input type="hidden" name="wyslano_o" id="fWyslanoO" value="">
+
 <button class="btn btn--primary btn--submit" type="submit"><span>Poproś o kontakt</span><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"></path></svg></button>
 <p class="form-note">Po wysłaniu formularza skontaktuje się z Tobą zespół P&amp;T Money. Dane wykorzystamy wyłącznie do obsługi tego zgłoszenia.</p>
+<!-- Skrócona klauzula informacyjna (art. 13 RODO) — zwinięta, żeby nie przytłaczała
+     formularza, ale dostępna bez wysyłania czegokolwiek. -->
+<details class="rodo-klauzula">
+<summary>Informacja o przetwarzaniu danych osobowych</summary>
+<div class="rodo-klauzula-tresc">
+<p><strong>Administrator.</strong> MARTOM POLSKA Sp. z o.o., ul. Walerego Sławka 5/16, 40-833 Katowice, KRS 0000584084, NIP 6342849173, wpisana do Rejestru Pośredników Kredytowych KNF jako pośrednik kredytu konsumenckiego (nr RPK027234), działająca pod marką P&amp;T Money. Kontakt: <a href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a>.</p>
+<p><strong>Cele i podstawy.</strong> Imię, telefon oraz — jeśli je podasz — e-mail, kwotę i treść wiadomości przetwarzamy, aby obsłużyć zapytanie i skontaktować się z Tobą (art. 6 ust. 1 lit. b i f RODO), przekazać dane współpracującemu ekspertowi, pośrednikowi lub instytucji finansowej w celu przygotowania oferty (art. 6 ust. 1 lit. b RODO), prowadzić marketing własnych usług (art. 6 ust. 1 lit. f RODO) oraz ustalać i dochodzić roszczeń i spełniać obowiązki prawne (art. 6 ust. 1 lit. f i c RODO). Zgody zaznaczone dobrowolnie — art. 6 ust. 1 lit. a RODO.</p>
+<p><strong>Odbiorcy.</strong> Współpracujący eksperci i pośrednicy finansowi oraz instytucje finansowe (jako odrębni administratorzy), a także nasi dostawcy usług IT, hostingu, poczty i obsługi zgłoszeń oraz podmioty uprawnione na podstawie przepisów.</p>
+<p><strong>Okres.</strong> Do zakończenia obsługi zapytania, a zgłoszenia bez dalszej współpracy — 12 miesięcy od ostatniego kontaktu; dane przetwarzane na podstawie zgody — do jej wycofania.</p>
+<p><strong>Twoje prawa.</strong> Dostęp do danych, sprostowanie, usunięcie, ograniczenie, przenoszenie, sprzeciw, wycofanie zgody w dowolnym momencie (bez wpływu na zgodność z prawem wcześniejszego przetwarzania) oraz skarga do Prezesa UODO, ul. Stawki 2, 00-193 Warszawa. Podanie imienia, telefonu i wskazanie produktu jest dobrowolne, ale niezbędne do kontaktu i przygotowania oferty.</p>
+<p>Pełna treść: <a href="./polityka-prywatnosci.html">Polityka prywatności</a> · <a href="./polityka-cookies.html">Polityka cookies</a> · <a href="./regulamin.html">Regulamin</a> · <a href="./informacja-o-posredniku.html">Informacja o pośredniku</a></p>
+</div>
+</details>
+
 <div aria-live="polite" class="form-success" hidden="" id="formSuccess" role="status">
 <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.25 2.25L15.5 9.5"></path></svg>
 <span id="formSuccessText">Zgłoszenie przyjęte. Nasz zespół oddzwoni w ciągu jednego dnia roboczego.</span>
@@ -595,12 +635,12 @@ document.documentElement.classList.add('js');
 <div class="footer-col"><h2>Firma</h2><a href="#jak-to-dziala">Jak działamy</a><a href="#zespol">Zespół</a><a href="./kalkulator.html">Kalkulator</a><a href="./kontakt.html">Kontakt</a></div>
 <div class="footer-col"><h2>Kontakt</h2><a class="contact-placeholder" data-contact-placeholder="true" href="tel:+48782972300">+48 782 972 300</a><a data-phone="secondary" href="tel:+48791739337">+48 791 739 337</a><a class="contact-placeholder" data-contact-placeholder="true" href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a><a href="https://jakubskrzypiec.github.io/ptmoney/" id="stronaWww">ptmoney.pl</a></div>
 </div>
-<div aria-label="Dane rejestrowe" class="footer-registry"><span>Pełna nazwa: [Pełna nazwa firmy]</span><span>NIP: 6342849173</span><span>KRS/CEIDG: [KRS/CEIDG]</span><span>Nr wpisu KNF: [Nr wpisu KNF]</span><span>Siedziba: [Adres]</span></div>
+<div aria-label="Dane rejestrowe" class="footer-registry"><span>Pełna nazwa: [Pełna nazwa firmy]</span><span>NIP: 6342849173</span><span>KRS/CEIDG: [KRS/CEIDG]</span><span>Rejestr Pośredników Kredytowych KNF, Dział II: [Nr wpisu KNF]</span><span>Siedziba: [Adres]</span></div>
 <div class="footer-bottom">
 <p>© 2026 P&amp;T Money. Wszelkie prawa zastrzeżone.</p>
-<p><a href="./polityka-prywatnosci.html">Polityka prywatności</a> · <a href="./regulamin.html">Regulamin</a></p>
+<p><a href="./polityka-prywatnosci.html">Polityka prywatności</a> · <a href="./polityka-cookies.html">Polityka cookies</a> · <a href="./regulamin.html">Regulamin</a> · <a href="./informacja-o-posredniku.html">Informacja o pośredniku</a></p>
 </div>
-<p class="footer-disclaimer">P&amp;T Money jest pośrednikiem finansowym i nie jest bankiem ani instytucją pożyczkową. Prezentowane kalkulacje mają charakter wyłącznie poglądowy i edukacyjny, nie stanowią oferty w rozumieniu art. 66 Kodeksu cywilnego ani rekomendacji inwestycyjnej. Ostateczne warunki finansowania, w tym RRSO, zależą od indywidualnej oceny zdolności kredytowej dokonanej przez wybraną instytucję finansową.</p>
+<p class="footer-disclaimer">P&amp;T Money to marka MARTOM POLSKA Sp. z o.o., pośrednika kredytu konsumenckiego wpisanego do rejestru KNF pod numerem RPK027234. Spółka nie jest bankiem ani instytucją pożyczkową i nie udziela finansowania we własnym imieniu. Spółka nie jest wpisana do rejestru pośredników kredytu hipotecznego — zapytania o kredyt hipoteczny przekazujemy podmiotom posiadającym stosowne uprawnienia. Prezentowane kalkulacje mają charakter wyłącznie poglądowy i edukacyjny, nie stanowią oferty w rozumieniu art. 66 Kodeksu cywilnego ani rekomendacji inwestycyjnej. Ostateczne warunki finansowania, w tym RRSO, zależą od indywidualnej oceny zdolności kredytowej dokonanej przez wybraną instytucję finansową.</p>
 </div>
 </footer>
 </div><!-- /#pageWrap -->

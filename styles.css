@@ -1775,3 +1775,52 @@ h2 { letter-spacing: -.042em; }
   font-size: clamp(3rem, 5.8vw, 5.35rem);
   line-height: .98;
 }
+
+/* ==========================================================================
+   Dokumenty prawne i zgody przy formularzu
+   ==========================================================================
+   Dodane przy wgrywaniu paczki dokumentów od klienta (6.09.2026). Reguły
+   .legal-wrap siedziały wcześniej w bloku <style> powtórzonym w trzech
+   plikach — tutaj są raz i zmieniają się razem z resztą arkusza. */
+
+.legal-wrap h2 { margin-top: 2.4rem; }
+.legal-wrap h3 { margin-top: 1.6rem; font-size: 1.06rem; }
+.legal-wrap ul, .legal-wrap ol { padding-left: 1.3rem; line-height: 1.72; color: var(--muted); }
+.legal-wrap li { margin: .4rem 0; }
+.legal-wrap li > strong { color: var(--ink); }
+.legal-wrap a { color: var(--blue); }
+
+/* Tabele bywają szersze niż kolumna tekstu — przewijają się we własnym
+   kontenerze, żeby nie rozpychały strony w poziomie. */
+.legal-wrap .table-scroll { overflow-x: auto; margin: 1.2rem 0; }
+.legal-wrap table { width: 100%; border-collapse: collapse; font-size: .92rem; min-width: 34rem; }
+.legal-wrap th, .legal-wrap td {
+  border: 1px solid var(--line); padding: .7rem .75rem;
+  text-align: left; vertical-align: top; color: var(--muted);
+}
+.legal-wrap thead th { background: var(--paper); color: var(--ink); font-weight: 600; }
+
+/* Zgody opcjonalne — wizualnie lżejsze od wymaganego potwierdzenia, żeby było
+   widać, że nie trzeba ich zaznaczać, aby wysłać formularz. */
+.consent-optional { list-style: none; margin: 14px 0 0; padding: 0 16px; display: grid; gap: 12px; }
+.consent-optional .consent { font-size: .82rem; }
+.consent-opt {
+  display: inline-block; margin-left: 4px; padding: 1px 7px;
+  font-size: .68rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); background: var(--paper-2, var(--paper)); border-radius: 999px;
+  vertical-align: 1px;
+}
+
+/* Klauzula informacyjna — zwinięta, ale dostępna bez wysyłania formularza. */
+.rodo-klauzula { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 18px; }
+.rodo-klauzula summary {
+  cursor: pointer; list-style: none;
+  font-size: .86rem; font-weight: 600; color: var(--blue);
+}
+.rodo-klauzula summary::-webkit-details-marker { display: none; }
+.rodo-klauzula summary::before { content: "+ "; }
+.rodo-klauzula[open] summary::before { content: "– "; }
+.rodo-klauzula-tresc { margin-top: 14px; display: grid; gap: 12px; }
+.rodo-klauzula-tresc p { font-size: .8rem; line-height: 1.6; color: var(--muted); }
+.rodo-klauzula-tresc strong { color: var(--ink); }
+.rodo-klauzula-tresc a { color: var(--blue); }

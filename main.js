@@ -635,6 +635,26 @@
     return valid;
   }
 
+  /* Zgody muszą jechać jako jawne „tak” / „nie” z treścią, której dotyczą.
+     Sam FormData tego nie załatwia: niezaznaczony checkbox nie trafia do
+     zgłoszenia w ogóle, a zaznaczony wysyła bezużyteczne „on”. Przy sporze
+     trzeba umieć pokazać, na co konkretnie ktoś się zgodził, a na co nie
+     (rozliczalność, art. 5 ust. 2 RODO). */
+  function zbudujZgloszenie(form) {
+    const dane = new FormData(form);
+    $$('input[type="checkbox"][name^="zgoda_"]', form).forEach(pole => {
+      dane.set(pole.name, pole.checked ? 'tak' : 'nie');
+      const tresc = pole.closest('.consent')?.querySelector('span');
+      if (tresc) {
+        // Sama treść oświadczenia — bez etykiety „opcjonalne” i gwiazdki.
+        const kopia = tresc.cloneNode(true);
+        kopia.querySelectorAll('.consent-opt, [aria-hidden="true"]').forEach(x => x.remove());
+        dane.set(`${pole.name}__tresc`, kopia.textContent.replace(/s+/g, ' ').trim());
+      }
+    });
+    return dane;
+  }
+
   function validateForm() {
     const nameOk = (nameField?.value.trim().length || 0) >= 2;
     const phoneOk = phoneDigits(phoneField?.value).length === 9;
@@ -673,6 +693,11 @@
         return;
       }
 
+      /* Dowód zgody: moment wysyłki leci razem ze zgłoszeniem. Adresu IP
+         przeglądarka nie zna — musi go dopisać odbiorca formularza. */
+      const stempel = $('#fWyslanoO', form);
+      if (stempel) stempel.value = new Date().toISOString();
+
       // Pole-pułapka wypełnia tylko automat. Udajemy sukces, żeby nie podpowiadać botowi,
       // że został rozpoznany, ale zgłoszenia nigdzie nie wysyłamy.
       if ($('#fCompany', form)?.value) {
@@ -692,7 +717,7 @@
         try {
           const response = await fetch(endpoint, {
             method: form.method || 'POST',
-            body: new FormData(form),
+            body: zbudujZgloszenie(form),
             headers: { Accept: 'application/json' }
           });
           sent = response.ok;
