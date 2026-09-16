@@ -1363,7 +1363,6 @@ h2 { letter-spacing: -.042em; }
 .stats-head .eyebrow { margin-bottom: 18px; }
 .stat { border-top-color: rgba(255,255,255,.2); }
 .stat strong { color: #F7F7FF; }
-.stat--confirmed strong { color: var(--error); }
 .stat span { color: rgba(255,255,255,.58); }
 
 #produkty { background: var(--paper); }
