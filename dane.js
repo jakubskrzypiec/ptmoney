@@ -46,7 +46,7 @@ window.PTM_DANE = {
   liczby: {
     klienci: 12000,
     banki: 30,
-    godziny: 48,
+    godziny: 24,
     aktualneNa: ''                // np. '09.2026'
   }
 };
