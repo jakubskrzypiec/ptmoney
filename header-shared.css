@@ -98,6 +98,22 @@
   white-space: nowrap;
 }
 .pt-header__phone:hover { color: #2F3FFF; }
+.pt-header__phone--person {
+  position: relative;
+  padding-top: 11px;
+}
+.pt-header__phone--person::before {
+  content: attr(data-label);
+  position: absolute;
+  top: -2px;
+  left: 0;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .62;
+}
 
 .pt-header__cta {
   display: none;
