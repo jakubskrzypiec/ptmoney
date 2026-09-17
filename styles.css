@@ -1530,8 +1530,14 @@ h2 { letter-spacing: -.042em; }
   .hero { min-height: 100svh; }
   .hero-media img { object-position: 38% center; }
   .hero-copy { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
-  .hero-copy h1 { max-width: none; font-size: clamp(2.15rem, 10.8vw, 4.6rem); line-height: 1; }
+  .hero-copy h1 {
+    max-width: none;
+    font-size: clamp(2.1rem, 10.3vw, 4.4rem);
+    line-height: 1;
+    padding-right: .08em;
+  }
   .hero-copy h1 .hero-line { display: block; padding-bottom: .12em; margin: 0; }
+  .hero-copy h1 .hero-line--second { margin-left: 0; }
   .hero-copy h1 .hero-line + .hero-line { margin-top: .1em; }
   .hero-assurances { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 22px; padding-top: 16px; }
   .hero-assurances li { min-width: 0; padding-right: 12px; }
