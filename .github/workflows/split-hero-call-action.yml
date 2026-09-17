@@ -1,0 +1,47 @@
+name: Split hero call action by device
+on:
+  push:
+    paths:
+      - '.github/workflows/split-hero-call-action.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update hero call behavior
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48782972300">Zadzwoń</a>'
+          new = '<a class="btn btn--ghost hero-call hero-call--desktop" href="#kontakt">Zadzwoń</a>\n<a class="btn btn--ghost hero-call hero-call--mobile" href="tel:+48782972300">Zadzwoń</a>'
+          if old not in s:
+              raise SystemExit('Hero call button not found')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+
+          p = Path('styles.css')
+          s = p.read_text(encoding='utf-8')
+          marker = '.hero-actions { gap: 12px; margin-top: 0; }'
+          insert = '''.hero-actions { gap: 12px; margin-top: 0; }
+.hero-call--mobile { display: none; }
+@media (max-width: 899px) {
+  .hero-call--desktop { display: none; }
+  .hero-call--mobile { display: inline-flex; }
+}'''
+          if marker not in s:
+              raise SystemExit('Hero actions marker not found')
+          s = s.replace(marker, insert, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name "Jakub Skrzypiec"
+          git config user.email "kuba.skrzypiec5@gmail.com"
+          git add index.html styles.css
+          git commit -m "P&T Money: route hero call by device"
+          git push
