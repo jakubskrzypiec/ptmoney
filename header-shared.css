@@ -83,51 +83,30 @@
 .pt-header__actions {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
   flex: 0 0 auto;
 }
 .pt-header__phone {
   display: none;
-  position: relative;
-  min-height: 39px;
-  align-items: flex-end;
-  padding-top: 14px;
   color: #1D1D1D;
   font-family: inherit;
-  font-size: 14.2px;
+  font-size: 14.6px;
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: -0.015em;
   text-decoration: none;
   white-space: nowrap;
   transition: color .2s ease, opacity .2s ease;
 }
-.pt-header__phone::before {
-  position: absolute;
-  top: 2px;
-  left: 0;
-  font-size: 8.5px;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: .11em;
-  text-transform: uppercase;
-  opacity: .55;
+.pt-header__phone::before,
+.pt-header__phone::after {
+  content: none !important;
+  display: none !important;
 }
-.pt-header__phone:not(.pt-header__phone--person)::before { content: "Biuro"; }
-.pt-header__phone--person::before { content: attr(data-label); }
 .pt-header__phone--person {
   margin-left: 2px;
-  padding-left: 19px;
-}
-.pt-header__phone--person::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 5px;
-  bottom: 3px;
-  width: 1px;
-  background: currentColor;
-  opacity: .22;
+  padding-left: 14px;
+  border-left: 1px solid rgba(29,29,29,.18);
 }
 .pt-header__phone:hover { color: #2F3FFF; }
 
@@ -213,9 +192,9 @@
   .pt-header__phone { display: inline-flex; }
 }
 @media (min-width: 1200px) and (max-width: 1379px) {
-  .pt-header__actions { gap: 12px; }
-  .pt-header__phone { font-size: 13.4px; }
-  .pt-header__phone--person { padding-left: 14px; }
+  .pt-header__actions { gap: 11px; }
+  .pt-header__phone { font-size: 13.6px; }
+  .pt-header__phone--person { padding-left: 12px; }
   .pt-header__cta { padding-inline: 15px; }
 }
 
@@ -241,8 +220,6 @@
     backdrop-filter .28s ease;
 }
 
-/* W trakcie intro header ma być całkowicie niewidoczny. Pojawia się dopiero
-   po zakończeniu animacji, gdy main.js usuwa klasę .js-intro z <html>. */
 .js-intro .pt-header--home {
   opacity: 0 !important;
   visibility: hidden;
@@ -257,7 +234,6 @@
   box-shadow: 0 10px 34px rgba(9,27,39,.055);
 }
 
-/* Na samym hero: jasna wersja logo i jasna nawigacja. */
 .pt-header__brand--home {
   position: relative;
 }
@@ -296,6 +272,9 @@ body.menu-open .pt-header--home .pt-header__logo--dark {
 .pt-header--home:not(.is-compact) .pt-header__nav a::after {
   background: currentColor;
 }
+.pt-header--home:not(.is-compact) .pt-header__phone--person {
+  border-left-color: rgba(255,255,255,.26);
+}
 .pt-header--home:not(.is-compact) .pt-header__cta {
   background: rgba(255,255,255,.12);
   color: #fff;
@@ -316,7 +295,6 @@ body.menu-open .pt-header--home .pt-header__logo--dark {
   background: #111;
 }
 
-/* Po otwarciu menu mobilnego header przechodzi na biel, niezależnie od scrolla. */
 body.menu-open .pt-header--home {
   background: rgba(255,255,255,.98);
   -webkit-backdrop-filter: saturate(135%) blur(16px);
