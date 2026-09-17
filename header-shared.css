@@ -314,3 +314,16 @@ body.menu-open .pt-header--home .pt-header__toggle {
   .pt-header--home,
   .pt-header__brand--home .pt-header__logo { transition: none; }
 }
+
+/* Mobile hero typography fix: align all lines and keep final glyphs clear of the edge. */
+@media (max-width: 899px) {
+  .hero-copy h1 {
+    max-width: none;
+    font-size: clamp(2.1rem, 10.3vw, 4.4rem);
+    line-height: 1;
+    padding-right: .08em;
+  }
+  .hero-copy h1 .hero-line--second {
+    margin-left: 0;
+  }
+}
