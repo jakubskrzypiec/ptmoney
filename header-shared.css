@@ -83,37 +83,53 @@
 .pt-header__actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
   flex: 0 0 auto;
 }
 .pt-header__phone {
   display: none;
+  position: relative;
+  min-height: 39px;
+  align-items: flex-end;
+  padding-top: 14px;
   color: #1D1D1D;
   font-family: inherit;
-  font-size: 15.3px;
+  font-size: 14.2px;
   font-weight: 600;
-  line-height: 1.62;
-  letter-spacing: -0.01em;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   text-decoration: none;
   white-space: nowrap;
+  transition: color .2s ease, opacity .2s ease;
 }
-.pt-header__phone:hover { color: #2F3FFF; }
-.pt-header__phone--person {
-  position: relative;
-  padding-top: 11px;
-}
-.pt-header__phone--person::before {
-  content: attr(data-label);
+.pt-header__phone::before {
   position: absolute;
-  top: -2px;
+  top: 2px;
   left: 0;
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 600;
   line-height: 1;
-  letter-spacing: .08em;
+  letter-spacing: .11em;
   text-transform: uppercase;
-  opacity: .62;
+  opacity: .55;
 }
+.pt-header__phone:not(.pt-header__phone--person)::before { content: "Biuro"; }
+.pt-header__phone--person::before { content: attr(data-label); }
+.pt-header__phone--person {
+  margin-left: 2px;
+  padding-left: 19px;
+}
+.pt-header__phone--person::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  bottom: 3px;
+  width: 1px;
+  background: currentColor;
+  opacity: .22;
+}
+.pt-header__phone:hover { color: #2F3FFF; }
 
 .pt-header__cta {
   display: none;
@@ -195,6 +211,12 @@
 }
 @media (min-width: 1200px) {
   .pt-header__phone { display: inline-flex; }
+}
+@media (min-width: 1200px) and (max-width: 1379px) {
+  .pt-header__actions { gap: 12px; }
+  .pt-header__phone { font-size: 13.4px; }
+  .pt-header__phone--person { padding-left: 14px; }
+  .pt-header__cta { padding-inline: 15px; }
 }
 
 /* --------------------------------------------------------------------------
