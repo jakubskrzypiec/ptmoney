@@ -1,0 +1,42 @@
+name: Device call link
+on:
+  push:
+    paths:
+      - '.github/workflows/tmp-device-call.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update call link behavior
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('main.js')
+          s = p.read_text(encoding='utf-8')
+          marker = "  const contactSection = $('#kontakt');\n"
+          addition = """  const heroCall = $('.hero-actions .contact-placeholder');
+  if (heroCall) {
+    const updateHeroCallTarget = () => {
+      heroCall.href = window.innerWidth >= 900 ? '#kontakt' : 'tel:+48782972300';
+    };
+    updateHeroCallTarget();
+    window.addEventListener('resize', updateHeroCallTarget, { passive: true });
+  }
+
+"""
+          if marker not in s:
+              raise SystemExit('contact marker not found')
+          if "const heroCall = $('.hero-actions .contact-placeholder');" not in s:
+              s = s.replace(marker, marker + addition, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "Jakub Skrzypiec"
+          git config user.email "kuba.skrzypiec5@gmail.com"
+          git add main.js
+          git commit -m "P&T Money: responsive hero call link"
+          git push
