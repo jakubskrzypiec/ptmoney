@@ -26,7 +26,7 @@
 <!-- Czcionki z własnego serwera, nie z Google — patrz fonts/fonts.css -->
 <link rel="stylesheet" href="./fonts/fonts.css?v=1">
 <link href="./styles.css?v=20260916-2" rel="stylesheet"/>
-<link rel="stylesheet" href="./header-shared.css?v=20260906-1">
+<link rel="stylesheet" href="./header-shared.css?v=20260917-1">
 <script>
 document.documentElement.classList.add('js');
 (() => {
@@ -87,6 +87,7 @@ document.documentElement.classList.add('js');
     </nav>
     <div class="pt-header__actions">
       <a class="pt-header__phone" href="tel:+48782972300" aria-label="Zadzwoń: +48 782 972 300">+48 782 972 300</a>
+      <a class="pt-header__phone pt-header__phone--person" data-phone="secondary" data-label="Paulina" href="tel:+48791739337" aria-label="Zadzwoń do Pauliny: +48 791 739 337">+48 791 739 337</a>
       <a class="pt-header__cta" href="#kontakt">Sprawdź możliwości</a>
       <button class="pt-header__toggle" id="menuToggle" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobileNav">
         <span></span><span></span><span></span>
@@ -128,9 +129,9 @@ document.documentElement.classList.add('js');
 <a class="btn btn--ghost contact-placeholder" data-contact-placeholder="true" href="tel:+48782972300">Zadzwoń</a>
 </div>
 <ul aria-label="Najważniejsze korzyści" class="hero-assurances" data-delay="0.27" data-hero-in="">
-<li><strong>Jedna rozmowa</strong><span>zamiast wielu wniosków</span></li>
+<li><strong>Jedna osoba prowadząca</strong><span>cały proces</span></li>
 <li><strong>Wiele ofert</strong><span>porównanych w jednym miejscu</span></li>
-<li><strong>Zespół po Twojej stronie</strong><span>od pierwszej rozmowy do umowy</span></li>
+<li><strong>Kredyt skrojony</strong><span>pod Ciebie</span></li>
 </ul>
 </div>
 </div>
@@ -141,7 +142,7 @@ document.documentElement.classList.add('js');
 <div class="section-head section-head--products reveal">
 <div>
 <p class="eyebrow">Czym się zajmujemy</p>
-<h2 id="produkty-title">Jeden zespół.<br/>Osiem rozwiązań finansowych.</h2>
+<h2 id="produkty-title">Finansowanie w jednym miejscu.<br/>Dziesięć rozwiązań.</h2>
 <p class="section-lead">Wybierz, czego dziś potrzebujesz — resztę wyjaśnimy podczas rozmowy i dobierzemy oferty dopasowane do Twojej sytuacji.</p>
 </div>
 <ul aria-label="Obszary wsparcia" class="audience-pills">
@@ -235,6 +236,26 @@ document.documentElement.classList.add('js');
 <span class="product-desc">Zabezpiecz kredyt, firmę i rodzinę. Dobierzemy ochronę adekwatną do ryzyka — bez przepłacania za zbędne opcje.</span>
 <a class="product-go product-select" data-product="Ubezpieczenia" href="?produkt=ubezpieczenia#kontakt"><span class="sr-only">Ubezpieczenia — zostaw kontakt</span><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"></path></svg></a>
 </li>
+<li class="product-row reveal">
+<span class="product-idx">09</span>
+<span aria-hidden="true" class="product-icon"><svg viewbox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M7 9h10M7 13h6M16 13h1"></path></svg></span>
+<span class="product-main">
+<span class="product-title">Kredyt ratalny</span>
+<span class="product-tag">Samodzielny proces</span>
+</span>
+<span class="product-desc">Klient nie musi odkładać zakupu na później. Ty lub Twój pracownik przygotujecie kredyt ratalny na miejscu, w kilka minut.</span>
+<a class="product-go product-select" data-product="Kredyt ratalny" href="?produkt=kredyt-ratalny#kontakt"><span class="sr-only">Kredyt ratalny — zostaw kontakt</span><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"></path></svg></a>
+</li>
+<li class="product-row reveal">
+<span class="product-idx">10</span>
+<span aria-hidden="true" class="product-icon"><svg viewbox="0 0 24 24"><path d="M4 15V9l3-3h10l3 3v6"></path><circle cx="7.5" cy="17" r="2"></circle><circle cx="16.5" cy="17" r="2"></circle><path d="M4 15h1.5M9.5 15h5M18.5 15H20M8 9h8"></path></svg></span>
+<span class="product-main">
+<span class="product-title">Kredyt samochodowy</span>
+<span class="product-tag">Finansowanie auta</span>
+</span>
+<span class="product-desc">Klient wybrał auto? Przygotuj mu kredyt od razu, bez wysyłania go do banku.</span>
+<a class="product-go product-select" data-product="Kredyt samochodowy" href="?produkt=kredyt-samochodowy#kontakt"><span class="sr-only">Kredyt samochodowy — zostaw kontakt</span><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"></path></svg></a>
+</li>
 </ul>
 <div class="section-cta reveal"><a class="btn btn--primary" href="#kontakt">Porozmawiaj bezpłatnie</a></div>
 </div>
@@ -248,7 +269,7 @@ document.documentElement.classList.add('js');
 <figure class="portrait portrait--advisor">
 <img alt="Zespół doradców P&amp;T Money" data-portrait="" decoding="async" height="1374" loading="lazy" src="./img/doradca-2.jpg" width="1099"/>
 <figcaption aria-hidden="true" class="portrait-fallback"><img alt="" height="707" src="./logo-mark.png" width="785"/><span>Zespół P&amp;T Money</span></figcaption>
-<div aria-label="Wsparcie zespołu P&amp;T Money" class="advisor-badge"><strong>TEAM</strong><span>Wspólna opieka<br/>nad Twoją sprawą</span></div>
+
 </figure>
 <p class="advisor-meta"><strong>Zespół P&amp;T Money</strong><span id="doradcaRola">Doradcy finansowi · P&amp;T Money</span><span class="advisor-availability"><i aria-hidden="true"></i>Kontakt w ciągu jednego dnia roboczego</span></p>
 <div class="advisor-actions">
@@ -265,8 +286,8 @@ document.documentElement.classList.add('js');
 <ol class="advisor-duties reveal-grid">
 <li class="reveal"><span class="duty-num">01</span><div><strong>Zbieramy dokumenty</strong><span>Mówimy dokładnie, co przygotować — i sprawdzamy komplet, zanim trafi do banku.</span></div></li>
 <li class="reveal"><span class="duty-num">02</span><div><strong>Rozmawiamy z bankami</strong><span>Składamy wnioski, pilnujemy terminów i negocjujemy marżę oraz prowizję.</span></div></li>
-<li class="reveal"><span class="duty-num">03</span><div><strong>Tłumaczymy warunki</strong><span>Pokazujemy różnice między ofertami po ludzku, razem z tym, co realnie będzie Cię kosztować.</span></div></li>
-<li class="reveal"><span class="duty-num">04</span><div><strong>Zostajemy po decyzji</strong><span>Jesteśmy pod telefonem także przy aneksach, refinansowaniu i zmianie sytuacji.</span></div></li>
+<li class="reveal"><span class="duty-num">03</span><div><strong>Tłumaczymy warunki</strong><span>Wskazujemy różnice między ofertami po ludzku, razem z tym, co realnie będzie Cię kosztować.</span></div></li>
+<li class="reveal"><span class="duty-num">04</span><div><strong>Umowa to nie koniec współpracy</strong><span>Pomagamy przy aneksach, refinansowaniu i wtedy, gdy zmienia się Twoja sytuacja.</span></div></li>
 </ol>
 </div>
 </div>
@@ -413,6 +434,16 @@ document.documentElement.classList.add('js');
 <blockquote><p>Najbardziej doceniam to, że cały zespół znał moją sprawę. Nie musiałem za każdym razem tłumaczyć wszystkiego od początku.</p></blockquote>
 <p class="quote-meta"><strong>Michał D.</strong><span>Kredyt firmowy · Gdańsk</span></p>
 </li>
+<li aria-roledescription="slajd" class="quote-card" data-placeholder="true" role="group">
+<p aria-hidden="true" class="quote-mark">„</p>
+<blockquote><p>Wdrożyliśmy raty bezpośrednio w punkcie sprzedaży. Klient może od razu sfinalizować zakup, a cały proces obsługujemy na miejscu.</p></blockquote>
+<p class="quote-meta"><strong>Karolina M.</strong><span>Kredyt ratalny · punkt sprzedaży</span></p>
+</li>
+<li aria-roledescription="slajd" class="quote-card" data-placeholder="true" role="group">
+<p aria-hidden="true" class="quote-mark">„</p>
+<blockquote><p>Przy inwestycji w fotowoltaikę zależało nam na rozłożeniu kosztu w czasie. Dostaliśmy jasne warianty finansowania i mogliśmy spokojnie wybrać rozwiązanie dla firmy.</p></blockquote>
+<p class="quote-meta"><strong>Adam P.</strong><span>Finansowanie OZE · firma usługowa</span></p>
+</li>
 </ul>
 </div>
 <div class="opinions-foot">
@@ -440,9 +471,9 @@ document.documentElement.classList.add('js');
 <section aria-labelledby="contact-title" class="section contact-section" id="kontakt">
 <div class="container contact-grid">
 <div class="contact-copy reveal">
-<p class="eyebrow">Bezpłatna rozmowa</p>
-<h2 id="contact-title">Podaj dane raz.<br/><em>Resztę załatwiamy.</em></h2>
-<p class="contact-lead">Oddzwaniamy zwykle w ciągu jednego dnia roboczego. Konsultacja i przygotowanie oferty są zawsze bezpłatne.</p>
+<p class="eyebrow">Zacznijmy od rozmowy</p>
+<h2 id="contact-title">Zostaw swoje dane,<br/><em>a skontaktujemy się z Tobą w ciągu jednego dnia roboczego.</em></h2>
+<p class="contact-lead">Krótka rozmowa pozwoli nam poznać Twoją sytuację i sprawdzić dostępne możliwości.</p>
 </div>
 <div class="form-card reveal">
 <form action="" data-endpoint="" id="leadForm" method="post" novalidate="">
@@ -471,6 +502,8 @@ document.documentElement.classList.add('js');
 <option>Faktoring</option>
 <option>OZE — finansowanie systemów</option>
 <option>Ubezpieczenia</option>
+<option>Kredyt ratalny</option>
+<option>Kredyt samochodowy</option>
 <option>Nie jestem pewien/pewna</option>
 </select>
 <p class="field-error" id="fProductError">Wybierz produkt.</p>
@@ -554,42 +587,19 @@ document.documentElement.classList.add('js');
 <ul class="trust-list">
 <li><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"></path><path d="M12 7v5l3 2"></path></svg><div><strong>Szybki kontakt</strong><span>Oddzwaniamy w ciągu 24 godzin roboczych.</span></div></li>
 <li><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"></path></svg><div><strong>Porównanie ofert</strong><span>Sprawdzamy warunki u kilkunastu instytucji naraz.</span></div></li>
-<li><svg aria-hidden="true" viewbox="0 0 24 24"><rect height="10" rx="2" width="14" x="5" y="10"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg><div><strong>Twoje dane są bezpieczne</strong><span>Przetwarzamy je wyłącznie w celu przygotowania oferty.</span></div></li>
+<li><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"></path><path d="m8.5 12 2.25 2.25L15.5 9.5"></path></svg><div><strong>Bez zobowiązań</strong><span>Rozmowa i oferta nie zobowiązują Cię do podpisania umowy.</span></div></li>
 </ul>
 </div>
 </section>
-<!-- ============ SZYBKI PODGLĄD RATY ============ -->
-<!-- Dodatkowe narzędzie dla osób, które po formularzu chcą jeszcze sprawdzić
-       orientacyjną ratę. Nie przerywa już głównej ścieżki do kontaktu. -->
+<!-- ============ ODESŁANIE DO KALKULATORA ============ -->
 <section aria-labelledby="rate-title" class="section rate-section section--line" id="start">
 <div class="container">
 <div class="section-head reveal">
-<p class="eyebrow">Dodatkowe narzędzie</p>
-<h2 id="rate-title">Chcesz jeszcze szybko sprawdzić ratę?</h2>
-<p class="section-lead">Ustaw kwotę i okres, aby zobaczyć orientacyjny rząd wielkości.</p>
+<p class="eyebrow">Kalkulator</p>
+<h2 id="rate-title">Zobacz, jak możemy obniżyć Twoją obecną ratę.</h2>
+<p class="section-lead">Przejdź do kalkulatora i sprawdź orientacyjny wariant finansowania przed rozmową.</p>
 </div>
-<div aria-label="Szybki podgląd raty" class="rate-bar reveal">
-<div class="rate-bar-head">
-<p class="rate-bar-kicker">Szybki podgląd raty<span>Kredyt gotówkowy</span></p>
-<p class="rate-bar-note">Nic nie wysyłasz — to tylko rząd wielkości.</p>
-</div>
-<div class="rate-bar-controls">
-<div class="range-field">
-<div class="range-label"><label for="heroAmount">Kwota</label><output for="heroAmount" id="heroAmountVal">30 000 zł</output></div>
-<input aria-label="Kwota kredytu" id="heroAmount" max="150000" min="2000" step="1000" type="range" value="30000"/>
-</div>
-<div class="range-field">
-<div class="range-label"><label for="heroPeriod">Okres</label><output for="heroPeriod" id="heroPeriodVal">48 mies.</output></div>
-<input aria-label="Okres spłaty" id="heroPeriod" max="120" min="6" step="6" type="range" value="48"/>
-</div>
-</div>
-<div aria-live="polite" class="rate-bar-out">
-<span>Orientacyjna rata</span>
-<strong id="heroResult">712 <small>zł / mies.</small></strong>
-</div>
-<a class="rate-bar-cta" href="#kontakt">Porozmawiaj o wyniku <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h13M12 6l6 6-6 6"></path></svg></a>
-</div>
-<p class="fineprint fineprint--hero">Wyliczenie poglądowe przy założeniu oprocentowania nominalnego 9,9% — nie stanowi oferty w rozumieniu Kodeksu cywilnego. Rzeczywiste warunki zależą od oferty banku i Twojej zdolności kredytowej.</p>
+<div class="section-cta reveal"><a class="btn btn--primary" href="./kalkulator.html">Przejdź do kalkulatora</a></div>
 </div>
 </section>
 <!-- ============ FAQ ============ -->
@@ -632,7 +642,7 @@ document.documentElement.classList.add('js');
 <p>Niezależne pośrednictwo finansowe. Porównujemy oferty banków, firm leasingowych i faktoringowych oraz towarzystw ubezpieczeniowych, żebyś nie musiał robić tego sam.</p>
 </div>
 <div class="footer-col"><h2>Produkty</h2><a href="./oferta.html">Kredyty</a><a href="./oferta.html#firma">Leasing i faktoring</a><a href="./oferta.html#oze">OZE — finansowanie systemów</a><a href="./oferta.html#ubezpieczenia">Ubezpieczenia</a></div>
-<div class="footer-col"><h2>Firma</h2><a href="#jak-to-dziala">Jak działamy</a><a href="#zespol">Zespół</a><a href="./kalkulator.html">Kalkulator</a><a href="./kontakt.html">Kontakt</a></div>
+<div class="footer-col"><h2>Firma</h2><a href="#jak-to-dziala">Jak działamy</a><a href="#zespol">O nas</a><a href="./kalkulator.html">Kalkulator</a><a href="./kontakt.html">Kontakt</a></div>
 <div class="footer-col"><h2>Kontakt</h2><a class="contact-placeholder" data-contact-placeholder="true" href="tel:+48782972300">+48 782 972 300</a><a data-phone="secondary" href="tel:+48791739337">+48 791 739 337</a><a class="contact-placeholder" data-contact-placeholder="true" href="mailto:kontakt@ptmoney.pl">kontakt@ptmoney.pl</a><a href="https://jakubskrzypiec.github.io/ptmoney/" id="stronaWww">ptmoney.pl</a></div>
 </div>
 <div aria-label="Dane rejestrowe" class="footer-registry"><span>Martom Polska Sp. z o.o.</span><span>NIP: 6342849173</span><span>KRS: 0000584084</span><span>Siedziba: ul. Walerego Sławka 5/16, 40-833 Katowice</span></div>
