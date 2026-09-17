@@ -165,4 +165,15 @@ window.PTM_DANE = {
   /* 6. Odbiór formularza. */
   const form = document.getElementById('leadForm');
   if (form && set(D.formularzEndpoint)) form.dataset.endpoint = set(D.formularzEndpoint);
+
+  /* 7. CTA „Zadzwoń" w hero: na desktopie przewija do formularza,
+        na telefonie uruchamia połączenie. */
+  const heroCall = document.querySelector('.hero-actions a.contact-placeholder');
+  if (heroCall) {
+    const syncHeroCall = () => {
+      heroCall.href = window.innerWidth >= 900 ? '#kontakt' : (telHref || 'tel:+48782972300');
+    };
+    syncHeroCall();
+    window.addEventListener('resize', syncHeroCall, { passive: true });
+  }
 })();
