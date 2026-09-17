@@ -1,0 +1,31 @@
+name: Fix mobile hero title now
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-mobile-hero-now.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply mobile hero fix
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('styles.css')
+          s = p.read_text(encoding='utf-8')
+          old = "  .hero-copy h1 { max-width: none; font-size: clamp(2.15rem, 10.8vw, 4.6rem); line-height: 1; }\n  .hero-copy h1 .hero-line { display: block; padding-bottom: .12em; margin: 0; }\n  .hero-copy h1 .hero-line + .hero-line { margin-top: .1em; }"
+          new = "  .hero-copy h1 {\n    max-width: none;\n    font-size: clamp(2.1rem, 10.3vw, 4.4rem);\n    line-height: 1;\n    padding-right: .08em;\n  }\n  .hero-copy h1 .hero-line { display: block; padding-bottom: .12em; margin: 0; }\n  .hero-copy h1 .hero-line--second { margin-left: 0; }\n  .hero-copy h1 .hero-line + .hero-line { margin-top: .1em; }"
+          if old not in s:
+              raise SystemExit('target block not found')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "Jakub Skrzypiec"
+          git config user.email "kuba.skrzypiec5@gmail.com"
+          git add styles.css
+          git commit -m "P&T Money: fix mobile hero alignment"
+          git push
