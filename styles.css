@@ -491,7 +491,7 @@ em { font-style: normal; color: var(--blue); }
 @media (max-width: 899px) {
   /* Na wąskim ekranie kadr tnie się mocno w pionie. 38% trzyma w kadrze kubek,
      notes i widok z okna — czyli to, po co to zdjęcie w ogóle jest. */
-  .hero-media img { object-position: 38% center; }
+  .hero-media img { object-position: 72% center; }
   .hero-copy { max-width: 100%; padding: 0 var(--gutter) clamp(28px, 4vh, 44px) var(--gutter); }
   /* Na wąskim ekranie elipsa z rogu nie obejmie całej szerokości napisów,
      więc dokładamy do niej klin od dołu. */
@@ -1263,12 +1263,7 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
 .cta-dock.is-shown { opacity: 1; transform: none; }
 
 .mobile-bottom-bar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
-  display: grid; grid-template-columns: auto 1fr; gap: 10px;
-  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(255,255,255,.94);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid var(--line);
+  display: none !important;
 }
 .mobile-bottom-bar .btn { min-height: 46px; }
 
@@ -1277,7 +1272,7 @@ input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.12); }
   .cta-dock { display: none !important; }
 }
 @media (max-width: 899px) {
-  body { padding-bottom: 72px; }
+  body { padding-bottom: 0; }
   .cta-dock { display: none !important; }
 }
 
@@ -1528,7 +1523,7 @@ h2 { letter-spacing: -.042em; }
 
 @media (max-width: 899px) {
   .hero { min-height: 100svh; }
-  .hero-media img { object-position: 38% center; }
+  .hero-media img { object-position: 72% center; }
   .hero-copy { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
   .hero-copy h1 {
     max-width: none;
